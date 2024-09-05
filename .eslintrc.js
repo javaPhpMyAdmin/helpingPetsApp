@@ -1,9 +1,12 @@
-module.exports={
-  extends:[
-    'universe/native',
-  ],
+module.exports = {
+  extends: ['universe/native'],
   rules: {
-    'react-hooks/exhaustive-deps':'warn'
-  }
-  
-}
+    'react-hooks/exhaustive-deps': 'warn',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
+  },
+};
