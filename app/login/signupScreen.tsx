@@ -18,18 +18,18 @@ const SignUpScreen = () => {
       <StatusBar barStyle="light-content" />
       <Image
         className="h-full w-full absolute"
-        source={require('../assets/images/background.png')}
+        source={require('@/assets/images/background.png')}
       />
       <View className="flex-row justify-around w-full absolute">
         <Animated.Image
           entering={FadeInUp.delay(200).duration(1000).springify().damping(3)}
           className="h-[225] w-[90]"
-          source={require('../assets/images/light.png')}
+          source={require('@/assets/images/light.png')}
         />
         <Animated.Image
           entering={FadeInUp.delay(600).duration(1000).springify().damping(3)}
           className="h-[160] w-[65]"
-          source={require('../assets/images/light.png')}
+          source={require('@/assets/images/light.png')}
         />
       </View>
       <View className="h-full w-full flex justify-around pt-48 pb-10">
