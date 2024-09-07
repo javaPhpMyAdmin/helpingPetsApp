@@ -9,10 +9,14 @@ export default function TabsLayout() {
         name="index"
         options={{
           headerTitle: 'Agregar nuevo Registro',
-          headerStyle: { justifyContent: 'center' },
         }}
       />
-      <Tabs.Screen name="profile" />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          headerTitle: 'Perfil',
+        }}
+      />
     </Tabs>
   );
 }

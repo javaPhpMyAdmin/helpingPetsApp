@@ -1,4 +1,4 @@
-import { Link } from 'expo-router';
+import { router } from 'expo-router';
 import {
   View,
   Text,
@@ -7,11 +7,7 @@ import {
   TextInput,
   Pressable,
 } from 'react-native';
-import Animated, {
-  FadeInDown,
-  FadeInUp,
-  FadeOut,
-} from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 const SignUpScreen = () => {
   return (
     <View className="bg-white h-full w-full">
@@ -78,11 +74,9 @@ const SignUpScreen = () => {
             className="flex-row justify-center"
           >
             <Text>Ya tienes una cuenta? </Text>
-            <Link asChild href="/login">
-              <Pressable>
-                <Text className="text-sky-600">Login</Text>
-              </Pressable>
-            </Link>
+            <Pressable onPress={() => router.push('/login')}>
+              <Text className="text-sky-600">Login</Text>
+            </Pressable>
           </Animated.View>
         </View>
       </View>

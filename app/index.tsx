@@ -1,24 +1,28 @@
-import { router } from 'expo-router';
+import { Link, router } from 'expo-router';
+import LottieView from 'lottie-react-native';
 import React, { useEffect, useRef } from 'react';
+import { type ComponentProps } from 'react';
 import {
   View,
-  Text,
-  Image,
-  useWindowDimensions,
-  ImageBackground,
   Animated as Anima,
+  Text,
+  useWindowDimensions,
 } from 'react-native';
 import Animated, {
   FadeInDown,
-  FadeInRight,
-  FadeInUp,
+  FadeInLeft,
+  Easing,
+  LightSpeedInLeft,
 } from 'react-native-reanimated';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+type Href = ComponentProps<typeof Link>['href'];
 
 const Index = () => {
   const opacityAnimation = useRef(new Anima.Value(0.5)).current;
+  const { width, height } = useWindowDimensions();
+  const opacityAnime = { opacity: opacityAnimation };
 
-  const opacityStyle = { opacity: opacityAnimation };
-
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const animateElement = () => {
     Anima.timing(opacityAnimation, {
       toValue: 0,
@@ -34,41 +38,71 @@ const Index = () => {
   };
   useEffect(() => {
     animateElement();
-    setTimeout(() => {
-      router.push('/login');
-    }, 3000);
-  }, []);
+    setTimeout(() => router.replace('/login'), 5500);
+  }, [animateElement]);
   return (
-    <View className="flex flex-1 flex-col">
-      <ImageBackground
-        source={require('@/assets/images/splashImage.jpg')}
-        className="flex flex-1 object-cover justify-center items-center relative"
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: 'orange',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Animated.Image
+        entering={FadeInDown.delay(600).duration(1200).damping(2).springify()}
+        style={{
+          width: width * 0.7,
+          height: height * 0.35,
+          top: height * 0.045,
+        }}
+        source={require('@/assets/images/paws.webp')}
+      />
+
+      <Animated.View
+        entering={FadeInLeft.delay(1500).duration(1000).springify()}
+        style={{
+          aspectRatio: 2,
+          height: height * 0.46,
+          padding: 0,
+          top: 50,
+        }}
       >
-        <Animated.Text
-          entering={FadeInRight.delay(1200)
-            .duration(1000)
-            .springify()
-            .damping(3)}
-          className="text-2xl font-extrabold mb-5 text-center top-16 absolute"
-        >
-          HELP PAW PETS
-        </Animated.Text>
-        <Anima.View style={opacityStyle}>
-          <Image
-            source={require('@/assets/images/songam.png')}
-            className="w-[190] h-[190] justify-center items-center"
-          />
-        </Anima.View>
-        <Animated.Text
-          entering={FadeInDown.delay(1000)
-            .duration(1000)
-            .springify()
-            .damping(3)}
-          className="mt-3 font-extrabold text-black text-2xl text-center"
-        >
-          CARGANDO...
-        </Animated.Text>
-      </ImageBackground>
+        <LottieView
+          style={{ flex: 1, backgroundColor: 'orange' }}
+          source={require('@/assets/animations/walking_dog.json')}
+          autoPlay
+          loop
+        />
+      </Animated.View>
+
+      <Animated.View
+        entering={LightSpeedInLeft.delay(1500)
+          .duration(1200)
+          .easing(Easing.ease)}
+        // entering={FadeInDown.delay(1000).duration(1000).springify().damping(3)}
+        style={{
+          flexDirection: 'row',
+          height: 50,
+          width: 200,
+          alignItems: 'center',
+          justifyContent: 'center',
+          bottom: 50,
+        }}
+      >
+        <Text className="font-semibold text-black text-2xl">CARGANDO</Text>
+        <LottieView
+          style={{
+            top: 3.5,
+            width: 70,
+            height: 70,
+            right: 7,
+          }}
+          source={require('@/assets/animations/loading_animation.json')}
+          autoPlay
+          loop
+        />
+      </Animated.View>
     </View>
   );
 };

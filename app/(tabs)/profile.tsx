@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function Profile() {
   return (
-    <View>
+    <View className="flex flex-1 justify-center items-center">
       <Text>Profile</Text>
     </View>
   );

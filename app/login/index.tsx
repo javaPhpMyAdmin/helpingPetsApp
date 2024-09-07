@@ -15,7 +15,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-type Href = ComponentProps<typeof Link>['href'];
+type href = ComponentProps<typeof Link>['href'];
 
 const LoginScreen = () => {
   return (
