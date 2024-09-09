@@ -61,7 +61,7 @@ const INITIAL_DESTINATION = {
   latitudeDelta: 0,
   longitudeDelta: 0,
 };
-const Img = Platform.OS === 'android' ? WebView : Image;
+
 export default function MapScreen() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const mapRef = useRef<MapView>();
@@ -81,15 +81,14 @@ export default function MapScreen() {
   const [loadingTimeAndDistance, setLoadingTimeAndDistance] = useState(false);
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
+      const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
         return;
       }
-
-      let location = await Location.getCurrentPositionAsync({});
-      console.log({ location });
-      setLocation(location);
+      // const location = await Location.getCurrentPositionAsync({});
+      // console.log({ location });
+      // setLocation(location);
     })();
   }, []);
 
@@ -172,7 +171,7 @@ export default function MapScreen() {
             strokeColor="pink"
           />
         )}
-        {origin && <Marker coordinate={origin} identifier="origin"></Marker>}
+        {origin && <Marker coordinate={origin} identifier="origin" />}
         {MockedMarkers &&
           MockedMarkers.map((marker) => (
             <Marker
