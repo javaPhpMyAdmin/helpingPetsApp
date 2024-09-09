@@ -38,7 +38,7 @@ const Index = () => {
   };
   useEffect(() => {
     animateElement();
-    setTimeout(() => router.replace('/(tabs)'), 500);
+    setTimeout(() => router.replace('/login'), 4500);
   }, [animateElement]);
   return (
     <View

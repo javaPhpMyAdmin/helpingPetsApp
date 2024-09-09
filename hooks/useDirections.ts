@@ -21,11 +21,6 @@ interface Origin {
   initialZoom?: number;
 }
 
-interface UseDirectionsProps {
-  origin: Origin;
-  destination: Destination;
-}
-
 export const useDirections = (
   origin: Origin,
   destination: Destination
