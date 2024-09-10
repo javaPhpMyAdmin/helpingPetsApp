@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
 import { decode } from '@googlemaps/polyline-codec';
+import { useEffect, useState } from 'react';
 import { LatLng } from 'react-native-maps';
 const gmd = process.env.EXPO_PUBLIC_GOOGLE_MAPS_DIRECTIONS;
+
 const mapDirectionsURL =
   'https://maps.googleapis.com/maps/api/directions/json?';
 
@@ -27,15 +28,16 @@ export const useDirections = (
 ): [LatLng[], unknown] => {
   const [coords, setCoords] = useState<LatLng[]>([]);
   const [error, setError] = useState<unknown>(null);
+
   const getDirections = async (origin: Origin, destination: Destination) => {
     try {
-      let resp = await fetch(
+      const resp = await fetch(
         `${mapDirectionsURL}origin=${origin.latitude},${origin.longitude}&destination=${destination?.latitude},${destination?.longitude}&key=${gmd}`
       );
 
-      let respJson = await resp.json();
-      let points = decode(respJson.routes[0].overview_polyline.points);
-      let coordsArray = points.map((point, index) => {
+      const respJson = await resp.json();
+      const points = decode(respJson.routes[0].overview_polyline.points);
+      const coordsArray = points.map((point, index) => {
         return {
           latitude: point[0],
           longitude: point[1],

@@ -20,7 +20,6 @@ type Href = ComponentProps<typeof Link>['href'];
 const Index = () => {
   const opacityAnimation = useRef(new Anima.Value(0.5)).current;
   const { width, height } = useWindowDimensions();
-  const opacityAnime = { opacity: opacityAnimation };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const animateElement = () => {
@@ -80,7 +79,6 @@ const Index = () => {
         entering={LightSpeedInLeft.delay(1500)
           .duration(1200)
           .easing(Easing.ease)}
-        // entering={FadeInDown.delay(1000).duration(1000).springify().damping(3)}
         style={{
           flexDirection: 'row',
           height: 50,
