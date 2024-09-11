@@ -1,6 +1,12 @@
 /* eslint-disable import/order */
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   View,
   Text,
@@ -8,7 +14,6 @@ import {
   StyleSheet,
   Image,
   Pressable,
-  Modal,
   ActivityIndicator,
 } from 'react-native';
 import MapView, {
@@ -19,17 +24,16 @@ import MapView, {
   PROVIDER_DEFAULT,
   PROVIDER_GOOGLE,
 } from 'react-native-maps';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Location from 'expo-location';
-import { useDirections } from '../../hooks/useDirections';
-import {
-  fetchDataDriving,
-  fetchDataWalking,
-} from '../../utils/getTimeTravel.util';
-import { MockedMarkers } from '../../MockedMarkers/MockedMarkers';
+import { useDirections } from '@/hooks/useDirections';
+import { fetchDataDriving, fetchDataWalking } from '@/utils/getTimeTravel.util';
+import { MockedMarkers } from '@/MockedMarkers/MockedMarkers';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Fontisto from '@expo/vector-icons/Fontisto';
-import { WebView } from 'react-native-webview';
+
+import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 const gmapk = process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY;
 
 const PROVIDER = Platform.OS === 'android' ? PROVIDER_GOOGLE : PROVIDER_DEFAULT;
@@ -42,12 +46,12 @@ const INITIAL_REGION = {
   initialZoom: 20,
 };
 
-const origin = {
-  latitude: -34.6459093,
-  longitude: -56.0576395,
-  latitudeDelta: 0.05,
-  longitudeDelta: 0.05,
-};
+// const origin = {
+//   latitude: -34.6459093,
+//   longitude: -56.0576395,
+//   latitudeDelta: 0.05,
+//   longitudeDelta: 0.05,
+// };
 interface DestinationProps {
   latitude: number;
   longitude: number;
@@ -62,23 +66,43 @@ const INITIAL_DESTINATION = {
   longitudeDelta: 0,
 };
 
+interface Origin {
+  latitude: number;
+  longitude: number;
+  latitudeDelta: number;
+  longitudeDelta: number;
+  initialZoom?: number;
+}
+
 export default function MapScreen() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const mapRef = useRef<MapView>();
-  const [location, setLocation] = useState<Location.LocationObject | null>(
-    null
-  );
-  const [isVisible, setIsVisibleModal] = useState(false);
+  const mapRef = useRef<MapView | null>(null);
+  const [origin, setOrigin] = useState<Origin>(INITIAL_DESTINATION);
 
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [destinationCoords, setDestinationCoords] =
     useState<DestinationProps>(INITIAL_DESTINATION);
 
-  const [coords] = useDirections(origin, destinationCoords);
+  const [coords] = useDirections(origin!, destinationCoords);
   const [distance, setDistance] = useState('');
   const [timeDriving, setTimeDriving] = useState('');
   const [timeWalking, setTimeWalking] = useState('');
   const [loadingTimeAndDistance, setLoadingTimeAndDistance] = useState(false);
+
+  const bottomSheetRef = useRef<BottomSheet>(null);
+  const snapPoints = useMemo(() => ['5%', '25%', '50%'], []);
+
+  const renderBackDrop = useCallback(
+    (props: any) => (
+      <BottomSheetBackdrop
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+        {...props}
+      />
+    ),
+    []
+  );
+
   useEffect(() => {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -86,14 +110,20 @@ export default function MapScreen() {
         setErrorMsg('Permission to access location was denied');
         return;
       }
-      // const location = await Location.getCurrentPositionAsync({});
-      // console.log({ location });
-      // setLocation(location);
+      const location = await Location.getCurrentPositionAsync({});
+      console.log('CURRENT LOCATION', { location });
+      const origenAux: Origin = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05,
+      };
+      setOrigin(origenAux);
     })();
   }, []);
 
   useEffect(() => {
-    if (!origin || !destinationCoords) return;
+    if (!origin) return;
 
     const getTimeTravel = async () => {
       setLoadingTimeAndDistance(true);
@@ -120,7 +150,8 @@ export default function MapScreen() {
       }
     };
     getTimeTravel();
-  }, [destinationCoords, distance, timeDriving, timeWalking]);
+    console.log('RENDER MAPVIEW');
+  }, [destinationCoords, origin]);
 
   const handleSelectedDestination = (
     event: MarkerPressEvent,
@@ -138,24 +169,23 @@ export default function MapScreen() {
     mapRef.current?.fitToSuppliedMarkers(['origin', `${identifier}`], {
       edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
     });
-    setIsVisibleModal(!isVisible);
+    bottomSheetRef.current?.expand();
   };
 
   const focusTap = () => {
     mapRef.current?.animateToRegion(origin);
   };
 
-  const handleCloseModal = () => {
-    setIsVisibleModal(!isVisible);
-  };
+  // const handleCloseModal = () => {
+  //   setIsVisibleModal(!isVisible);
+  // };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <MapView
         initialRegion={INITIAL_REGION}
         provider={PROVIDER}
-        style={StyleSheet.absoluteFill}
-        showsUserLocation
+        style={[StyleSheet.absoluteFill]}
         ref={mapRef}
         zoomEnabled
         mapType="mutedStandard"
@@ -166,12 +196,32 @@ export default function MapScreen() {
         {origin && (
           <Polyline
             coordinates={coords}
-            strokeWidth={7}
+            strokeWidth={8}
             key={gmapk}
-            strokeColor="pink"
+            strokeColor="skyblue"
           />
         )}
-        {origin && <Marker coordinate={origin} identifier="origin" />}
+        {origin && (
+          <Marker coordinate={origin} identifier="origin">
+            <View
+              style={{
+                width: 60,
+                height: 60,
+                backgroundColor: 'gray',
+                borderRadius: 50,
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                opacity: 0.5,
+              }}
+            >
+              <Image
+                style={{ width: 40, height: 40 }}
+                source={require('@/assets/images/user.png')}
+              />
+            </View>
+          </Marker>
+        )}
         {MockedMarkers &&
           MockedMarkers.map((marker) => (
             <Marker
@@ -182,60 +232,82 @@ export default function MapScreen() {
                 handleSelectedDestination(event, marker.identifier)
               }
             >
-              <Callout
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                }}
-              >
-                {Platform.OS === 'android' ? (
-                  <WebView
-                    style={{
-                      width: 120,
-                      height: 120,
-                    }}
-                    source={require('@/assets/images/paws.webp')}
-                  />
-                ) : (
-                  <Image
-                    style={{
-                      width: 80,
-                      height: 80,
-                      backgroundColor: 'transparent',
-                    }}
-                    source={require('@/assets/images/paws.webp')}
-                  />
-                )}
+              <>
+                <Image
+                  style={{
+                    width: 50,
+                    height: 50,
+                    backgroundColor: 'transparent',
+                    borderRadius: 50,
+                    padding: 0,
+                  }}
+                  source={require('@/assets/images/paws.webp')}
+                />
+                <Callout
+                  style={{
+                    width: 200,
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flex: 1,
+                  }}
+                >
+                  {/* {Platform.OS === 'android' ? (
+                    <WebView
+                      style={{
+                        widht: 80,
+                        height: 80,
+                      }}
+                      source={require('@/assets/images/paws.webp')}
+                    />
+                  ) : (
+                    <Image
+                      style={{
+                        justifyContent: 'center',
+                        width: 80,
+                        height: 80,
+                        backgroundColor: 'transparent',
+                      }}
+                      source={require('@/assets/images/paws.webp')}
+                    />
+                  )} */}
 
-                <Text>BREVE DESCRIPCION</Text>
-              </Callout>
+                  <Text>BREVE DESCRIPCION</Text>
+                </Callout>
+              </>
             </Marker>
           ))}
-        {/* <Pressable
-          style={{
-            position: 'absolute',
-            right: 40,
-            top: 60,
-            backgroundColor: 'white',
-            padding: 5,
-            borderRadius: 10,
-            borderColor: 'black',
-          }}
-          onPress={focusTap}
-        >
-          <Text>MI UBICACION</Text>
-        </Pressable> */}
       </MapView>
-      <Modal animationType="slide" transparent visible={isVisible}>
+      <Pressable
+        style={{
+          position: 'absolute',
+          right: 40,
+          top: 60,
+          backgroundColor: 'skyblue',
+          padding: 5,
+          borderRadius: 10,
+          borderColor: 'black',
+        }}
+        onPress={focusTap}
+      >
+        <Text>MI UBICACION</Text>
+      </Pressable>
+      <BottomSheet
+        enablePanDownToClose
+        index={-1}
+        ref={bottomSheetRef}
+        snapPoints={snapPoints}
+        backdropComponent={renderBackDrop}
+      >
         <View style={styles.modalContent}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.title}>Como llegar:</Text>
-            <Pressable onPress={handleCloseModal}>
-              <Text>Cerrar</Text>
-            </Pressable>
-          </View>
           {loadingTimeAndDistance ? (
-            <ActivityIndicator size={130} color="red" />
+            <View
+              style={{
+                top: 50,
+              }}
+            >
+              <ActivityIndicator size="large" color="red" />
+            </View>
           ) : (
             <View className="flex items-center justify-center">
               <Text className="font-medium text-2xl">Datos del recorrido</Text>
@@ -267,13 +339,13 @@ export default function MapScreen() {
             </View>
           )}
         </View>
-      </Modal>
-    </SafeAreaView>
+      </BottomSheet>
+    </GestureHandlerRootView>
   );
 }
 const styles = StyleSheet.create({
   modalContent: {
-    height: '25%',
+    height: '100%',
     width: '100%',
     backgroundColor: '#ccdcf0',
     borderTopRightRadius: 18,

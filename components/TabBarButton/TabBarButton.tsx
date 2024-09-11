@@ -32,6 +32,7 @@ export const TabBarButton = ({
   color,
 }: TabBarButtonProps) => {
   const scale = useSharedValue(0);
+
   useEffect(() => {
     scale.value = withSpring(
       typeof isFocused === 'boolean' ? (isFocused ? 1 : 0) : isFocused,
@@ -70,7 +71,7 @@ export const TabBarButton = ({
       <Animated.Text
         style={[{ color: `${color}`, fontSize: 12 }, animatedTextStyle]}
       >
-        {label ?? ''}
+        {label}
       </Animated.Text>
     </Pressable>
   );

@@ -10,6 +10,7 @@ export default function TabsLayout() {
         name="index"
         options={{
           headerTitle: 'Agregar nuevo Registro',
+          tabBarLabel: 'Home',
         }}
       />
       <Tabs.Screen
@@ -17,12 +18,14 @@ export default function TabsLayout() {
         options={{
           headerTitle: 'Mapa',
           headerShown: false,
+          tabBarLabel: 'Mapa',
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           headerTitle: 'Perfil',
+          tabBarLabel: 'Perfil',
         }}
       />
     </Tabs>

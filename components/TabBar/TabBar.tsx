@@ -1,6 +1,11 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useState } from 'react';
-import { View, StyleSheet, LayoutChangeEvent } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  LayoutChangeEvent,
+  useWindowDimensions,
+} from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -10,14 +15,15 @@ import Animated, {
 import { TabBarButton } from '@/components/TabBarButton';
 
 export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
-  const [dimensions, setDimensions] = useState({ height: 20, width: 100 });
+  const { width, height } = useWindowDimensions();
+  const [dimensions, setDimensions] = useState({ _height: 20, _width: 100 });
 
-  const buttonWidth = dimensions.width / state.routes.length;
+  const buttonWidth = dimensions._width / state.routes.length;
 
   const onTabbarLayout = (e: LayoutChangeEvent) => {
     setDimensions({
-      height: e.nativeEvent.layout.height,
-      width: e.nativeEvent.layout.width,
+      _height: e.nativeEvent.layout.height,
+      _width: e.nativeEvent.layout.width,
     });
   };
 
@@ -28,7 +34,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
     };
   });
   return (
-    <View onLayout={onTabbarLayout} style={styles.tabbar}>
+    <View onLayout={onTabbarLayout} style={styles(height, width).tabbar}>
       <Animated.View
         style={[
           animatedStyle,
@@ -37,7 +43,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             backgroundColor: '#723feb',
             borderRadius: 30,
             marginHorizontal: 12,
-            height: dimensions.height - 15,
+            height: dimensions._height - 15,
             width: buttonWidth - 25,
           },
         ]}
@@ -93,20 +99,21 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  tabbar: {
-    position: 'absolute',
-    bottom: 50,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    marginHorizontal: 80,
-    paddingVertical: 15,
-    borderRadius: 35,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowRadius: 10,
-    shadowOpacity: 0.1,
-  },
-});
+const styles = (height: number, width: number) =>
+  StyleSheet.create({
+    tabbar: {
+      position: 'absolute',
+      bottom: height / 50,
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      backgroundColor: '#fff',
+      marginHorizontal: width / 35,
+      paddingVertical: 15,
+      borderRadius: 35,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 10 },
+      shadowRadius: 10,
+      shadowOpacity: 0.1,
+    },
+  });
