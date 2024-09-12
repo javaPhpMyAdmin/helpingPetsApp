@@ -46,12 +46,6 @@ const INITIAL_REGION = {
   initialZoom: 20,
 };
 
-// const origin = {
-//   latitude: -34.6459093,
-//   longitude: -56.0576395,
-//   latitudeDelta: 0.05,
-//   longitudeDelta: 0.05,
-// };
 interface DestinationProps {
   latitude: number;
   longitude: number;
@@ -237,17 +231,20 @@ export default function MapScreen() {
                   style={{
                     width: 50,
                     height: 50,
-                    backgroundColor: 'transparent',
+                    // backgroundColor: 'transparent',
                     borderRadius: 50,
-                    padding: 0,
+                    padding: 3,
+                    borderColor: 'black',
+                    borderWidth: 2,
                   }}
-                  source={require('@/assets/images/paws.webp')}
+                  source={{ uri: marker.image }}
                 />
                 <Callout
                   style={{
                     width: 200,
+                    height: 70,
                     flexDirection: 'column',
-                    justifyContent: 'center',
+                    justifyContent: 'flex-start',
                     alignItems: 'center',
                     flex: 1,
                   }}
@@ -272,7 +269,15 @@ export default function MapScreen() {
                     />
                   )} */}
 
-                  <Text>BREVE DESCRIPCION</Text>
+                  <Text className="font-medium">{marker.title}</Text>
+                  <View
+                    style={{
+                      borderBottomColor: 'black',
+                      borderBottomWidth: StyleSheet.hairlineWidth,
+                      alignSelf: 'stretch',
+                    }}
+                  />
+                  <Text>{marker.description}</Text>
                 </Callout>
               </>
             </Marker>

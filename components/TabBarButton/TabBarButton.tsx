@@ -6,9 +6,9 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
+import { AnimatedText } from 'react-native-reanimated/lib/typescript/reanimated2/component/Text';
 
 import { icon } from '@/constants/Icons';
-import { AnimatedText } from 'react-native-reanimated/lib/typescript/reanimated2/component/Text';
 
 interface TabBarButtonProps {
   label: any;

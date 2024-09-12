@@ -107,7 +107,7 @@ const styles = (height: number, width: number) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      backgroundColor: '#fff',
+      backgroundColor: '#ffa7a7',
       marginHorizontal: width / 35,
       paddingVertical: 15,
       borderRadius: 35,

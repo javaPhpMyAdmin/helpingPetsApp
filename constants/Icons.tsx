@@ -1,4 +1,8 @@
-import { Feather } from '@expo/vector-icons';
+import {
+  Feather,
+  FontAwesome5,
+  MaterialCommunityIcons,
+} from '@expo/vector-icons';
 
 export const icon = (name: string, color: string) => {
   if (name === 'index') return <Feather name="home" size={24} color={color} />;
@@ -6,4 +10,12 @@ export const icon = (name: string, color: string) => {
     return <Feather name="compass" size={24} color={color} />;
   if (name === 'profile')
     return <Feather name="user" size={24} color={color} />;
+  if (name === 'newMarker')
+    return (
+      <MaterialCommunityIcons
+        name="map-marker-radius-outline"
+        size={30}
+        color={color}
+      />
+    );
 };

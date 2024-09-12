@@ -9,7 +9,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          headerTitle: 'Agregar nuevo Registro',
+          headerShown: false,
           tabBarLabel: 'Home',
         }}
       />
@@ -19,6 +19,14 @@ export default function TabsLayout() {
           headerTitle: 'Mapa',
           headerShown: false,
           tabBarLabel: 'Mapa',
+        }}
+      />
+      <Tabs.Screen
+        name="newMarker"
+        options={{
+          headerTitle: 'Nuevo Registro',
+          // headerShown: false,
+          tabBarLabel: 'Nuevo',
         }}
       />
       <Tabs.Screen
