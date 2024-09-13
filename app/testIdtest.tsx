@@ -6,7 +6,7 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 import { HeaderDetail } from '@/components/HeaderDetail';
 import { ButtonDetail } from '@/components/ButtonDetail';
 
-const MarkerDetail = () => {
+const MarkerDetailTest = () => {
   const { width } = useWindowDimensions();
   const { petId, image, title, userEmail } = useLocalSearchParams();
 
@@ -17,7 +17,7 @@ const MarkerDetail = () => {
         <HeaderDetail />
         <Animated.Image
           resizeMode="cover"
-          // sharedTransitionTag={title}
+          sharedTransitionTag={image as string}
           style={{ width, height: width }}
           source={{
             uri: `${image}`,
@@ -32,7 +32,7 @@ const MarkerDetail = () => {
         </Animated.View>
       </View>
       <Animated.View entering={FadeInDown.delay(800)}>
-        <Text style={styles.textTitle}>Descripción</Text>
+        <Text style={styles.textTitle}>DescripciónNNNNN {petId}</Text>
         <Text style={styles.textDescription}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
           laudantium, esse adipisci veniam veritatis sequi nostrum odit labore
@@ -45,7 +45,7 @@ const MarkerDetail = () => {
   );
 };
 
-export default MarkerDetail;
+export default MarkerDetailTest;
 
 const styles = StyleSheet.create({
   container: {

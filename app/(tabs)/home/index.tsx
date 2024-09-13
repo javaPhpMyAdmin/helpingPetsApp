@@ -14,9 +14,9 @@ import {
   Pressable,
   SafeAreaView,
 } from 'react-native';
+import Animated from 'react-native-reanimated';
 
 import { MockedPets } from '@/MockedPets';
-import Animated from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -47,16 +47,26 @@ export default function AddNew() {
             data={MockedPets}
             renderItem={({ item, index }) => (
               <TouchableWithoutFeedback
-                onPress={() =>
-                  router.push({
-                    pathname: `/home/[petId]`,
-                    params: {
-                      petId: item.id,
-                      image: item.image,
-                      title: item.title,
-                      userEmail: item.userEmail,
-                    },
-                  })
+                onPress={
+                  () =>
+                    router.push({
+                      pathname: `/testIdtest`,
+                      params: {
+                        petId: item.id,
+                        image: item.image,
+                        title: item.title,
+                        userEmail: item.userEmail,
+                      },
+                    })
+                  // router.push({
+                  //   pathname: `/home/[petId]`,
+                  //   params: {
+                  //     petId: item.id,
+                  //     image: item.image,
+                  //     title: item.title,
+                  //     userEmail: item.userEmail,
+                  //   },
+                  // })
                 }
               >
                 <View style={styles.itemContainer}>

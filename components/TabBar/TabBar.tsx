@@ -1,5 +1,5 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -33,6 +33,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
       transform: [{ translateX: tabPositionX.value }],
     };
   });
+
   return (
     <View onLayout={onTabbarLayout} style={styles(height, width).tabbar}>
       <Animated.View

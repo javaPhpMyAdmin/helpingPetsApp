@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import Animated, { FadeInDown } from 'react-native-reanimated';
+import { router } from 'expo-router';
 
 export const ButtonDetail = () => {
   const { width } = useWindowDimensions();
@@ -15,7 +16,7 @@ export const ButtonDetail = () => {
     <AnimatedPressable
       entering={FadeInDown.delay(1000)}
       style={[styles.container, { width: width * 0.9 }]}
-      onPress={() => {}}
+      onPress={() => router.push('/(tabs)/mapView')}
     >
       <Text style={styles.text}>Ver en el mapa</Text>
     </AnimatedPressable>
