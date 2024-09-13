@@ -1,4 +1,5 @@
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import {
@@ -15,6 +16,7 @@ import {
 } from 'react-native';
 
 import { MockedPets } from '@/MockedPets';
+import Animated from 'react-native-reanimated';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -43,11 +45,23 @@ export default function AddNew() {
             style={{ width: '98%' }}
             showsVerticalScrollIndicator={false}
             data={MockedPets}
-            // decelerationRate="fast"
             renderItem={({ item, index }) => (
-              <TouchableWithoutFeedback onPress={() => null}>
+              <TouchableWithoutFeedback
+                onPress={() =>
+                  router.push({
+                    pathname: `/home/[petId]`,
+                    params: {
+                      petId: item.id,
+                      image: item.image,
+                      title: item.title,
+                      userEmail: item.userEmail,
+                    },
+                  })
+                }
+              >
                 <View style={styles.itemContainer}>
-                  <Image
+                  <Animated.Image
+                    sharedTransitionTag={item.image}
                     style={{
                       width: width * 0.942,
                       height: width * 0.466,
