@@ -104,17 +104,17 @@ const styles = (height: number, width: number) =>
   StyleSheet.create({
     tabbar: {
       position: 'absolute',
-      bottom: height * 0.008,
+      bottom: width * 0.01,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
       backgroundColor: 'white', //'#ffa7a7',
       marginHorizontal: width * 0.005,
-      paddingVertical: 15,
-      borderRadius: 35,
+      paddingVertical: 9,
+      borderRadius: 10,
       shadowColor: '#000',
-      shadowOffset: { width: 0, height: 10 },
-      shadowRadius: 10,
-      shadowOpacity: 0.1,
+      // shadowOffset: { width: 0, height: 10 },
+      // shadowRadius: 10,
+      // shadowOpacity: 0.1,
     },
   });

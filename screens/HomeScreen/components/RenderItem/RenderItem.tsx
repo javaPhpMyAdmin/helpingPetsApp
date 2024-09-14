@@ -1,11 +1,20 @@
+/* eslint-disable import/order */
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Foundation from '@expo/vector-icons/Foundation';
 import { router } from 'expo-router';
 import React from 'react';
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  useWindowDimensions,
+} from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { Marker } from '@/types/types';
+import { colorHEX } from '@/utils/generateRandomColor';
 
 enum Gender {
   Male = 'male',
@@ -17,16 +26,12 @@ interface RenderItemProps {
 }
 
 export const RenderItem = ({ item, index }: RenderItemProps) => {
-  // const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
+  const { width } = useWindowDimensions();
+  const randomColor = colorHEX();
 
   return (
-    // <Animated.View
-    //   style={styles.container}
-    //   entering={FadeInDown.delay(200 * index)}
-    // >
     <Pressable
-      style={styles.container}
-      // entering={FadeInDown.delay(200 * index)}
+      style={styles(width).container}
       onPress={() =>
         router.push<Marker>({
           pathname: `/testIdtest`,
@@ -39,24 +44,26 @@ export const RenderItem = ({ item, index }: RenderItemProps) => {
         })
       }
     >
-      <Animated.Image
-        sharedTransitionTag={item.id}
-        source={{ uri: item.image }}
-        style={styles.image}
-      />
+      <View style={styles(width, randomColor).squareImage}>
+        <Animated.Image
+          sharedTransitionTag={item.id}
+          source={{ uri: item.image }}
+          style={styles(width).image}
+        />
+      </View>
 
-      <View style={styles.textContainer}>
-        <Text style={styles.textTitle}>{item.title}</Text>
-        <Text style={styles.textUserEmail}>{item.userEmail}</Text>
-        <Text style={styles.textCreatedAt}>{item.createdAt}</Text>
-        <View style={styles.infoContainer}>
-          <Text style={styles.moreInformation}>Ver más información</Text>
-          <View style={styles.rightArrow}>
+      <View style={styles(width).textContainer}>
+        <Text style={styles(width).textTitle}>{item.title}</Text>
+        <Text style={styles(width).textUserEmail}>{item.userEmail}</Text>
+        <Text style={styles(width).textCreatedAt}>{item.createdAt}</Text>
+        <View style={styles(width).infoContainer}>
+          <Text style={styles(width).moreInformation}>Ver más información</Text>
+          <View style={styles(width).rightArrow}>
             <AntDesign name="arrowright" size={24} color="black" />
           </View>
         </View>
       </View>
-      <View style={styles.gender}>
+      <View style={styles(width).gender}>
         {item.gender && item.gender === Gender.Male ? (
           <Foundation name="male-symbol" size={24} color="green" />
         ) : (
@@ -64,89 +71,101 @@ export const RenderItem = ({ item, index }: RenderItemProps) => {
         )}
       </View>
     </Pressable>
-    // </Animated.View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    marginTop: 30,
-    marginHorizontal: 8,
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    position: 'relative',
-    height: 170,
-    width: 380,
-    backgroundColor: 'white',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: -2,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 10,
+const styles = (width: number, randomColor?: string) =>
+  StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      marginTop: 30,
+      marginHorizontal: 10,
+      borderRadius: 20,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      position: 'relative',
+      height: width! * 0.43,
+      width: width! * 0.95,
+      backgroundColor: 'white',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 1,
+        height: 1,
+      },
+      shadowOpacity: 2,
+      shadowRadius: 4,
 
-    elevation: 5,
-    bottom: 4,
-  },
-  image: {
-    width: 160,
-    height: 185,
-    borderRadius: 20,
-    position: 'absolute',
-    top: -15,
-    objectFit: 'cover',
-  },
-  textContainer: {
-    gap: 4,
-    flexShrink: 1,
-    justifyContent: 'flex-end',
-    // backgroundColor: 'yellow',
-    width: 210,
-    position: 'absolute',
-    right: 3,
-  },
-  textTitle: {
-    color: '#323232',
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  textUserEmail: {
-    color: 'gray',
-    fontSize: 16,
-    fontWeight: '500',
-    opacity: 0.9,
-  },
-  gender: {
-    position: 'absolute',
-    right: 25,
-    top: 5,
-  },
-  textCreatedAt: {
-    fontWeight: 'bold',
-    color: 'gray',
-    opacity: 0.9,
-  },
-  moreInformation: {
-    textShadowColor: 'blue',
-    fontSize: 18,
-    top: 6,
-    fontStyle: 'italic',
-    fontWeight: '800',
-    color: 'skyblue',
-  },
-  infoContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-  },
-  rightArrow: {
-    alignItems: 'center',
-    display: 'flex',
-    justifyContent: 'center',
-    top: 8,
-  },
-});
+      elevation: 8,
+      bottom: 4,
+    },
+    image: {
+      width: width * 0.4,
+      height: width * 0.44,
+      borderRadius: 20,
+      objectFit: 'cover',
+    },
+    squareImage: {
+      width: width * 0.44,
+      height: width * 0.472,
+      borderRadius: 20,
+      position: 'absolute',
+      top: -(width * 0.042),
+      backgroundColor: randomColor ?? 'orange',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    textContainer: {
+      gap: 4,
+      flexShrink: 1,
+      justifyContent: 'flex-end',
+      // backgroundColor: 'yellow',
+      width: width * 0.48,
+      height: width * 0.31,
+      position: 'absolute',
+      right: 2,
+      top: width * 0.08,
+    },
+    textTitle: {
+      color: '#323232',
+      fontSize: 19,
+      fontWeight: 'bold',
+    },
+    textUserEmail: {
+      color: 'gray',
+      fontSize: 16,
+      fontWeight: '600',
+      opacity: 0.92,
+    },
+    gender: {
+      position: 'absolute',
+      right: 25,
+      top: 3,
+    },
+    textCreatedAt: {
+      fontWeight: 'bold',
+      color: 'gray',
+      opacity: 0.9,
+    },
+    moreInformation: {
+      textShadowColor: 'blue',
+      fontSize: 16.6,
+      top: 4,
+      fontStyle: 'italic',
+      fontWeight: '800',
+      color: 'skyblue',
+    },
+    infoContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    rightArrow: {
+      alignItems: 'center',
+      display: 'flex',
+      justifyContent: 'center',
+      top: width * 0.015,
+      right: 3,
+    },
+  });

@@ -10,7 +10,7 @@ export default function TabsLayout() {
         name="home"
         options={{
           headerShown: false,
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Inicio',
         }}
       />
       <Tabs.Screen
@@ -30,10 +30,10 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="profile"
+        name="adopt"
         options={{
-          headerTitle: 'Perfil',
-          tabBarLabel: 'Perfil',
+          headerTitle: 'Adoptar',
+          tabBarLabel: 'Adoptar',
         }}
       />
     </Tabs>

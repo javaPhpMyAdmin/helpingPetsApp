@@ -1,10 +1,10 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 
-export default function Profile() {
+export default function Adopt() {
   return (
     <View className="flex flex-1 justify-center items-center">
-      <Text>Profile</Text>
+      <Text>Adopt</Text>
     </View>
   );
 }
