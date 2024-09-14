@@ -1,3 +1,5 @@
+import { router } from 'expo-router';
+import React from 'react';
 import {
   View,
   Text,
@@ -5,9 +7,7 @@ import {
   Pressable,
   StyleSheet,
 } from 'react-native';
-import React from 'react';
 import Animated, { FadeInDown } from 'react-native-reanimated';
-import { router } from 'expo-router';
 
 export const ButtonDetail = () => {
   const { width } = useWindowDimensions();

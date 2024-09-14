@@ -9,6 +9,7 @@ export const MockedPets = [
     long: '',
     userEmail: 'chelobat@gmail.com',
     createdAt: '10-10-2024',
+    gender: 'female',
   },
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53asaasdbb28ba',
@@ -20,6 +21,7 @@ export const MockedPets = [
     long: '',
     userEmail: 'chelobat1@gmail.com',
     createdAt: '09-10-2024',
+    gender: 'male',
   },
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3addas33d53ba',
@@ -31,6 +33,7 @@ export const MockedPets = [
     long: '',
     userEmail: 'chelobat2@gmail.com',
     createdAt: '08-10-2024',
+    gender: 'male',
   },
   {
     id: 'bd7ea-c1b1-46c2-aed5-3ad53ba333drerasaa3',
@@ -42,6 +45,7 @@ export const MockedPets = [
     long: '',
     userEmail: 'chelobat3@gmail.com',
     createdAt: '07-10-2024',
+    gender: 'male',
   },
   {
     id: 'bd7ea-c1b12-aed5-p44yuy',
@@ -53,6 +57,7 @@ export const MockedPets = [
     long: '',
     userEmail: 'chelobat4@gmail.com',
     createdAt: '07-10-2024',
+    gender: 'male',
   },
   {
     id: 'bd7ea-c1b12-aed5aaaaaaaaaw-3ad5iip3saa3',
@@ -64,6 +69,7 @@ export const MockedPets = [
     long: '',
     userEmail: 'chelobat5@gmail.com',
     createdAt: '06-10-2024',
+    gender: 'male',
   },
   {
     id: 'bd7ea-c1b12-aed5aaaaaaw-3ad53sauuarrr3',
@@ -75,6 +81,7 @@ export const MockedPets = [
     long: '',
     userEmail: 'chelobat6@gmail.com',
     createdAt: '06-10-2024',
+    gender: 'male',
   },
   {
     id: 'bd7ea-c1b12-aed5aaaaaaw-3atttttd53saarrr3',
@@ -86,6 +93,7 @@ export const MockedPets = [
     long: '',
     userEmail: 'chelobat7@gmail.com',
     createdAt: '04-10-2024',
+    gender: 'male',
   },
   {
     id: 'bd7ea-c1b12-aed5aaaaaaw-3aqqqqqd53saarrr3',
@@ -97,6 +105,7 @@ export const MockedPets = [
     long: '',
     userEmail: 'chelobat8@gmail.com',
     createdAt: '03-10-2024',
+    gender: 'female',
   },
   {
     id: 'bd7eaawa-c1b12-ad5aaaa-3aqd5asdd3saarrr3',
@@ -108,6 +117,7 @@ export const MockedPets = [
     long: '',
     userEmail: 'chelobat9@gmail.com',
     createdAt: '03-10-2024',
+    gender: 'female',
   },
   {
     id: 'bd7eaawa-c1b12-ad5aaaa-3aqd53saarrraaaaa3',
@@ -119,6 +129,7 @@ export const MockedPets = [
     long: '',
     userEmail: 'chelobat10@gmail.com',
     createdAt: '02-10-2024',
+    gender: 'male',
   },
   {
     id: 'bd7eaawa-c1b12-ad5aaaa-3aqd53saarro44ooor3',
@@ -130,5 +141,6 @@ export const MockedPets = [
     long: '',
     userEmail: 'chelobat11@gmail.com',
     createdAt: '02-10-2024',
+    gender: 'male',
   },
 ];

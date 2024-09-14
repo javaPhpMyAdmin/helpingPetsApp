@@ -5,6 +5,7 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import { HeaderDetail } from '@/components/HeaderDetail';
 import { ButtonDetail } from '@/components/ButtonDetail';
+import { RenderItem } from '../screens/HomeScreen/components';
 
 const MarkerDetailTest = () => {
   const { width } = useWindowDimensions();
@@ -17,7 +18,7 @@ const MarkerDetailTest = () => {
         <HeaderDetail />
         <Animated.Image
           resizeMode="cover"
-          sharedTransitionTag={image as string}
+          sharedTransitionTag={String(petId)}
           style={{ width, height: width }}
           source={{
             uri: `${image}`,
