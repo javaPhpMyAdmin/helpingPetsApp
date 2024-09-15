@@ -34,7 +34,7 @@ const MarkerDetailTest = () => {
         </Animated.View>
       </View>
       <Animated.View entering={FadeInDown.delay(800)}>
-        <Text style={styles.textTitle}>DescripciónNNNNN {petId}</Text>
+        <Text style={styles.textTitle}>Descripción {petId}</Text>
         <Text style={styles.textDescription}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
           laudantium, esse adipisci veniam veritatis sequi nostrum odit labore

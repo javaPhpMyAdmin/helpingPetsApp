@@ -14,7 +14,7 @@ import {
 import Animated from 'react-native-reanimated';
 
 import { Marker } from '@/types/types';
-import { colorHEX } from '@/utils/generateRandomColor';
+import { generateColor } from '@/utils/generateRandomColor';
 
 enum Gender {
   Male = 'male',
@@ -25,9 +25,9 @@ interface RenderItemProps {
   index: number;
 }
 
-export const RenderItem = ({ item, index }: RenderItemProps) => {
+const RenderItem = ({ item, index }: RenderItemProps) => {
   const { width } = useWindowDimensions();
-  const randomColor = colorHEX();
+  const randomColor = generateColor();
 
   return (
     <Pressable
@@ -73,7 +73,7 @@ export const RenderItem = ({ item, index }: RenderItemProps) => {
     </Pressable>
   );
 };
-
+export default RenderItem;
 const styles = (width: number, randomColor?: string) =>
   StyleSheet.create({
     container: {

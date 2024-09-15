@@ -15,6 +15,7 @@ export default function RootLayout() {
       />
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="testIdtest" options={{ headerShown: false }} />
+      <Stack.Screen name="mapRoute" options={{ headerShown: false }} />
     </Stack>
   );
 }

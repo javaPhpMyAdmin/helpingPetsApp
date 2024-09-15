@@ -1,31 +1,31 @@
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+/* eslint-disable import/order */
 import React, { useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   FlatList,
-  Pressable,
   useWindowDimensions,
   Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { RenderItem } from './components';
-
 import { categories } from '@/MockedCategories';
 import { MockedPets } from '@/MockedPets';
+import { CategoryItem, EditUserButton, RenderItem } from './components';
 
 export const HomeScreen = () => {
   const { width, height } = useWindowDimensions();
   const [selectedCategory, setSelectedCategory] = useState('Todos');
+
+  const ndate = new Date();
+
   const handleOnPress = (category: string) => {
     setSelectedCategory(category);
   };
-  const ndate = new Date();
+
   return (
     <SafeAreaView style={styles(width, height).container}>
-      {/* <Text style={styles().title}>Ultimos registros</Text> */}
       <View style={styles(width, height).userContainer}>
         <Image
           style={styles(height, width).userInfoAvatar}
@@ -39,71 +39,33 @@ export const HomeScreen = () => {
               {ndate.toLocaleString()}
             </Text>
           </View>
-          <View style={{ left: width * 0.2 }}>
-            <Pressable style={styles(height, width).editUserButton}>
-              <MaterialCommunityIcons
-                name="circle-edit-outline"
-                size={34}
-                color="black"
-              />
-            </Pressable>
-          </View>
+          <EditUserButton />
         </View>
       </View>
       <View style={styles(height, width).horizontalFlatlist}>
         <FlatList
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            gap: 10,
-            paddingHorizontal: 12,
-            position: 'static',
-          }}
+          contentContainerStyle={styles(height, width).contentContainer}
           keyExtractor={(item) => item.id}
           data={categories}
           horizontal
-          style={{ paddingVertical: 5, position: 'static' }}
+          style={styles(height, width).categoryButton}
           renderItem={({ item }) => (
-            <Pressable
-              style={{
-                width: width * 0.3,
-                height: 30,
-                backgroundColor: 'transparent',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderColor: 'lightgray',
-                borderWidth: 1,
-                borderRadius: 10,
-                opacity: 0.9,
-              }}
-              onPress={() => handleOnPress(item.category)}
-            >
-              {({ pressed }) => (
-                <Text
-                  style={[
-                    styles(width, height).categoryItem,
-                    selectedCategory === item.category
-                      ? styles(width, height).selectedCategory
-                      : null,
-                  ]}
-                >
-                  {item.category}
-                </Text>
-              )}
-            </Pressable>
+            <CategoryItem
+              handleOnPress={handleOnPress}
+              selectedCategory={selectedCategory}
+              item={item}
+            />
           )}
         />
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
         data={MockedPets}
+        keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => {
           return <RenderItem item={item} index={index} />;
         }}
-        ListHeaderComponentStyle={{ marginVertical: 10 }}
-        // ListHeaderComponent={() => (
-
-        // )}
       />
     </SafeAreaView>
   );
@@ -117,26 +79,12 @@ const styles = (width: number, height?: number) =>
       height: height! * 0.949,
       top: 2,
     },
-    title: {
-      fontSize: 34,
-      marginHorizontal: 20,
-      color: '#323232',
-      fontWeight: 'bold',
-    },
-    categoryItem: {
-      fontStyle: 'normal',
-      fontWeight: 'bold',
-      fontSize: 20,
-      marginHorizontal: 12,
-      color: 'black',
-      opacity: 0.3,
-    },
-    selectedCategory: {
-      color: 'orange',
-      fontSize: 22,
-      fontWeight: '900',
-      opacity: 1,
-    },
+    // title: {
+    //   fontSize: 34,
+    //   marginHorizontal: 20,
+    //   color: '#5a61f1',
+    //   fontWeight: 'bold',
+    // },
     userContainer: {
       display: 'flex',
       flexDirection: 'row',
@@ -177,21 +125,16 @@ const styles = (width: number, height?: number) =>
     },
     userName: { fontSize: 13, fontWeight: '400' },
     location: { fontSize: 13, fontWeight: '400', top: 2 },
-    editUserButton: {
-      width: 40,
-      height: 40,
-      borderColor: 'lightgray',
-      borderWidth: 0.8,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 6,
-      right: 1,
-    },
+    categoryButton: { paddingVertical: 5, position: 'static' },
     horizontalFlatlist: {
       top: width * 0.015,
       height: width * 0.065,
       display: 'flex',
       justifyContent: 'center',
+    },
+    contentContainer: {
+      gap: 10,
+      paddingHorizontal: 12,
+      position: 'static',
     },
   });

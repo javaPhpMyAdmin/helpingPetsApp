@@ -1,12 +1,6 @@
 import { router } from 'expo-router';
 import React from 'react';
-import {
-  View,
-  Text,
-  useWindowDimensions,
-  Pressable,
-  StyleSheet,
-} from 'react-native';
+import { Text, useWindowDimensions, Pressable, StyleSheet } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
 export const ButtonDetail = () => {
@@ -16,7 +10,7 @@ export const ButtonDetail = () => {
     <AnimatedPressable
       entering={FadeInDown.delay(1000)}
       style={[styles.container, { width: width * 0.9 }]}
-      onPress={() => router.push('/(tabs)/mapView')}
+      onPress={() => router.push('/mapRoute')}
     >
       <Text style={styles.text}>Ver en el mapa</Text>
     </AnimatedPressable>

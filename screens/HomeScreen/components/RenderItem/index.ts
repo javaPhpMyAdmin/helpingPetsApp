@@ -1,1 +1,1 @@
-export * from './RenderItem';
+export { default as RenderItem } from './RenderItem';

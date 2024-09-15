@@ -1,14 +1,9 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 
-import { HomeScreen } from '@/screens/HomeScreen';
+import { HomeScreen } from '@/screens';
 
 const IndexHome = () => {
-  return (
-    <View>
-      <HomeScreen />
-    </View>
-  );
+  return <HomeScreen />;
 };
 
 export default IndexHome;

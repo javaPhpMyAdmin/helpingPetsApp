@@ -23,3 +23,8 @@ export interface Marker {
   createdAt: string;
   gender?: string;
 }
+
+export interface Category {
+  id: string;
+  category: string;
+}
