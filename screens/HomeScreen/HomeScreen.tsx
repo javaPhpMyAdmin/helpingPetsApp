@@ -1,5 +1,5 @@
 /* eslint-disable import/order */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,22 +7,44 @@ import {
   FlatList,
   useWindowDimensions,
   Image,
+  Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { categories } from '@/MockedCategories';
 import { MockedPets } from '@/MockedPets';
 import { CategoryItem, EditUserButton, RenderItem } from './components';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useFonts } from 'expo-font';
 
+import * as Location from 'expo-location';
 export const HomeScreen = () => {
   const { width, height } = useWindowDimensions();
   const [selectedCategory, setSelectedCategory] = useState('Todos');
-
-  const ndate = new Date();
-
+  const [loaded] = useFonts({
+    PlaypenSans: require('@/assets/fonts/PlaypenSans-SemiBold.ttf'),
+  });
+  const [currentPlaceName, setCurrentPlaceName] = useState('');
   const handleOnPress = (category: string) => {
     setSelectedCategory(category);
   };
+
+  useEffect(() => {
+    (async () => {
+      const location = await Location.getCurrentPositionAsync({});
+      const currentPlace = await Location.reverseGeocodeAsync({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+      const currentPlaceName = currentPlace[0].city?.concat(
+        ', ',
+        Platform.OS === 'ios'
+          ? currentPlace[0].region!
+          : currentPlace[0].region?.split(' ')[2]!
+      );
+      setCurrentPlaceName(currentPlaceName ?? '');
+    })();
+  }, []);
 
   return (
     <SafeAreaView style={styles(width, height).container}>
@@ -32,12 +54,23 @@ export const HomeScreen = () => {
           source={require('@/assets/images/random_user.webp')}
         />
         <View style={styles(height, width).userInfoContainer}>
-          <View style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Text style={styles(height, width).greetUser}>Hola Usuario!</Text>
-            <Text style={styles(height, width).userName}>@usuarioLogueado</Text>
-            <Text style={styles(height, width).location}>
-              {ndate.toLocaleString()}
+          <View style={styles(height, width).userInfo}>
+            <Text style={styles(height, width, loaded).greetUser}>
+              Hola Usuario!
             </Text>
+            <Text style={styles(height, width, loaded).userName}>
+              @usuarioLogueado
+            </Text>
+            <View style={styles(height, width).locationContainer}>
+              <MaterialCommunityIcons
+                name="map-marker-outline"
+                size={18}
+                color="red"
+              />
+              <Text style={styles(height, width, loaded).location}>
+                {currentPlaceName}
+              </Text>
+            </View>
           </View>
           <EditUserButton />
         </View>
@@ -71,30 +104,22 @@ export const HomeScreen = () => {
   );
 };
 
-const styles = (width: number, height?: number) =>
+const styles = (width: number, height?: number, loaded?: boolean) =>
   StyleSheet.create({
     container: {
-      // flex: 1,
       backgroundColor: '#fafafb',
       height: height! * 0.949,
       top: 2,
     },
-    // title: {
-    //   fontSize: 34,
-    //   marginHorizontal: 20,
-    //   color: '#5a61f1',
-    //   fontWeight: 'bold',
-    // },
     userContainer: {
-      display: 'flex',
       flexDirection: 'row',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      marginHorizontal: 16,
+      marginHorizontal: width * 0.0255,
       height: width * 0.22,
       backgroundColor: 'white',
       borderRadius: 10,
-      width: width * 0.93,
+      width: width * 0.95,
       shadowColor: '#000',
       shadowOffset: {
         width: 1,
@@ -107,24 +132,27 @@ const styles = (width: number, height?: number) =>
     },
     userInfoAvatar: {
       marginHorizontal: 6,
+      right: 2,
       width: width * 0.09,
       height: width * 0.092,
       borderRadius: 10,
     },
     userInfoContainer: {
-      marginHorizontal: 10,
+      marginHorizontal: 4,
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'space-evenly',
+      justifyContent: 'space-between',
       alignItems: 'center',
     },
     greetUser: {
-      fontSize: 25,
-      fontWeight: 'bold',
-      fontStyle: 'italic',
+      fontSize: 23.5,
+      fontFamily: loaded ? 'PlaypenSans' : '',
     },
-    userName: { fontSize: 13, fontWeight: '400' },
-    location: { fontSize: 13, fontWeight: '400', top: 2 },
+    userName: {
+      fontSize: 15,
+      fontFamily: loaded ? 'PlaypenSans' : '',
+      bottom: width * 0.0044,
+    },
     categoryButton: { paddingVertical: 5, position: 'static' },
     horizontalFlatlist: {
       top: width * 0.015,
@@ -136,5 +164,21 @@ const styles = (width: number, height?: number) =>
       gap: 10,
       paddingHorizontal: 12,
       position: 'static',
+    },
+    locationContainer: {
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      alignItems: 'flex-start',
+      padding: 2,
+      bottom: 2,
+      right: width * 0.005,
+      // backgroundColor: 'pink',
+    },
+    location: { left: 4, bottom: 2, fontFamily: loaded ? 'PlaypenSans' : '' },
+    userInfo: {
+      flexDirection: 'column',
+      gap: 1,
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
     },
   });

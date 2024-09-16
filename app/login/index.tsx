@@ -1,4 +1,4 @@
-import { Link, router, useNavigation } from 'expo-router';
+import { Link, router } from 'expo-router';
 import { type ComponentProps } from 'react';
 import {
   View,
@@ -8,11 +8,7 @@ import {
   TextInput,
   Pressable,
 } from 'react-native';
-import Animated, {
-  FadeInDown,
-  FadeInUp,
-  FadeOut,
-} from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type href = ComponentProps<typeof Link>['href'];

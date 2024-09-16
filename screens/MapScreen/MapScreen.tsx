@@ -34,6 +34,7 @@ import Fontisto from '@expo/vector-icons/Fontisto';
 import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { router } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const gmapk = process.env.EXPO_PUBLIC_GOOGLE_MAPS_API_KEY;
 
@@ -78,6 +79,7 @@ export default function MapScreen() {
   const [destinationCoords, setDestinationCoords] =
     useState<DestinationProps>(INITIAL_DESTINATION);
 
+  const inset = useSafeAreaInsets();
   const [coords] = useDirections(origin!, destinationCoords);
   const [distance, setDistance] = useState('');
   const [timeDriving, setTimeDriving] = useState('');
@@ -106,13 +108,18 @@ export default function MapScreen() {
         return;
       }
       const location = await Location.getCurrentPositionAsync({});
-      console.log('CURRENT LOCATION', { location });
       const origenAux: Origin = {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
         latitudeDelta: 0.05,
         longitudeDelta: 0.05,
       };
+      const currentPlace = await Location.reverseGeocodeAsync({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+      console.log('CITY', currentPlace[0].city);
+      console.log('DEPARTMENT', currentPlace[0].region);
       setOrigin(origenAux);
     })();
   }, []);
@@ -131,12 +138,14 @@ export default function MapScreen() {
           destinationCoords
         );
         const timeTravelWalking = await travelTimeWalkin.json();
-        setDistance(timeTravel.rows[0].elements[0].distance.text.split(' ')[0]);
+        setDistance(
+          timeTravel.rows[0].elements[0].distance?.text.split(' ')[0]
+        );
         setTimeDriving(
-          timeTravel.rows[0].elements[0].duration.text.split(' ')[0]
+          timeTravel.rows[0].elements[0].duration?.text.split(' ')[0]
         );
         setTimeWalking(
-          timeTravelWalking.rows[0].elements[0].duration.text.split(' ')[0]
+          timeTravelWalking.rows[0].elements[0].duration?.text.split(' ')[0]
         );
       } catch (error) {
         console.log(error);
@@ -145,7 +154,6 @@ export default function MapScreen() {
       }
     };
     getTimeTravel();
-    console.log('RENDER MAPVIEW');
   }, [destinationCoords, origin]);
 
   const handleSelectedDestination = (
@@ -298,7 +306,20 @@ export default function MapScreen() {
       >
         <Text>MI UBICACION</Text>
       </Pressable>
-      <Pressable
+      <View
+        style={[
+          styles.container,
+          { top: Platform.OS === 'ios' ? inset.top : 50 },
+        ]}
+      >
+        <Pressable onPress={() => router.back()}>
+          <Image
+            style={styles.chevron}
+            source={require('@/assets/images/chevron.png')}
+          />
+        </Pressable>
+      </View>
+      {/* <Pressable
         style={{
           position: 'absolute',
           left: 40,
@@ -311,7 +332,7 @@ export default function MapScreen() {
         onPress={() => router.back()}
       >
         <Text style={{ fontSize: 17 }}>Regresar</Text>
-      </Pressable>
+      </Pressable> */}
       <BottomSheet
         enablePanDownToClose
         index={-1}
@@ -433,5 +454,17 @@ const styles = StyleSheet.create({
   title: {
     color: '#151414',
     fontSize: 16,
+  },
+  container: {
+    position: 'absolute',
+    zIndex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    left: 20,
+    right: 20,
+  },
+  chevron: {
+    height: 44,
+    width: 44,
   },
 });
