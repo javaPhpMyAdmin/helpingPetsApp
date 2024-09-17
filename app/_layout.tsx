@@ -17,7 +17,7 @@ export default function RootLayout() {
       <Stack.Screen name="testIdtest" options={{ headerShown: false }} />
       <Stack.Screen name="mapPets" options={{ headerShown: false }} />
       <Stack.Screen name="reportPet" options={{ headerShown: false }} />
-      <Stack.Screen name="fileTest" options={{ headerShown: false }} />
+      <Stack.Screen name="ReportPet" options={{ headerShown: false }} />
     </Stack>
   );
 }

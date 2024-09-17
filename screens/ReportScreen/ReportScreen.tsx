@@ -3,20 +3,29 @@ import {
   View,
   Text,
   useWindowDimensions,
-  Pressable,
   Image,
   StyleSheet,
 } from 'react-native';
-import React from 'react';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import React, { useEffect, useState } from 'react';
 import { useFonts } from 'expo-font';
-import Feather from '@expo/vector-icons/Feather';
+import Animated, { FadeInDown } from 'react-native-reanimated';
+import { CustomButton } from './components';
+import {
+  getRandomCardInfo,
+  PetsForCardInfo,
+} from '../../utils/generateRandomCardInfo';
 
 export const ReportScreen = () => {
   const { width, height } = useWindowDimensions();
   const [loaded] = useFonts({
     PlaypenSans: require('@/assets/fonts/PlaypenSans-SemiBold.ttf'),
   });
+  const [currentPet, setCurrentPet] = useState<PetsForCardInfo>();
+
+  useEffect(() => {
+    const currentPetInfoCard = getRandomCardInfo();
+    setCurrentPet(currentPetInfoCard);
+  }, []);
 
   return (
     <View style={styles().container}>
@@ -30,7 +39,11 @@ export const ReportScreen = () => {
           </View>
         </View>
         <View>
-          <Image
+          <Animated.Image
+            entering={FadeInDown.delay(200)
+              .duration(2000)
+              .damping(4)
+              .springify()}
             style={styles(loaded, width, height).imageContainer}
             source={require('@/assets/images/paws.webp')}
           />
@@ -39,11 +52,7 @@ export const ReportScreen = () => {
       <View style={styles(loaded, width, height).cardContainer}>
         <View style={styles(loaded, width, height).cardInfo}>
           <Image
-            style={{
-              width: width * 0.33,
-              height: width * 0.33,
-              borderRadius: 70,
-            }}
+            style={styles(loaded, width, height).imageCard}
             source={require('@/assets/images/golden-pet.jpg')}
           />
           <View
@@ -52,18 +61,26 @@ export const ReportScreen = () => {
               justifyContent: 'flex-start',
               alignItems: 'flex-start',
               gap: 10,
+              right: 5,
             }}
           >
             <Text
               style={{
                 fontSize: 25,
-                bottom: 12,
                 fontFamily: loaded ? 'PlaypenSans' : '',
+                bottom: height * 0.05,
               }}
             >
-              Hey soy Pyxie
+              {currentPet?.title}
             </Text>
-            <View style={{ width: '100%' }}>
+            <View
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+                bottom: height * 0.04,
+                gap: 7,
+              }}
+            >
               <View
                 style={{
                   flexDirection: 'row',
@@ -83,7 +100,7 @@ export const ReportScreen = () => {
                     opacity: 0.65,
                   }}
                 >
-                  Femenino
+                  {currentPet?.gender}
                 </Text>
               </View>
               <View
@@ -105,7 +122,7 @@ export const ReportScreen = () => {
                     opacity: 0.65,
                   }}
                 >
-                  Golden
+                  {currentPet?.breed}
                 </Text>
               </View>
               <View
@@ -128,14 +145,16 @@ export const ReportScreen = () => {
                     opacity: 0.65,
                   }}
                 >
-                  9 meses
+                  {currentPet?.age}
                 </Text>
               </View>
             </View>
-            <Text style={{ color: 'black', fontWeight: 'bold', flexShrink: 1 }}>
-              Ayúdame a encontrar a otros amigos perdidos!
-            </Text>
           </View>
+        </View>
+        <View style={styles(loaded, width, height).helpmeContainer}>
+          <Text style={styles(loaded).helpmeText}>
+            Ayúdame a encontrar a otros amigos perdidos o abandonados!
+          </Text>
         </View>
         <View style={styles(loaded, width, height).containerReport}>
           <View>
@@ -144,49 +163,22 @@ export const ReportScreen = () => {
             </Text>
           </View>
           <View style={styles(loaded, width, height).buttonReportContainer}>
-            <Pressable style={styles(loaded, width, height).buttonWrap}>
-              {({ pressed }) => (
-                <>
-                  <MaterialIcons
-                    name="pets"
-                    color="orange"
-                    size={39}
-                    style={{ opacity: pressed ? 0.5 : 1 }}
-                  />
-                  <Text
-                    style={[
-                      styles().buttonText,
-                      { opacity: pressed ? 0.5 : 1 },
-                    ]}
-                  >
-                    He encontrado una mascota perdida
-                  </Text>
-                </>
-              )}
-            </Pressable>
+            <CustomButton
+              loaded={loaded}
+              width={width}
+              height={height}
+              title="He encontrado una mascota"
+              type={1}
+            />
           </View>
           <View style={styles(loaded, width, height).buttonReportContainer}>
-            <Pressable style={styles(loaded, width, height).buttonWrap}>
-              {/* <MaterialIcons name="pets" size={39} color="orange" /> */}
-              {({ pressed }) => (
-                <>
-                  <Feather
-                    name="alert-triangle"
-                    size={39}
-                    color="orange"
-                    style={{ opacity: pressed ? 0.5 : 1 }}
-                  />
-                  <Text
-                    style={[
-                      styles().buttonText,
-                      { opacity: pressed ? 0.5 : 1 },
-                    ]}
-                  >
-                    He perdido a mi mascota
-                  </Text>
-                </>
-              )}
-            </Pressable>
+            <CustomButton
+              loaded={loaded}
+              width={width}
+              height={height}
+              title="He perdido a mi mascota"
+              type={2}
+            />
           </View>
         </View>
       </View>
@@ -256,13 +248,6 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
       shadowRadius: 2,
       elevation: 2.5,
     },
-    buttonWrap: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 5,
-      left: width! * 0.03,
-    },
-    buttonText: { color: 'black', fontSize: 16, fontWeight: 'bold' },
     reportTittle: {
       color: 'black',
       fontSize: 22,
@@ -300,5 +285,26 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
       shadowOpacity: 1,
       shadowRadius: 2,
       elevation: 12,
+      top: height! * 0.02,
+    },
+    helpmeText: {
+      color: 'black',
+      flexShrink: 1,
+      fontSize: 16,
+      fontFamily: loaded ? 'PlaypenSans' : '',
+      bottom: 80,
+      right: 16,
+    },
+    imageCard: {
+      width: width! * 0.33,
+      height: width! * 0.33,
+      borderRadius: 70,
+      bottom: height! * 0.035,
+    },
+    helpmeContainer: {
+      width: width! * 0.8,
+      justifyContent: 'center',
+      alignItems: 'center',
+      left: 10,
     },
   });
