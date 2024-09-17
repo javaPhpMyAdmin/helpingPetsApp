@@ -1,9 +1,8 @@
+/* eslint-disable import/order */
 import { router, Stack, useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { View, Text, StyleSheet, useWindowDimensions } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
-
-import { RenderItem } from '../screens/HomeScreen/components';
 
 import { HeaderDetail } from '@/components/HeaderDetail';
 import { ButtonDetail } from '@/components/ButtonDetail';

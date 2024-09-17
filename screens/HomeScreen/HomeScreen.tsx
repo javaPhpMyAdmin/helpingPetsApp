@@ -36,12 +36,22 @@ export const HomeScreen = () => {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       });
-      const currentPlaceName = currentPlace[0].city?.concat(
-        ', ',
-        Platform.OS === 'ios'
+      let currentPlaceName = '';
+      if (
+        currentPlace[0].city! !==
+        (Platform.OS === 'ios'
           ? currentPlace[0].region!
-          : currentPlace[0].region?.split(' ')[2]!
-      );
+          : currentPlace[0].region?.split(' ')[2]!)
+      ) {
+        currentPlaceName = currentPlace[0].city!.concat(
+          ', ',
+          Platform.OS === 'ios'
+            ? currentPlace[0].region!
+            : currentPlace[0].region?.split(' ')[2]!
+        );
+      }
+      currentPlaceName = currentPlace[0].city!;
+
       setCurrentPlaceName(currentPlaceName ?? '');
     })();
   }, []);

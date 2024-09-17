@@ -1,7 +1,7 @@
 import { MapScreen } from '@/screens';
 
-const MapRoute = () => {
+const MapPets = () => {
   return <MapScreen />;
 };
 
-export default MapRoute;
+export default MapPets;

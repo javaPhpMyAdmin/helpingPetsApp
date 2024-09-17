@@ -31,6 +31,6 @@ const styles = (width: number, height?: number) =>
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 6,
-      right: 1,
+      right: width * 0.04,
     },
   });

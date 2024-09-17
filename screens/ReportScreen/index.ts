@@ -1,1 +1,1 @@
-export { default as ReportScreen } from './ReportScreen';
+export * from './ReportScreen';

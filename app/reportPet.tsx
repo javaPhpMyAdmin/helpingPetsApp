@@ -2,8 +2,8 @@
 import React from 'react';
 import { ReportScreen } from '@/screens';
 
-const ReportRoute = () => {
+const ReportPet = () => {
   return <ReportScreen />;
 };
 
-export default ReportRoute;
+export default ReportPet;
