@@ -60,5 +60,5 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
       gap: 5,
       left: width! * 0.03,
     },
-    buttonText: { color: 'black', fontSize: 16, fontWeight: 'bold' },
+    buttonText: { color: 'black', fontSize: 16, fontWeight: 'bold', left: 10 },
   });
