@@ -38,7 +38,8 @@ const Index = () => {
   useEffect(() => {
     animateElement();
     // setTimeout(() => router.replace('/(tabs)/home'), 500);
-    setTimeout(() => router.replace('/reportPet'), 500);
+    // setTimeout(() => router.replace('/reportPet'), 500);
+    setTimeout(() => router.replace('/ReportPet'), 500);
   }, [animateElement]);
   return (
     <View
