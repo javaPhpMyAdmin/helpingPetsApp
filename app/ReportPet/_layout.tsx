@@ -7,9 +7,12 @@ const ReportPetLayout = () => {
       <Stack.Screen
         name="index"
         options={{
-          title: 'Reportar una mascota perdida',
-          headerShown: true,
+          title: '        Reportar una mascota perdida',
           headerStyle: { backgroundColor: 'orange' },
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          // headerTintColor: 'green',
         }}
       />
       <Stack.Screen name="lostMyPet" options={{ headerShown: false }} />

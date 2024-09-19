@@ -33,6 +33,12 @@
         {
           "locationAlwaysAndWhenInUsePermission": "Allow Helping Pets to use your location."
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Helping Pets to use your camera."
+        }
       ]
     ],
     "experiments": {
