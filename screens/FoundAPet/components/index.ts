@@ -4,3 +4,4 @@ export * from './CameraWrapper';
 export * from './PictureTakedWrapper';
 export * from './FormTitle';
 export * from './SubmitButton';
+export * from './ModalInformation';

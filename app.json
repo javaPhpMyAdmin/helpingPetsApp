@@ -39,6 +39,12 @@
         {
           "cameraPermission": "Allow Helping Pets to use your camera."
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow Helping Pets to access your photos."
+        }
       ]
     ],
     "experiments": {

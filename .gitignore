@@ -12,7 +12,8 @@ web-build/
 
 settings.json
 .env
-
+.vscode
+.vscode/settings.json
 # macOS
 .DS_Store
 

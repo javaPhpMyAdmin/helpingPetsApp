@@ -3,18 +3,20 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import {
   View,
   Text,
-  Pressable,
   TextInput,
   StyleSheet,
-  TouchableOpacity,
   useWindowDimensions,
+  Modal,
+  Pressable,
 } from 'react-native';
-import React from 'react';
-import { FontAwesome6, Entypo } from '@expo/vector-icons';
-import { Controller, FieldError, useForm } from 'react-hook-form';
+import React, { useState } from 'react';
+import { Controller, FieldError, set, useForm } from 'react-hook-form';
 import { object, string } from 'yup';
 import { FormTitle } from '../FormTitle';
 import { SubmitButton } from '../SubmitButton';
+import Octicons from '@expo/vector-icons/Octicons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ModalInformation } from '../ModalInformation';
 
 const formSchema = object().shape({
   reportTitle: string()
@@ -32,6 +34,9 @@ interface FormProps {
 }
 
 const ReportFoundPetForm = () => {
+  const [openTitleInformationModal, setOpenTitleInformationModal] =
+    useState(false);
+  const [type, setType] = useState(0);
   const {
     control,
     handleSubmit,
@@ -41,7 +46,16 @@ const ReportFoundPetForm = () => {
     resolver: yupResolver(formSchema),
   });
   const { width, height } = useWindowDimensions();
-  const handleTitleInfo = () => {};
+
+  const openModal = (type: number) => {
+    setOpenTitleInformationModal(!openTitleInformationModal);
+    setType(type);
+  };
+
+  const closeModal = () => {
+    setOpenTitleInformationModal(!openTitleInformationModal);
+  };
+
   const handleDescriptionInfo = () => {};
 
   const submit = (data: FormProps) => {
@@ -52,7 +66,7 @@ const ReportFoundPetForm = () => {
   return (
     <>
       <View style={styles().titleContainer}>
-        <FormTitle title="Título" handleInfo={handleTitleInfo} />
+        <FormTitle title="Título" handleInfo={openModal} type={0} />
         <Controller
           name="reportTitle"
           control={control}
@@ -75,7 +89,7 @@ const ReportFoundPetForm = () => {
           styles(errors.reportDescription, width, height).descriptionContainer
         }
       >
-        <FormTitle title="Descripción" handleInfo={handleDescriptionInfo} />
+        <FormTitle title="Descripción" handleInfo={openModal} type={1} />
         <Controller
           name="reportDescription"
           control={control}
@@ -98,6 +112,11 @@ const ReportFoundPetForm = () => {
           </Text>
         )}
       </View>
+      <ModalInformation
+        openTitleInformationModal={openTitleInformationModal}
+        closeModal={closeModal}
+        type={type}
+      />
       <SubmitButton handleSubmit={handleSubmit} submit={submit} />
     </>
   );
@@ -108,6 +127,7 @@ export default ReportFoundPetForm;
 const styles = (error?: FieldError, width?: number, height?: number) =>
   StyleSheet.create({
     titleContainer: {
+      position: 'relative',
       width: 370,
       height: 100,
       // backgroundColor: 'orange',

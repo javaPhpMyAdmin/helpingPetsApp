@@ -1,22 +1,24 @@
 /* eslint-disable import/order */
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { FontAwesome6 } from '@expo/vector-icons';
+import {} from 'react-native-gesture-handler';
 
 interface FormTitleProps {
   title: string;
-  handleInfo: () => void;
+  handleInfo: (type: number) => void;
+  type: number;
 }
 
-const FormTitle = ({ title, handleInfo }: FormTitleProps) => {
+const FormTitle = ({ title, handleInfo, type }: FormTitleProps) => {
   return (
     <View style={styles.descriptionAndTitleContainer}>
       <Text style={styles.titleText}>{title}</Text>
-      <View style={styles.iconInfo}>
-        <Pressable onPress={() => handleInfo}>
+      <TouchableOpacity onPress={() => handleInfo(type)}>
+        <View style={styles.iconInfo}>
           <FontAwesome6 name="info" size={15} color="orange" />
-        </Pressable>
-      </View>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
