@@ -1,6 +1,6 @@
 {
-  "editor.fontFamily": "Input Mono Thin",
-  "editor.codeLensFontFamily": "Input Mono Thin",
+  "editor.fontFamily": "Roboto Mono Thin for PowerLine",
+  "editor.codeLensFontFamily": "Roboto Mono Thin for PowerLine",
   "editor.fontSize": 13,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
