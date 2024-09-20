@@ -1,7 +1,7 @@
 {
-  "editor.fontFamily": "Roboto Mono Light for Powerline",
-  "editor.codeLensFontFamily": "Roboto Mono Thin for Powerline",
-  "editor.fontSize": 12,
+  "editor.fontFamily": "Input Mono Thin",
+  "editor.codeLensFontFamily": "Input Mono Thin",
+  "editor.fontSize": 13,
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode"
