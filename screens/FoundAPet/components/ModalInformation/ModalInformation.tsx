@@ -25,18 +25,15 @@ const ModalInformation = ({
   return (
     <Modal visible={openTitleInformationModal} transparent animationType="fade">
       <View style={styles(width, height).modalContentContainer}>
-        <Pressable
-          onPress={closeModal}
-          style={{
-            position: 'absolute',
-            top: 0,
-            right: 0,
-          }}
-        >
-          <View>
-            <Octicons name="issue-closed" size={34} color="green" />
-          </View>
-        </Pressable>
+        <View style={styles(width).buttonContainer}>
+          <Pressable onPress={closeModal}>
+            {({ pressed }) => (
+              <>
+                <Octicons name="issue-closed" size={37} color="green" />
+              </>
+            )}
+          </Pressable>
+        </View>
 
         {type === 0 ? (
           <View style={{ paddingTop: 15 }}>
@@ -64,7 +61,7 @@ const styles = (width?: number, height?: number) =>
   StyleSheet.create({
     modalContentContainer: {
       width: width! * 0.6,
-      height: height! * 0.21,
+      height: width! * 0.48,
       backgroundColor: 'white',
       borderRadius: 20,
       padding: 10,
@@ -72,6 +69,9 @@ const styles = (width?: number, height?: number) =>
       top: height! * 0.3,
       right: width! * 0.2,
       gap: 10,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     iconModal: {
       position: 'absolute',
@@ -83,5 +83,15 @@ const styles = (width?: number, height?: number) =>
       letterSpacing: 0.5,
       color: 'gray',
       fontWeight: 'bold',
+      flexShrink: 1,
+    },
+    buttonContainer: {
+      width: width! * 0.1,
+      height: width! * 0.1,
+      justifyContent: 'center',
+      alignSelf: 'center',
+      position: 'absolute',
+      top: 2,
+      right: 5,
     },
   });

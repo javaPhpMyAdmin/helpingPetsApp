@@ -1,34 +1,22 @@
 /* eslint-disable import/order */
-import {
-  View,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-  Keyboard,
-  useWindowDimensions,
-  Modal,
-  Text,
-} from 'react-native';
+import { View, StyleSheet, useWindowDimensions } from 'react-native';
 import React, { useState } from 'react';
 
-import {
-  GestureHandlerRootView,
-  TouchableWithoutFeedback,
-} from 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Stack } from 'expo-router';
-import ReportFoundPetForm from './components/ReportFoundPetForm/ReportFounPetForm';
+import ReportFoundPetForm from './components/ReportFoundPetForm/ReportFoundPetForm';
 import {
   CameraWrapper,
   PetPhotoButton,
   PictureTakedWrapper,
 } from './components';
-
-const BEHAVIOR = Platform.OS === 'ios' ? 'padding' : 'height';
+import Animated, { FadeIn } from 'react-native-reanimated';
 
 const FoundAPet = () => {
   const [showCamera, setShowCamera] = useState(false);
   const [image, setImage] = useState<string | null | undefined>(null);
   const { width, height } = useWindowDimensions();
+  const [isKeyboardVisble, setIsKeyboardVisible] = useState(false);
 
   const handleOpenCamera = () => {
     setShowCamera(true);
@@ -37,49 +25,54 @@ const FoundAPet = () => {
     setImage(null);
   };
 
-  // if (!permission) {
-  //   return <Text>No tienes permisos para usar la cámara</Text>;
-  // }
+  //TODO: ONLY FOR TEST CAMERA ON IOS DEVICE
+  // useEffect(() => {
+  //   if (Platform.OS === 'ios')
+  //     setImage(
+  //       'https://elcomercio.pe/resizer/o1iGvdjwZ7uyfm32ap0mZqVyY4Q=/580x330/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/JJIAPKY5HFEI5DFMOGVYNXCBCE.jpg'
+  //     );
+  // }, []);
 
-  // if (!permission.granted) {
-  //   return <Text>No tienes permisos para usar la cámara</Text>;
-  // }
   return (
-    <KeyboardAvoidingView behavior={BEHAVIOR} style={styles().container}>
+    <>
       <Stack.Screen
         options={{
           headerBackVisible: true,
         }}
       />
-      {!showCamera ? (
-        <GestureHandlerRootView>
-          <TouchableWithoutFeedback
-            style={styles().touchableContainer}
-            onPress={() => Keyboard.dismiss()}
-          >
-            <View
-              style={
-                !image
-                  ? styles(width, height).imageContainer
-                  : styles(width, height).imageTakedContainer
-              }
-            >
-              {!image ? (
-                <PetPhotoButton handleOpenCamera={handleOpenCamera} />
-              ) : (
-                <PictureTakedWrapper
-                  image={image}
-                  handleCancelPhoto={handleCancelPhoto}
-                />
-              )}
-            </View>
-            <ReportFoundPetForm />
-          </TouchableWithoutFeedback>
-        </GestureHandlerRootView>
-      ) : (
-        <CameraWrapper setShowCamera={setShowCamera} setImage={setImage} />
-      )}
-    </KeyboardAvoidingView>
+      <GestureHandlerRootView>
+        <View style={styles(width, height).container}>
+          {!showCamera && (
+            <>
+              <Animated.View
+                entering={FadeIn.duration(500).damping(3).springify()}
+                style={
+                  !image
+                    ? styles(width, height).imageContainer
+                    : isKeyboardVisble
+                      ? styles(width, height).isKeyboardVisible
+                      : styles(width, height).imageTakedContainer
+                }
+              >
+                {!image ? (
+                  <PetPhotoButton handleOpenCamera={handleOpenCamera} />
+                ) : (
+                  <PictureTakedWrapper
+                    isKeyboardVisible={isKeyboardVisble}
+                    image={image}
+                    handleCancelPhoto={handleCancelPhoto}
+                  />
+                )}
+              </Animated.View>
+              <ReportFoundPetForm setIsKeyboardVisible={setIsKeyboardVisible} />
+            </>
+          )}
+        </View>
+        {showCamera && (
+          <CameraWrapper setShowCamera={setShowCamera} setImage={setImage} />
+        )}
+      </GestureHandlerRootView>
+    </>
   );
 };
 
@@ -88,34 +81,33 @@ export default FoundAPet;
 const styles = (width?: number, height?: number) =>
   StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'space-evenly',
+      justifyContent: 'space-between',
       alignItems: 'center',
     },
     imageContainer: {
-      width: width! * 0.35,
-      height: height! * 0.16,
+      width: width! * 0.4,
+      height: height! * 0.17,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 10,
       borderWidth: 0.2,
       borderColor: 'gray',
+      top: 10,
     },
-    cameraIcon: { position: 'absolute', top: -20, right: -12 },
-    touchableContainer: {
-      display: 'flex',
-      justifyContent: 'space-evenly',
-      height: '100%',
-      alignItems: 'center',
-    },
-
     imageTakedContainer: {
-      width: '100%',
-      height: 270,
+      width: width! * 0.96,
+      height: width! * 0.6,
+      top: 10,
       justifyContent: 'space-evenly',
       alignItems: 'center',
       borderRadius: 15,
       borderWidth: 0.2,
       borderColor: 'gray',
+    },
+    isKeyboardVisible: {
+      bottom: 5,
+      width: width! * 0.96,
+      height: width! * 0.3,
+      padding: 10,
     },
   });

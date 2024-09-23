@@ -3,13 +3,13 @@ import {
   StyleSheet,
   View,
   Text,
-  Pressable,
   useWindowDimensions,
+  TouchableOpacity,
 } from 'react-native';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
-import { CameraView, useCameraPermissions } from 'expo-camera';
+import { Camera, CameraView } from 'expo-camera';
 
 const facing = 'back';
 
@@ -19,7 +19,7 @@ interface CameraWapperProps {
 }
 
 const CameraWrapper = ({ setShowCamera, setImage }: CameraWapperProps) => {
-  const [permission, setPermission] = useCameraPermissions();
+  const [permission, setPermission] = useState(false);
   const [zoom, setZoom] = useState(0);
   const cameraRef = useRef<CameraView>(null);
   const { width, height } = useWindowDimensions();
@@ -39,6 +39,20 @@ const CameraWrapper = ({ setShowCamera, setImage }: CameraWapperProps) => {
   const handleZoom = (value: number) => {
     setZoom(value);
   };
+
+  const permisionFunction = async () => {
+    // here is how you can get the camera permission
+    const cameraPermission = await Camera.requestCameraPermissionsAsync();
+    setPermission(cameraPermission.granted);
+  };
+
+  useEffect(() => {
+    permisionFunction();
+    console.log({ permission });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (permission === false) return;
 
   return (
     <View style={styles().cameraContainer}>
@@ -63,15 +77,18 @@ const CameraWrapper = ({ setShowCamera, setImage }: CameraWapperProps) => {
             minimumTrackTintColor="white"
           />
         </View>
-        <Pressable
+        <TouchableOpacity
           style={styles(width, height).cancelTakePhoto}
           onPress={() => setShowCamera(false)}
         >
           <Ionicons name="arrow-undo-sharp" size={85} color="white" />
-        </Pressable>
-        <Pressable style={styles(width, height).takePhoto} onPress={takePhoto}>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles(width, height).takePhoto}
+          onPress={takePhoto}
+        >
           <Ionicons name="camera" size={100} color="gray" />
-        </Pressable>
+        </TouchableOpacity>
       </CameraView>
     </View>
   );
@@ -89,14 +106,14 @@ const styles = (width?: number, height?: number) =>
       width: width! * 0.25,
       height: width! * 0.25,
       position: 'absolute',
-      top: height! * 0.79,
+      top: height! * 0.77,
       left: width! * 0.6,
     },
     cancelTakePhoto: {
       width: width! * 0.25,
       height: width! * 0.25,
       position: 'absolute',
-      top: height! * 0.799,
+      top: height! * 0.78,
       left: width! * 0.09,
     },
     row: {

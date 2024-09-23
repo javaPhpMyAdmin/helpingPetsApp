@@ -1,8 +1,8 @@
 /* eslint-disable import/order */
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import { FontAwesome6 } from '@expo/vector-icons';
-import {} from 'react-native-gesture-handler';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 interface FormTitleProps {
   title: string;
@@ -14,11 +14,11 @@ const FormTitle = ({ title, handleInfo, type }: FormTitleProps) => {
   return (
     <View style={styles.descriptionAndTitleContainer}>
       <Text style={styles.titleText}>{title}</Text>
-      <TouchableOpacity onPress={() => handleInfo(type)}>
+      <TouchableWithoutFeedback onPress={() => handleInfo(type)}>
         <View style={styles.iconInfo}>
           <FontAwesome6 name="info" size={15} color="orange" />
         </View>
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     </View>
   );
 };

@@ -12,21 +12,25 @@ import { AntDesign } from '@expo/vector-icons';
 interface PictureTakedWrapperProps {
   image: string;
   handleCancelPhoto: () => void;
+  isKeyboardVisible: boolean;
 }
 
 const PictureTakedWrapper = ({
   image,
   handleCancelPhoto,
+  isKeyboardVisible,
 }: PictureTakedWrapperProps) => {
   const { width, height } = useWindowDimensions();
   return (
     <View style={styles(width, height).imageTakedExist}>
       <Image source={{ uri: image }} style={styles().imageTaked} />
-      <Pressable onPress={handleCancelPhoto}>
-        <View style={styles(width, height).cancelIconContainer}>
-          <AntDesign style={{}} name="close" size={50} color="red" />
-        </View>
-      </Pressable>
+      {!isKeyboardVisible && (
+        <Pressable onPress={handleCancelPhoto}>
+          <View style={styles(width, height).cancelIconContainer}>
+            <AntDesign style={{}} name="close" size={40} color="red" />
+          </View>
+        </Pressable>
+      )}
     </View>
   );
 };
@@ -49,10 +53,10 @@ const styles = (width?: number, height?: number) =>
     },
     cancelIconContainer: {
       position: 'absolute',
-      bottom: -height! * 0.04,
+      bottom: -height! * 0.034,
       right: width! * 0.41,
-      width: 70,
-      height: 70,
+      width: width! * 0.15,
+      height: width! * 0.14,
       borderRadius: 35,
       backgroundColor: 'gray',
       display: 'flex',
