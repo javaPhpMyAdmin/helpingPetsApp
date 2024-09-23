@@ -4,57 +4,46 @@ import {
   useWindowDimensions,
   StyleSheet,
   View,
-  Text,
 } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FormLostMyPet, PictureTaked } from './components';
 import * as ImagePicker from 'expo-image-picker';
-import {
-  GestureHandlerRootView,
-  TextInput,
-} from 'react-native-gesture-handler';
-import { SubmitButton } from '../FoundAPet/components';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const ILostMyPet = () => {
   const { width, height } = useWindowDimensions();
-  const [image, setImage] = useState('');
+  const [images, setImages] = useState<string[]>([]);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [1, 1],
       quality: 1,
     });
 
     if (!result.canceled) {
-      setImage(result.assets[0].uri);
+      console.log(result.assets[0].uri);
+      setImages([...images, result.assets[0].uri]);
     }
   };
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <GestureHandlerRootView>
         <ScrollView style={styles().scroll}>
-          <View
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              backgroundColor: 'orange',
-              height: '100%',
-            }}
-          >
+          <View style={styles(width, height).container}>
             <View style={styles(width).imagesContainer}>
               <View style={styles(width).imagePickerContainer}>
-                <PictureTaked image={image} handleOpenPicker={pickImage} />
+                <PictureTaked image={images[0]} handleOpenPicker={pickImage} />
               </View>
               <View style={styles(width).imagePickerContainer}>
-                <PictureTaked image={image} handleOpenPicker={pickImage} />
+                <PictureTaked image={images[1]} handleOpenPicker={pickImage} />
               </View>
               <View style={styles(width).imagePickerContainer}>
-                <PictureTaked image={image} handleOpenPicker={pickImage} />
+                <PictureTaked image={images[2]} handleOpenPicker={pickImage} />
               </View>
             </View>
             <FormLostMyPet />
@@ -69,6 +58,12 @@ export default ILostMyPet;
 
 const styles = (width?: number, height?: number) =>
   StyleSheet.create({
+    container: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      height: '100%',
+    },
     imagePickerContainer: {
       width: width! * 0.25,
       height: width! * 0.25,

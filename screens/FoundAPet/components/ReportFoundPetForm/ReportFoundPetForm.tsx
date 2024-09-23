@@ -6,7 +6,6 @@ import {
   TextInput,
   StyleSheet,
   useWindowDimensions,
-  Pressable,
   KeyboardAvoidingView,
   Platform,
   Keyboard,
@@ -59,7 +58,9 @@ const ReportFoundPetForm = ({
   });
 
   const { width, height } = useWindowDimensions();
+
   const isKeyboardVisible = useKeyboardVisible();
+
   const openModal = (type: number) => {
     setOpenTitleInformationModal(!openTitleInformationModal);
     setType(type);

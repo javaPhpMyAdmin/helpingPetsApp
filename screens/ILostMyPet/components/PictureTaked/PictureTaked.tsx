@@ -13,6 +13,7 @@ interface PictureTakedProps {
   handleOpenPicker?: () => void;
   isKeyboardVisible?: boolean;
 }
+
 const PictureTaked = ({
   image,
   handleOpenPicker,
@@ -22,16 +23,22 @@ const PictureTaked = ({
 
   return (
     <TouchableOpacity onPress={handleOpenPicker}>
-      <Image
-        source={require('@/assets/images/paw.png')}
-        style={styles(width, height).imagePicker}
-      />
-      <Ionicons
-        style={styles().cameraIcon}
-        name="camera"
-        size={30}
-        color="black"
-      />
+      {!image ? (
+        <>
+          <Image
+            source={require('@/assets/images/paw.png')}
+            style={styles(width, height).imagePicker}
+          />
+          <Ionicons
+            style={styles().cameraIcon}
+            name="camera"
+            size={30}
+            color="black"
+          />
+        </>
+      ) : (
+        <Image source={{ uri: image }} style={styles(width, height).hasImage} />
+      )}
     </TouchableOpacity>
   );
 };
@@ -43,6 +50,11 @@ const styles = (width?: number, height?: number) =>
     imagePicker: {
       width: width! * 0.22,
       height: width! * 0.21,
+    },
+    hasImage: {
+      width: width! * 0.25,
+      height: width! * 0.25,
+      borderRadius: 15,
     },
     cameraIcon: { position: 'absolute', top: -20, right: -12 },
   });
