@@ -7,7 +7,7 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { SwitchButton } from '../SwitchButton';
 import { CustomDropDown } from '../CustomDropDown';
 import { CustomSubmitButton } from '../CustomSubmitButton';
@@ -44,6 +44,7 @@ const data = [
 
 const formSchema = object().shape({
   petName: string().required('El nombre es requerido'),
+  race: string().required('La raza es requerida'),
   aboutPet: string()
     .required('Acerca del animal es requerida')
     .min(5, 'Debe tener al menos 10 caracteres')
@@ -52,9 +53,13 @@ const formSchema = object().shape({
 interface FormProps {
   petName: string;
   aboutPet: string;
+  race: string;
 }
 const FormLostMyPet = () => {
   const { width, height } = useWindowDimensions();
+  const [selectedSex, setSelectedSex] = useState('');
+  const [selectedRace, setSelectedRace] = useState('');
+  const [selectedReward, setSelectedReward] = useState('');
   const {
     control,
     handleSubmit,
@@ -70,14 +75,14 @@ const FormLostMyPet = () => {
     reset();
   };
 
-  const onChange = (item: OptionItem) => {
-    console.log(item);
-  };
+  // const onChange = (item: OptionItem) => {
+  //   console.log(item);
+  // };
 
   return (
     <View style={styles(width).formContainer}>
       <View style={styles(width, height).titleContainer}>
-        <Text>Nombre</Text>
+        <Text style={styles().titleText}>Nombre</Text>
         <Controller
           name="petName"
           control={control}
@@ -96,23 +101,43 @@ const FormLostMyPet = () => {
         )}
       </View>
       <View style={styles(width, height).titleContainer}>
-        <Text>Sexo</Text>
+        <Text style={styles().titleText}>Sexo</Text>
         <SwitchButton tab1="Macho" tab2="Hembra" />
       </View>
       <View style={styles(width, height).titleContainer}>
-        <Text>Raza</Text>
-        <CustomDropDown
+        <Text style={styles().titleText}>Especie</Text>
+        <SwitchButton tab1="Perro" tab2="Gato" tab3="Otro" />
+      </View>
+      <View style={styles(width, height).titleContainer}>
+        <Text style={styles().titleText}>Raza</Text>
+        <Controller
+          name="race"
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles().titleInput}
+              placeholder="Raza de la mascota"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+        />
+        {errors.race && (
+          <Text style={styles().errorText}>{errors.race.message}</Text>
+        )}
+        {/* <CustomDropDown
           data={data}
           onChange={onChange}
           placeholder="Seleciona una raza"
-        />
+        /> */}
       </View>
       <View style={styles(width, height).titleContainer}>
-        <Text>Recompensa</Text>
+        <Text style={styles().titleText}>Recompensa</Text>
         <SwitchButton tab1="SI" tab2="NO" />
       </View>
       <View style={styles(width, height).aboutPetContainer}>
-        <Text>Acerca del animal</Text>
+        <Text style={styles().titleText}>Acerca del animal</Text>
         <Controller
           name="aboutPet"
           control={control}
@@ -121,7 +146,7 @@ const FormLostMyPet = () => {
               numberOfLines={5}
               multiline
               style={styles().aboutPet}
-              placeholder="Breve descripcion acerca del animal"
+              placeholder="Breve descripción acerca del animal"
               textAlignVertical="top"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -133,7 +158,14 @@ const FormLostMyPet = () => {
           <Text style={styles().errorText}>{errors.aboutPet.message}</Text>
         )}
       </View>
-      <CustomSubmitButton handleSubmit={handleSubmit} submit={submit} />
+      <View style={styles(width, height).sumbitButtonContainer}>
+        <CustomSubmitButton
+          //TODO: CHANGE IT WHEN USE REACT QUERY
+          // isLoading={isLoading}
+          handleSubmit={handleSubmit}
+          submit={submit}
+        />
+      </View>
     </View>
   );
 };
@@ -148,6 +180,7 @@ const styles = (width?: number, height?: number) =>
       alignItems: 'center',
       width: '100%',
       padding: 10,
+      paddingTop: 30,
       //   backgroundColor: 'red',
     },
     titleContainer: {
@@ -188,5 +221,17 @@ const styles = (width?: number, height?: number) =>
       fontSize: 16,
       fontWeight: 'semibold',
       bottom: 5,
+    },
+    sumbitButtonContainer: {
+      width: width! * 0.939,
+      height: height! * 0.27,
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+      top: 40,
+    },
+    titleText: {
+      fontSize: 16,
+      fontWeight: '700',
+      top: 3,
     },
   });

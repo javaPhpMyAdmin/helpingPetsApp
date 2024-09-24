@@ -7,11 +7,13 @@ import { UseFormHandleSubmit } from 'react-hook-form';
 interface SubmitButtonProps {
   handleSubmit: UseFormHandleSubmit<FormProps, undefined>;
   submit: (data: FormProps) => void;
+  isLoading?: boolean;
 }
 
 interface FormProps {
   petName: string;
   aboutPet: string;
+  race: string;
 }
 
 const CustomSubmitButton = ({ handleSubmit, submit }: SubmitButtonProps) => {

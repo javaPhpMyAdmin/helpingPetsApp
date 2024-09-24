@@ -5,15 +5,24 @@ import React from 'react';
 interface SwitchButtonProps {
   tab1: string;
   tab2: string;
+  tab3?: string;
 }
 
-const SwitchButton = ({ tab1, tab2 }: SwitchButtonProps) => {
+const SwitchButton = ({ tab1, tab2, tab3 }: SwitchButtonProps) => {
   const [selectedTab, setSelectedTab] = React.useState('Macho');
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View
+      style={{
+        // flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'red',
+        height: '20%',
+      }}
+    >
       <View
         style={{
-          width: '90%',
+          width: '100%',
           height: 55,
           borderWidth: 0.3,
           backgroundColor: 'white',

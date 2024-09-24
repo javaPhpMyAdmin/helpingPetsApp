@@ -15,6 +15,10 @@ const ILostMyPet = () => {
   const { width, height } = useWindowDimensions();
   const [images, setImages] = useState<string[]>([]);
 
+  const deleteImageHandler = (position: number) => {
+    setImages(images.filter((_, index) => index !== position));
+  };
+
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -26,7 +30,9 @@ const ILostMyPet = () => {
 
     if (!result.canceled) {
       console.log(result.assets[0].uri);
-      setImages([...images, result.assets[0].uri]);
+      if (images.length < 3) {
+        setImages([...images, result.assets[0].uri]);
+      }
     }
   };
 
@@ -37,13 +43,28 @@ const ILostMyPet = () => {
           <View style={styles(width, height).container}>
             <View style={styles(width).imagesContainer}>
               <View style={styles(width).imagePickerContainer}>
-                <PictureTaked image={images[0]} handleOpenPicker={pickImage} />
+                <PictureTaked
+                  positionImage={0}
+                  deleteImageHandler={deleteImageHandler}
+                  image={images[0]}
+                  handleOpenPicker={pickImage}
+                />
               </View>
               <View style={styles(width).imagePickerContainer}>
-                <PictureTaked image={images[1]} handleOpenPicker={pickImage} />
+                <PictureTaked
+                  positionImage={1}
+                  deleteImageHandler={deleteImageHandler}
+                  image={images[1]}
+                  handleOpenPicker={pickImage}
+                />
               </View>
               <View style={styles(width).imagePickerContainer}>
-                <PictureTaked image={images[2]} handleOpenPicker={pickImage} />
+                <PictureTaked
+                  positionImage={2}
+                  deleteImageHandler={deleteImageHandler}
+                  image={images[2]}
+                  handleOpenPicker={pickImage}
+                />
               </View>
             </View>
             <FormLostMyPet />
