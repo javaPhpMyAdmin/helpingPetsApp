@@ -4,6 +4,7 @@ import {
   useWindowDimensions,
   StyleSheet,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -11,66 +12,96 @@ import { FormLostMyPet, PictureTaked } from './components';
 import * as ImagePicker from 'expo-image-picker';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+const POSITION_IMAGES = {
+  ZERO: 0,
+  ONE: 1,
+  TWO: 2,
+};
+
 const ILostMyPet = () => {
   const { width, height } = useWindowDimensions();
   const [images, setImages] = useState<string[]>([]);
+  const [isLoadingImage, setIsLoadingImage] = useState(false);
+  const [positionImage, setPositionImage] = useState(0);
 
   const deleteImageHandler = (position: number) => {
     setImages(images.filter((_, index) => index !== position));
+    setPositionImage(positionImage - 1);
   };
 
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
+  const pickImage = async (positionImage: number) => {
+    setIsLoadingImage(true);
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
 
-    if (!result.canceled) {
-      console.log(result.assets[0].uri);
-      if (images.length < 3) {
-        setImages([...images, result.assets[0].uri]);
+      if (!result.canceled) {
+        console.log(result.assets[0].uri);
+        if (images.length < 3) {
+          console.log({ positionImage });
+          setPositionImage(positionImage + 1);
+          setImages([...images, result.assets[0].uri]);
+        }
       }
+    } catch (error) {
+      alert(`OCURRIÓ UN ERROR INESPERADO, REINTENTE POR FAVOR, ${error}`);
+    } finally {
+      setIsLoadingImage(false);
     }
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <GestureHandlerRootView>
-        <ScrollView style={styles().scroll}>
-          <View style={styles(width, height).container}>
-            <View style={styles(width).imagesContainer}>
-              <View style={styles(width).imagePickerContainer}>
+      <ScrollView style={styles().scroll}>
+        <View style={styles(width, height).container}>
+          <View style={styles(width).imagesContainer}>
+            <View style={styles(width).imagePickerContainer}>
+              {isLoadingImage && positionImage === 0 ? (
+                <ActivityIndicator size="large" />
+              ) : (
                 <PictureTaked
                   positionImage={0}
                   deleteImageHandler={deleteImageHandler}
                   image={images[0]}
-                  handleOpenPicker={pickImage}
+                  pickImage={pickImage}
                 />
-              </View>
-              <View style={styles(width).imagePickerContainer}>
+              )}
+            </View>
+            <View style={styles(width).imagePickerContainer}>
+              {isLoadingImage && positionImage === 1 ? (
+                <ActivityIndicator size="large" />
+              ) : (
                 <PictureTaked
                   positionImage={1}
                   deleteImageHandler={deleteImageHandler}
                   image={images[1]}
-                  handleOpenPicker={pickImage}
+                  pickImage={pickImage}
                 />
-              </View>
-              <View style={styles(width).imagePickerContainer}>
+              )}
+            </View>
+            <View style={styles(width).imagePickerContainer}>
+              {isLoadingImage && positionImage === 2 ? (
+                <ActivityIndicator size="large" />
+              ) : (
                 <PictureTaked
                   positionImage={2}
                   deleteImageHandler={deleteImageHandler}
                   image={images[2]}
-                  handleOpenPicker={pickImage}
+                  pickImage={pickImage}
                 />
-              </View>
+              )}
             </View>
-            <FormLostMyPet />
           </View>
-        </ScrollView>
-      </GestureHandlerRootView>
+
+          <GestureHandlerRootView>
+            <FormLostMyPet />
+          </GestureHandlerRootView>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -93,6 +124,7 @@ const styles = (width?: number, height?: number) =>
       borderRadius: 15,
       justifyContent: 'center',
       alignItems: 'center',
+      margin: 50,
     },
     imagesContainer: {
       top: 20,

@@ -11,15 +11,15 @@ import { Ionicons } from '@expo/vector-icons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 interface PictureTakedProps {
-  image?: string;
-  handleOpenPicker?: () => void;
+  image: string;
+  pickImage: (positionImage: number) => void;
   deleteImageHandler: (position: number) => void;
   positionImage: number;
 }
 
 const PictureTaked = ({
   image,
-  handleOpenPicker,
+  pickImage,
   deleteImageHandler,
   positionImage,
 }: PictureTakedProps) => {
@@ -28,7 +28,7 @@ const PictureTaked = ({
   return (
     <>
       {!image ? (
-        <TouchableOpacity onPress={handleOpenPicker}>
+        <TouchableOpacity onPress={() => pickImage(positionImage)}>
           <Image
             source={require('@/assets/images/paw.png')}
             style={styles(width, height).imagePicker}
@@ -41,7 +41,7 @@ const PictureTaked = ({
           />
         </TouchableOpacity>
       ) : (
-        <View style={styles(width, height).hasImageContainer}>
+        <>
           <Image
             source={{ uri: image }}
             style={styles(width, height).hasImage}
@@ -52,7 +52,7 @@ const PictureTaked = ({
           >
             <MaterialIcons name="delete-forever" size={54} color="black" />
           </TouchableOpacity>
-        </View>
+        </>
       )}
     </>
   );
