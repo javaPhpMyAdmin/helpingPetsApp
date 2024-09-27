@@ -1,15 +1,37 @@
 /* eslint-disable import/order */
 import { View, Text, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface SwitchButtonProps {
   tab1: string;
   tab2: string;
   tab3?: string;
+  setSelectedSex?: (value: string) => void;
+  setSelectedSpecie?: (value: string) => void;
+  setSelectedReward?: (value: string) => void;
 }
 
-const SwitchButton = ({ tab1, tab2, tab3 }: SwitchButtonProps) => {
-  const [selectedTab, setSelectedTab] = React.useState('Macho');
+const SwitchButton = ({
+  tab1,
+  tab2,
+  tab3,
+  setSelectedReward,
+  setSelectedSpecie,
+  setSelectedSex,
+}: SwitchButtonProps) => {
+  const [selectedTab, setSelectedTab] = React.useState<string>(tab1);
+
+  useEffect(() => {
+    if (setSelectedSex) {
+      setSelectedSex(selectedTab);
+    }
+    if (setSelectedReward) {
+      setSelectedReward(selectedTab);
+    }
+    if (setSelectedSpecie) {
+      setSelectedSpecie(selectedTab);
+    }
+  }, [selectedTab, setSelectedReward, setSelectedSex, setSelectedSpecie]);
   return (
     <View
       style={{
@@ -36,17 +58,16 @@ const SwitchButton = ({ tab1, tab2, tab3 }: SwitchButtonProps) => {
           style={{
             width: '50%',
             height: 45,
-            backgroundColor:
-              selectedTab === 'Macho' ? '#f7991e' : 'transparent',
+            backgroundColor: selectedTab === tab1 ? '#f7991e' : 'transparent',
             borderRadius: 15,
             justifyContent: 'center',
             alignItems: 'center',
           }}
-          onPress={() => setSelectedTab('Macho')}
+          onPress={() => setSelectedTab(tab1)}
         >
           <Text
             style={{
-              color: selectedTab === 'Macho' ? 'white' : 'gray',
+              color: selectedTab === tab1 ? 'white' : 'gray',
               fontSize: 18,
               fontWeight: '700',
             }}
@@ -58,17 +79,16 @@ const SwitchButton = ({ tab1, tab2, tab3 }: SwitchButtonProps) => {
           style={{
             width: '50%',
             height: 45,
-            backgroundColor:
-              selectedTab === 'Hembra' ? '#f7991e' : 'transparent',
+            backgroundColor: selectedTab === tab2 ? '#f7991e' : 'transparent',
             borderRadius: 15,
             justifyContent: 'center',
             alignItems: 'center',
           }}
-          onPress={() => setSelectedTab('Hembra')}
+          onPress={() => setSelectedTab(tab2)}
         >
           <Text
             style={{
-              color: selectedTab === 'Hembra' ? 'white' : 'gray',
+              color: `{${selectedTab} === ${tab2} ? 'white' : 'gray'}`,
               fontSize: 18,
               fontWeight: '700',
             }}

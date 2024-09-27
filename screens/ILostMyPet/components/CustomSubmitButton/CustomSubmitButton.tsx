@@ -1,5 +1,11 @@
 /* eslint-disable import/order */
-import { Text, Pressable, useWindowDimensions, StyleSheet } from 'react-native';
+import {
+  Text,
+  useWindowDimensions,
+  StyleSheet,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import React from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { UseFormHandleSubmit } from 'react-hook-form';
@@ -16,22 +22,29 @@ interface FormProps {
   race: string;
 }
 
-const CustomSubmitButton = ({ handleSubmit, submit }: SubmitButtonProps) => {
+const CustomSubmitButton = ({
+  handleSubmit,
+  submit,
+  isLoading = false,
+}: SubmitButtonProps) => {
   const { width, height } = useWindowDimensions();
 
   return (
     <>
-      <Pressable
+      <TouchableOpacity
         style={styles(width, height).buttonContainer}
         onPress={handleSubmit(submit)}
+        disabled={isLoading}
       >
-        {({ pressed }) => (
+        {!isLoading ? (
           <>
             <Entypo name="check" size={60} color="white" />
             <Text style={styles().buttonText}>Reportar</Text>
           </>
+        ) : (
+          <ActivityIndicator size="large" />
         )}
-      </Pressable>
+      </TouchableOpacity>
     </>
   );
 };

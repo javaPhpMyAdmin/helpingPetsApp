@@ -12,12 +12,6 @@ import { FormLostMyPet, PictureTaked } from './components';
 import * as ImagePicker from 'expo-image-picker';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-const POSITION_IMAGES = {
-  ZERO: 0,
-  ONE: 1,
-  TWO: 2,
-};
-
 const ILostMyPet = () => {
   const { width, height } = useWindowDimensions();
   const [images, setImages] = useState<string[]>([]);
@@ -40,9 +34,7 @@ const ILostMyPet = () => {
       });
 
       if (!result.canceled) {
-        console.log(result.assets[0].uri);
         if (images.length < 3) {
-          console.log({ positionImage });
           setPositionImage(positionImage + 1);
           setImages([...images, result.assets[0].uri]);
         }

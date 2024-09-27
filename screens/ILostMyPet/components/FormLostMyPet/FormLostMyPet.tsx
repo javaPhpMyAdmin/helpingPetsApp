@@ -2,82 +2,52 @@
 import {
   View,
   Text,
-  Platform,
   TextInput,
   StyleSheet,
   useWindowDimensions,
 } from 'react-native';
 import React, { useState } from 'react';
 import { SwitchButton } from '../SwitchButton';
-import { CustomDropDown } from '../CustomDropDown';
 import { CustomSubmitButton } from '../CustomSubmitButton';
-import { object, string } from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
+import { TitleLostMyPet } from '../TitleLostMyPet';
+import { alertAboutPet, alertRace, infoTypes } from '../../helpers';
+import { formSchema } from './schemaValidation';
 
-const BEHAVIOR = Platform.OS === 'ios' ? 'padding' : 'height';
-
-type OptionItem = {
-  value: string;
-  label: string;
-};
-const data = [
-  { value: '🐈', label: '🐈 un Gato' },
-  { value: '🦮', label: '🦮 un Perro' },
-  { value: '🐍', label: '🐍 una serpiente' },
-  { value: '🐈', label: '🐈 un Gato' },
-  { value: '🦮', label: '🦮 un Perro' },
-  { value: '🐍', label: '🐍 una serpiente' },
-  { value: '🐈', label: '🐈 un Gato' },
-  { value: '🦮', label: '🦮 un Perro' },
-  { value: '🐍', label: '🐍 una serpiente' },
-  { value: '🐈', label: '🐈 un Gato' },
-  { value: '🦮', label: '🦮 un Perro' },
-  { value: '🐍', label: '🐍 una serpiente' },
-  { value: '🐈', label: '🐈 un Gato' },
-  { value: '🦮', label: '🦮 un Perro' },
-  { value: '🐍', label: '🐍 una serpiente' },
-  { value: '🐈', label: '🐈 un Gato' },
-  { value: '🦮', label: '🦮 un Perro' },
-  { value: '🐍', label: '🐍 una serpiente' },
-];
-
-const formSchema = object().shape({
-  petName: string().required('El nombre es requerido'),
-  race: string().required('La raza es requerida'),
-  aboutPet: string()
-    .required('Acerca del animal es requerida')
-    .min(5, 'Debe tener al menos 10 caracteres')
-    .max(70, 'Maximo 70 caracteres'),
-});
 interface FormProps {
   petName: string;
   aboutPet: string;
   race: string;
 }
+
 const FormLostMyPet = () => {
   const { width, height } = useWindowDimensions();
   const [selectedSex, setSelectedSex] = useState('');
-  const [selectedRace, setSelectedRace] = useState('');
   const [selectedReward, setSelectedReward] = useState('');
+  const [selectedSpecie, setSelectedSpecie] = useState('');
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm<FormProps>({
-    mode: 'all',
+    mode: 'onBlur',
     resolver: yupResolver(formSchema),
   });
 
   const submit = (data: FormProps) => {
     console.log({ data });
+    console.log({ selectedSex });
+    console.log({ selectedReward });
+    console.log({ selectedSpecie });
     reset();
   };
 
-  // const onChange = (item: OptionItem) => {
-  //   console.log(item);
-  // };
+  const handleInfo = (type: number) => {
+    if (type === infoTypes.RACE) alertRace();
+    if (type === infoTypes.ABOUT_PET) alertAboutPet();
+  };
 
   return (
     <View style={styles(width).formContainer}>
@@ -102,14 +72,35 @@ const FormLostMyPet = () => {
       </View>
       <View style={styles(width, height).titleContainer}>
         <Text style={styles().titleText}>Sexo</Text>
-        <SwitchButton tab1="Macho" tab2="Hembra" />
+        <SwitchButton
+          setSelectedSex={setSelectedSex}
+          tab1="Macho"
+          tab2="Hembra"
+        />
       </View>
       <View style={styles(width, height).titleContainer}>
         <Text style={styles().titleText}>Especie</Text>
-        <SwitchButton tab1="Perro" tab2="Gato" tab3="Otro" />
+        <SwitchButton
+          setSelectedSpecie={setSelectedSpecie}
+          tab1="Perro"
+          tab2="Gato"
+          tab3="Otro"
+        />
       </View>
       <View style={styles(width, height).titleContainer}>
-        <Text style={styles().titleText}>Raza</Text>
+        <TitleLostMyPet
+          title="Raza"
+          handleInfo={handleInfo}
+          type={infoTypes.RACE}
+        />
+        {/* <Text style={styles().titleText}>Raza</Text>
+        <TouchableWithoutFeedback
+          onPress={() => alert('Esta funcionalidad no esta disponible')}
+        >
+          <View style={styles().iconInfo}>
+            <FontAwesome6 name="info" size={15} color="orange" />
+          </View>
+        </TouchableWithoutFeedback> */}
         <Controller
           name="race"
           control={control}
@@ -126,18 +117,21 @@ const FormLostMyPet = () => {
         {errors.race && (
           <Text style={styles().errorText}>{errors.race.message}</Text>
         )}
-        {/* <CustomDropDown
-          data={data}
-          onChange={onChange}
-          placeholder="Seleciona una raza"
-        /> */}
       </View>
       <View style={styles(width, height).titleContainer}>
         <Text style={styles().titleText}>Recompensa</Text>
-        <SwitchButton tab1="SI" tab2="NO" />
+        <SwitchButton
+          setSelectedReward={setSelectedReward}
+          tab1="SI"
+          tab2="NO"
+        />
       </View>
       <View style={styles(width, height).aboutPetContainer}>
-        <Text style={styles().titleText}>Acerca del animal</Text>
+        <TitleLostMyPet
+          title="Acerca del animal"
+          handleInfo={handleInfo}
+          type={infoTypes.ABOUT_PET}
+        />
         <Controller
           name="aboutPet"
           control={control}
@@ -233,5 +227,14 @@ const styles = (width?: number, height?: number) =>
       fontSize: 16,
       fontWeight: '700',
       top: 3,
+    },
+    iconInfo: {
+      width: 25,
+      height: 25,
+      borderRadius: 40,
+      backgroundColor: '#e3e1e1',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });

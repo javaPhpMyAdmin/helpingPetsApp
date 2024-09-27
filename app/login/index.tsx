@@ -1,5 +1,6 @@
+/* eslint-disable import/order */
 import { Link, router } from 'expo-router';
-import { type ComponentProps } from 'react';
+import React, { type ComponentProps } from 'react';
 import {
   View,
   Text,
@@ -9,11 +10,94 @@ import {
   Pressable,
 } from 'react-native';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  isErrorWithCode,
+  isSuccessResponse,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
+
+WebBrowser.maybeCompleteAuthSession();
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type href = ComponentProps<typeof Link>['href'];
 
+GoogleSignin.configure({
+  webClientId:
+    '964976949621-3faafs3idqdh8t1q1q0sb7leetvja0t5.apps.googleusercontent.com', // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
+  scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
+  // offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+  // hostedDomain: '', // specifies a hosted domain restriction
+  // forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
+  // accountName: 'chelobat16411@gmail.com', // [Android] specifies an account name on the device that should be used
+  // iosClientId:
+  //   '964976949621-hr3aonf5ml6ic9shfgoi1j8bfda4o8jp.apps.googleusercontent.com', // [iOS] if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
+  // googleServicePlistPath: '', // [iOS] if you renamed your GoogleService-Info file, new name here, e.g. "GoogleService-Info-Staging"
+  // openIdRealm: '', // [iOS] The OpenID2 realm of the home web server. This allows Google to include the user's OpenID Identifier in the OpenID Connect ID token.
+  // profileImageSize: 120, // [iOS] The desired height (and width) of the profile image. Defaults to 120px
+});
+
 const LoginScreen = () => {
+  const [accessToken, setAccessToken] = React.useState<string | null>(null);
+  const [user, setUser] = React.useState<any | null>(null);
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    webClientId:
+      '964976949621-3faafs3idqdh8t1q1q0sb7leetvja0t5.apps.googleusercontent.com',
+    androidClientId:
+      '964976949621-7gt83kfvei6crm2co1q4gr4fp8079bg2.apps.googleusercontent.com',
+  });
+
+  const signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const response = await GoogleSignin.signIn();
+      console.log('response', response);
+      if (isSuccessResponse(response)) {
+        setUser(response.data);
+        console.log('response.data', response.data);
+      }
+    } catch (error) {
+      if (isErrorWithCode(error)) {
+        switch (error.code) {
+          case statusCodes.IN_PROGRESS:
+            // operation (eg. sign in) already in progress
+            break;
+          case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
+            // Android only, play services not available or outdated
+            break;
+          default:
+          // some other error happened
+        }
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    if (response?.type === 'success') {
+      setAccessToken(response.params.access_token);
+      console.log('token', response.params.access_token);
+      // accessToken && fetchUserInfo();
+      // console.log('USER', user);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [response, accessToken]);
+
+  // async function fetchUserInfo() {
+  //   const response = await fetch(
+  //     'https://www.googleapis.com/oauth2/v3/userinfo',
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //     }
+  //   );
+  //   const userInfo = await response.json();
+  //   setUser(userInfo);
+  // }
+
   return (
     <View className="bg-white h-full w-full">
       <StatusBar barStyle="light-content" />
@@ -68,6 +152,24 @@ const LoginScreen = () => {
               </Text>
             </Pressable>
           </Animated.View>
+          {/* <Animated.View
+            entering={FadeInUp.delay(500).duration(1000).springify()}
+            className="w-full"
+          >
+            <Pressable
+              onPress={() => promptAsync()}
+              className="bg-sky-400 p-3 rounded-2xl mb-3"
+            >
+              <Text className="text-xl font-bold text-white text-center">
+                Login with Google
+              </Text>
+            </Pressable>
+          </Animated.View> */}
+          <GoogleSigninButton
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={signIn}
+          />
           <Animated.View
             entering={FadeInUp.delay(700).duration(1000).springify()}
             className="flex-row justify-center"

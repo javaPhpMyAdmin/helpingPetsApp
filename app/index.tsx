@@ -40,7 +40,7 @@ const Index = () => {
     // setTimeout(() => router.replace('/(tabs)/home'), 500);
     // setTimeout(() => router.replace('/reportPet'), 500);
     // setTimeout(() => router.replace('/ReportPet'), 500);
-    setTimeout(() => router.replace('/ReportPet/lostMyPet'), 500);
+    setTimeout(() => router.replace('/login'), 500);
   }, [animateElement]);
   return (
     <View

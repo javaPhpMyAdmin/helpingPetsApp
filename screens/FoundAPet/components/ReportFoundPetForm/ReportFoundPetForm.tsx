@@ -10,24 +10,14 @@ import {
   Platform,
   Keyboard,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Controller, FieldError, useForm } from 'react-hook-form';
-import { object, string } from 'yup';
 import { FormTitle } from '../FormTitle';
 import { SubmitButton } from '../SubmitButton';
-import { ModalInformation } from '../ModalInformation';
-import { useKeyboardVisible } from '../../../../hooks/useIsKeyboardVisible';
+import { useKeyboardVisible } from '@/hooks/useIsKeyboardVisible';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-
-const formSchema = object().shape({
-  reportTitle: string()
-    .required('El título es requerido')
-    .min(10, 'El título debe tener al menos 3 caracteres'),
-  reportDescription: string()
-    .required('La descripción es requerida')
-    .min(10, 'La descripción debe tener al menos 10 caracteres')
-    .max(70, 'La descripción debe tener menos de 100 caracteres'),
-});
+import { alertDescription, alertTitle, infoTypes } from '../../helpers';
+import { formSchema } from './schemaValidation';
 
 interface FormProps {
   reportTitle: string;
@@ -43,10 +33,6 @@ const BEHAVIOR = Platform.OS === 'ios' ? 'padding' : 'height';
 const ReportFoundPetForm = ({
   setIsKeyboardVisible,
 }: ReportFoundPetFormProps) => {
-  const [openTitleInformationModal, setOpenTitleInformationModal] =
-    useState(false);
-  const [type, setType] = useState(0);
-
   const {
     control,
     handleSubmit,
@@ -62,12 +48,8 @@ const ReportFoundPetForm = ({
   const isKeyboardVisible = useKeyboardVisible();
 
   const openModal = (type: number) => {
-    setOpenTitleInformationModal(!openTitleInformationModal);
-    setType(type);
-  };
-
-  const closeModal = () => {
-    setOpenTitleInformationModal(!openTitleInformationModal);
+    if (type === infoTypes.TITLE) alertTitle();
+    if (type === infoTypes.DESCRIPTION) alertDescription();
   };
 
   const submit = (data: FormProps) => {
@@ -96,7 +78,11 @@ const ReportFoundPetForm = ({
           <View
             style={styles(errors.reportTitle, width, height).titleContainer}
           >
-            <FormTitle title="Título" handleInfo={openModal} type={0} />
+            <FormTitle
+              title="Título"
+              handleInfo={openModal}
+              type={infoTypes.TITLE}
+            />
             <Controller
               name="reportTitle"
               control={control}
@@ -122,7 +108,11 @@ const ReportFoundPetForm = ({
                 .descriptionContainer
             }
           >
-            <FormTitle title="Descripción" handleInfo={openModal} type={1} />
+            <FormTitle
+              title="Descripción"
+              handleInfo={openModal}
+              type={infoTypes.DESCRIPTION}
+            />
             <Controller
               name="reportDescription"
               control={control}
@@ -146,12 +136,6 @@ const ReportFoundPetForm = ({
             )}
           </View>
         </TouchableWithoutFeedback>
-
-        <ModalInformation
-          openTitleInformationModal={openTitleInformationModal}
-          closeModal={closeModal}
-          type={type}
-        />
       </KeyboardAvoidingView>
       {!isKeyboardVisible && (
         <SubmitButton handleSubmit={handleSubmit} submit={submit} />
