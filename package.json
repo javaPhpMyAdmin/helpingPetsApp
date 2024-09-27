@@ -15,6 +15,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "expo-application": "*",
     "@expo/vector-icons": "^14.0.2",
     "@googlemaps/polyline-codec": "^1.0.28",
     "@gorhom/bottom-sheet": "^4.6.4",

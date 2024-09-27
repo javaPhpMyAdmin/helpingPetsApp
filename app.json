@@ -35,6 +35,12 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      [
+        "@react-native-google-signin/google-signin",
+        {
+          "iosUrlScheme": "com.googleusercontent.apps.964976949621-hr3aonf5ml6ic9shfgoi1j8bfda4o8jp"
+        }
+      ],
       "expo-router",
       [
         "expo-location",
@@ -52,12 +58,6 @@
         "expo-image-picker",
         {
           "photosPermission": "Allow Helping Pets to access your photos."
-        }
-      ],
-      [
-        "@react-native-google-signin/google-signin",
-        {
-          "iosUrlScheme": "com.googleusercontent.apps._some_id_here_"
         }
       ]
     ],

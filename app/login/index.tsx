@@ -25,41 +25,41 @@ WebBrowser.maybeCompleteAuthSession();
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type href = ComponentProps<typeof Link>['href'];
 
-GoogleSignin.configure({
-  webClientId:
-    '964976949621-3faafs3idqdh8t1q1q0sb7leetvja0t5.apps.googleusercontent.com', // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
-  scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
-  // offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-  // hostedDomain: '', // specifies a hosted domain restriction
-  // forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
-  // accountName: 'chelobat16411@gmail.com', // [Android] specifies an account name on the device that should be used
-  // iosClientId:
-  //   '964976949621-hr3aonf5ml6ic9shfgoi1j8bfda4o8jp.apps.googleusercontent.com', // [iOS] if you want to specify the client ID of type iOS (otherwise, it is taken from GoogleService-Info.plist)
-  // googleServicePlistPath: '', // [iOS] if you renamed your GoogleService-Info file, new name here, e.g. "GoogleService-Info-Staging"
-  // openIdRealm: '', // [iOS] The OpenID2 realm of the home web server. This allows Google to include the user's OpenID Identifier in the OpenID Connect ID token.
-  // profileImageSize: 120, // [iOS] The desired height (and width) of the profile image. Defaults to 120px
-});
-
 const LoginScreen = () => {
   const [accessToken, setAccessToken] = React.useState<string | null>(null);
   const [user, setUser] = React.useState<any | null>(null);
   const [request, response, promptAsync] = Google.useAuthRequest({
+    // expoClientId:
+    //   '964976949621-usahoh8gok9fuvphbrmh4qv3nltn325n.apps.googleusercontent.com',
+    iosClientId:
+      '964976949621-hr3aonf5ml6ic9shfgoi1j8bfda4o8jp.apps.googleusercontent.com',
     webClientId:
       '964976949621-3faafs3idqdh8t1q1q0sb7leetvja0t5.apps.googleusercontent.com',
     androidClientId:
       '964976949621-7gt83kfvei6crm2co1q4gr4fp8079bg2.apps.googleusercontent.com',
+    scopes: ['profile', 'email'],
+  });
+
+  GoogleSignin.configure({
+    webClientId:
+      '964976949621-3faafs3idqdh8t1q1q0sb7leetvja0t5.apps.googleusercontent.com', // client ID of type WEB for your server. Required to get the `idToken` on the user object, and for offline access.
+    scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
+    iosClientId:
+      '964976949621-hr3aonf5ml6ic9shfgoi1j8bfda4o8jp.apps.googleusercontent.com',
   });
 
   const signIn = async () => {
+    console.log('signin');
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
       console.log('response', response);
       if (isSuccessResponse(response)) {
         setUser(response.data);
-        console.log('response.data', response.data);
+        console.warn('response.data', response.data);
       }
     } catch (error) {
+      console.log('error', error);
       if (isErrorWithCode(error)) {
         switch (error.code) {
           case statusCodes.IN_PROGRESS:
@@ -77,26 +77,28 @@ const LoginScreen = () => {
 
   React.useEffect(() => {
     if (response?.type === 'success') {
+      // console.log(response);
       setAccessToken(response.params.access_token);
       console.log('token', response.params.access_token);
-      // accessToken && fetchUserInfo();
-      // console.log('USER', user);
+      accessToken && fetchUserInfo();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [response, accessToken]);
 
-  // async function fetchUserInfo() {
-  //   const response = await fetch(
-  //     'https://www.googleapis.com/oauth2/v3/userinfo',
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //       },
-  //     }
-  //   );
-  //   const userInfo = await response.json();
-  //   setUser(userInfo);
-  // }
+  async function fetchUserInfo() {
+    const response = await fetch(
+      'https://www.googleapis.com/oauth2/v3/userinfo',
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const userInfo = await response.json();
+
+    console.log('USER', user);
+    setUser(userInfo);
+  }
 
   return (
     <View className="bg-white h-full w-full">
@@ -152,7 +154,7 @@ const LoginScreen = () => {
               </Text>
             </Pressable>
           </Animated.View>
-          {/* <Animated.View
+          <Animated.View
             entering={FadeInUp.delay(500).duration(1000).springify()}
             className="w-full"
           >
@@ -164,7 +166,7 @@ const LoginScreen = () => {
                 Login with Google
               </Text>
             </Pressable>
-          </Animated.View> */}
+          </Animated.View>
           <GoogleSigninButton
             size={GoogleSigninButton.Size.Wide}
             color={GoogleSigninButton.Color.Dark}
