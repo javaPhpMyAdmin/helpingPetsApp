@@ -11,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FormLostMyPet, PictureTaked } from './components';
 import * as ImagePicker from 'expo-image-picker';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Stack } from 'expo-router';
 
 const ILostMyPet = () => {
   const { width, height } = useWindowDimensions();
@@ -48,6 +49,11 @@ const ILostMyPet = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <Stack.Screen
+        options={{
+          headerBackVisible: true,
+        }}
+      />
       <ScrollView style={styles().scroll}>
         <View style={styles(width, height).container}>
           <View style={styles(width).imagesContainer}>
@@ -116,7 +122,7 @@ const styles = (width?: number, height?: number) =>
       borderRadius: 15,
       justifyContent: 'center',
       alignItems: 'center',
-      margin: 50,
+      marginBottom: 35,
     },
     imagesContainer: {
       top: 20,

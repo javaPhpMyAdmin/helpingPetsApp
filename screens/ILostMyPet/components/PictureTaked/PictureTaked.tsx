@@ -4,7 +4,6 @@ import {
   Image,
   useWindowDimensions,
   TouchableOpacity,
-  View,
 } from 'react-native';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
@@ -86,5 +85,6 @@ const styles = (width?: number, height?: number) =>
       height: 50,
       justifyContent: 'center',
       alignItems: 'center',
+      backgroundColor: 'red',
     },
   });

@@ -22,10 +22,12 @@ const CardInfo = () => {
   return (
     <>
       <View style={styles(loaded, width, height).cardInfo}>
-        <Image
-          style={styles(loaded, width, height).imageCard}
-          source={currentPet.image as ImageSourcePropType}
-        />
+        {currentPet.image && (
+          <Image
+            style={styles(loaded, width, height).imageCard}
+            source={currentPet.image as ImageSourcePropType}
+          />
+        )}
         <View style={styles(loaded, width, height).infoContainer}>
           <Text style={styles(loaded, width, height).infoTitle}>
             {currentPet.title}
