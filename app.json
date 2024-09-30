@@ -14,7 +14,16 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.helpingPetsApp"
+      "bundleIdentifier": "com.anonymous.helpingPetsApp",
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLSchemes": [
+              "com.googleusercontent.apps.964976949621-hr3aonf5ml6ic9shfgoi1j8bfda4o8jp"
+            ]
+          }
+        ]
+      }
     },
     "android": {
       "adaptiveIcon": {
