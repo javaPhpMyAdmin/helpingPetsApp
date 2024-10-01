@@ -32,7 +32,7 @@ const FormLostMyPet = () => {
     reset,
     formState: { errors },
   } = useForm<FormProps>({
-    mode: 'onBlur',
+    mode: 'onChange',
     resolver: yupResolver(formSchema),
   });
 

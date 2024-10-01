@@ -39,7 +39,7 @@ const ReportFoundPetForm = ({
     reset,
     formState: { errors },
   } = useForm<FormProps>({
-    mode: 'all',
+    mode: 'onChange',
     resolver: yupResolver(formSchema),
   });
 
