@@ -41,15 +41,12 @@ const Index = () => {
   };
   useEffect(() => {
     animateElement();
-    // setTimeout(() => router.replace('/(tabs)/home'), 500);
-    // setTimeout(() => router.replace('/reportPet'), 500);
-    // setTimeout(() => router.replace('/ReportPet'), 500);
     setTimeout(
       () =>
         isAuthenticated
           ? router.replace('/(auth)/ReportPet')
-          : router.replace('/(public)/login'),
-      5000
+          : router.replace('/(public)/login/signup'), //router.replace('/(public)/login'),
+      500
     );
   }, [animateElement]);
   return (

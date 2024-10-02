@@ -87,7 +87,7 @@ export default function MapScreen() {
   const [loadingTimeAndDistance, setLoadingTimeAndDistance] = useState(false);
 
   const bottomSheetRef = useRef<BottomSheet>(null);
-  const snapPoints = useMemo(() => ['5%', '25%', '50%'], []);
+  const snapPoints = useMemo(() => ['35%'], []);
 
   const renderBackDrop = useCallback(
     (props: any) => (

@@ -22,7 +22,6 @@ const ReportPetLayout = () => {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          // headerTintColor: 'green',
         }}
       />
       <Stack.Screen
@@ -33,7 +32,6 @@ const ReportPetLayout = () => {
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-          // headerTintColor: 'green',
         }}
       />
     </Stack>

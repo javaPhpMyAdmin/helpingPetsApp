@@ -48,11 +48,9 @@ const CameraWrapper = ({ setShowCamera, setImage }: CameraWapperProps) => {
 
   useEffect(() => {
     permisionFunction();
-    console.log({ permission });
+    // permisionFunction();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  if (permission === false) return;
 
   return (
     <View style={styles().cameraContainer}>

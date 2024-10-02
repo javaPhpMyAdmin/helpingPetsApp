@@ -5,6 +5,11 @@ import { AuthState } from '../types';
 interface AuthProps {
   onLogin: (username: string, password: string) => void;
   onLogout: () => void;
+  onSignIn: (
+    username: string,
+    password: string,
+    confirmPassword: string
+  ) => void;
   authState: AuthState;
 }
 

@@ -11,7 +11,7 @@ const NewAccountWrapper = () => {
       className="flex-row justify-center"
     >
       <Text>No tienes una cuenta? </Text>
-      <Link asChild href="/login/signupScreen">
+      <Link asChild href="/login/signup">
         <Pressable>
           <Text className="text-sky-600">Crear una</Text>
         </Pressable>

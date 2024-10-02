@@ -10,7 +10,6 @@ import {
   PetPhotoButton,
   PictureTakedWrapper,
 } from './components';
-import Animated, { FadeIn } from 'react-native-reanimated';
 
 const FoundAPet = () => {
   const [showCamera, setShowCamera] = useState(false);
@@ -44,8 +43,7 @@ const FoundAPet = () => {
         <View style={styles(width, height).container}>
           {!showCamera && (
             <>
-              <Animated.View
-                entering={FadeIn.duration(500).damping(3).springify()}
+              <View
                 style={
                   !image
                     ? styles(width, height).imageContainer
@@ -63,7 +61,7 @@ const FoundAPet = () => {
                     handleCancelPhoto={handleCancelPhoto}
                   />
                 )}
-              </Animated.View>
+              </View>
               <ReportFoundPetForm setIsKeyboardVisible={setIsKeyboardVisible} />
             </>
           )}

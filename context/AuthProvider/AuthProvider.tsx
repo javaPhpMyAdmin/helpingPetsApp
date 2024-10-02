@@ -8,7 +8,6 @@ import {
 } from '@react-native-google-signin/google-signin';
 import { AuthState } from '../types';
 import { AuthContext } from '../AuthContext/AuthContext';
-import { set } from 'react-hook-form';
 
 // GoogleSignin.configure({
 //   webClientId:
@@ -34,7 +33,11 @@ export const SessionProvider = ({
     user: UserEmpty,
   });
 
-  const login = async () => {
+  const login = async (username: string, password: string) => {
+    setAuthState({ authenticated: true, user: UserEmpty });
+  };
+
+  const loginWithGoogle = async () => {
     setAuthState({ authenticated: true, user: UserEmpty });
     // try {
     //   await GoogleSignin.hasPlayServices();
@@ -76,9 +79,20 @@ export const SessionProvider = ({
     // }
   };
 
+  const signIn = async (
+    username: string,
+    password: string,
+    confirmPassword: string
+  ) => {
+    setAuthState({ authenticated: true, user: UserEmpty });
+  };
+
+  const signUpWithGoogle = async () => {};
+
   const value = {
     onLogin: login,
     onLogout: logout,
+    onSignIn: signIn,
     authState,
   };
 
