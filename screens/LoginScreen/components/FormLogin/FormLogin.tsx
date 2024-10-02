@@ -4,22 +4,21 @@ import {
   Text,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   TextInput,
-  TouchableOpacity,
   useWindowDimensions,
-  Image,
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
 import React, { useState } from 'react';
-import { router, Link } from 'expo-router';
 import Animated, { FadeInUp, FadeInDown } from 'react-native-reanimated';
 import { Controller, FieldError, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formSchema } from './schemaValidation';
 import { SubmitButton } from '../SubmitButton';
+import { GoogleButton } from '../GoogleButton';
+import { NewAccountWrapper } from '../NewAccountWrapper';
+import { useAuth } from '@/context/AuthContext/AuthContext';
 
 interface FormProps {
   userEmail: string;
@@ -28,6 +27,7 @@ interface FormProps {
 
 const FormLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const { onLogin } = useAuth();
   const { width } = useWindowDimensions();
   const {
     control,
@@ -39,12 +39,10 @@ const FormLogin = () => {
     resolver: yupResolver(formSchema),
   });
 
-  const signIn = async () => {};
-
   const onSubmit = (data: FormProps) => {
     setIsLoading(true);
     setTimeout(() => {
-      console.log({ data });
+      onLogin!(data.userEmail!, data.password!);
       reset();
       setIsLoading(false);
     }, 2000);
@@ -129,36 +127,8 @@ const FormLogin = () => {
           isLoading={isLoading}
           isValid={isValid}
         />
-        <Animated.View
-          entering={FadeInUp.delay(500).duration(1000).springify()}
-          className="w-full border-gray-600"
-        >
-          <TouchableOpacity
-            onPress={signIn}
-            className="bg-transparent p-3 rounded-2xl border border-gray-300 mb-3"
-          >
-            <View style={styles().googleButton}>
-              <Image
-                source={require('@/assets/images/GLogo.jpg')}
-                style={{ width: 40, height: 40 }}
-              />
-              <Text className="text-xl font-bold text-gray-500 text-center">
-                Iniciar sesión con Google
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </Animated.View>
-        <Animated.View
-          entering={FadeInUp.delay(700).duration(1000).springify()}
-          className="flex-row justify-center"
-        >
-          <Text>No tienes una cuenta? </Text>
-          <Link asChild href="/login/signupScreen">
-            <Pressable>
-              <Text className="text-sky-600">Crear una</Text>
-            </Pressable>
-          </Link>
-        </Animated.View>
+        <GoogleButton />
+        <NewAccountWrapper />
       </View>
     </View>
   );

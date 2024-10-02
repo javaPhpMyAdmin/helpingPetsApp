@@ -2,7 +2,7 @@
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react';
-import { Text, Pressable, StyleSheet } from 'react-native';
+import { Text, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 interface CustomButtonProps {
@@ -21,33 +21,25 @@ const CustomButton = ({
   type,
 }: CustomButtonProps) => {
   return (
-    <Pressable
+    <TouchableOpacity
       style={styles(loaded, width, height).buttonWrap}
       onPress={() =>
         type === 1
-          ? router.push('/ReportPet')
+          ? router.push('/ReportPet/foundPet')
           : router.push('/ReportPet/lostMyPet')
       }
     >
       {/* <MaterialIcons name="pets" size={39} color="orange" /> */}
-      {({ pressed }) => (
-        <>
-          {type === 1 ? (
-            <FontAwesome name="paw" size={36} color="orange" />
-          ) : (
-            <Feather
-              name="alert-triangle"
-              size={39}
-              color="orange"
-              style={{ opacity: pressed ? 0.5 : 1 }}
-            />
-          )}
-          <Text style={[styles().buttonText, { opacity: pressed ? 0.5 : 1 }]}>
-            {title}
-          </Text>
-        </>
-      )}
-    </Pressable>
+
+      <>
+        {type === 1 ? (
+          <FontAwesome name="paw" size={36} color="orange" />
+        ) : (
+          <Feather name="alert-triangle" size={39} color="orange" />
+        )}
+        <Text style={[styles().buttonText]}>{title}</Text>
+      </>
+    </TouchableOpacity>
   );
 };
 

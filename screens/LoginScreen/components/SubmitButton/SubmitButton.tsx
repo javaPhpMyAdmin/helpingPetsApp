@@ -25,7 +25,7 @@ const SubmitButton = ({
   return (
     <Animated.View
       entering={FadeInUp.delay(500).duration(1000).springify()}
-      className="w-[90%]  justify-center"
+      className="w-[100%]  justify-center"
     >
       <TouchableOpacity
         onPress={handleSubmit(onSubmit)}

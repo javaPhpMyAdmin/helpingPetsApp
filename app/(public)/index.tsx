@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Link, router } from 'expo-router';
 import LottieView from 'lottie-react-native';
 import React, { useEffect, useRef } from 'react';
@@ -14,10 +15,13 @@ import Animated, {
   Easing,
   LightSpeedInLeft,
 } from 'react-native-reanimated';
+import { useAuth } from '@/context/AuthContext/AuthContext';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 type Href = ComponentProps<typeof Link>['href'];
 
 const Index = () => {
+  const { authState } = useAuth();
+  const isAuthenticated = authState?.authenticated;
   const opacityAnimation = useRef(new Anima.Value(0.5)).current;
   const { width, height } = useWindowDimensions();
 
@@ -40,7 +44,13 @@ const Index = () => {
     // setTimeout(() => router.replace('/(tabs)/home'), 500);
     // setTimeout(() => router.replace('/reportPet'), 500);
     // setTimeout(() => router.replace('/ReportPet'), 500);
-    setTimeout(() => router.replace('/login'), 500);
+    setTimeout(
+      () =>
+        isAuthenticated
+          ? router.replace('/(auth)/ReportPet')
+          : router.replace('/(public)/login'),
+      5000
+    );
   }, [animateElement]);
   return (
     <View

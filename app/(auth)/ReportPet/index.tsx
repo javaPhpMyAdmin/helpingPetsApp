@@ -1,9 +1,9 @@
 /* eslint-disable import/order */
 import React from 'react';
-import FoundAPet from '@/screens/FoundAPet/FoundAPet';
+import { ReportScreen } from '@/screens';
 
 const PetFounded = () => {
-  return <FoundAPet />;
+  return <ReportScreen />;
 };
 
 export default PetFounded;
