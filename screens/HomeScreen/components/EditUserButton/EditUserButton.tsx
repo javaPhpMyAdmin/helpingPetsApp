@@ -1,19 +1,31 @@
 /* eslint-disable import/order */
-import { View, Pressable, useWindowDimensions, StyleSheet } from 'react-native';
+import {
+  View,
+  useWindowDimensions,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const EditUserButton = () => {
+interface EditUserButtonProps {
+  handleOpenModal: () => void;
+}
+
+const EditUserButton = ({ handleOpenModal }: EditUserButtonProps) => {
   const { width, height } = useWindowDimensions();
   return (
     <View style={{ left: width * 0.2 }}>
-      <Pressable style={styles(height, width).editUserButton}>
+      <TouchableOpacity
+        onPress={handleOpenModal}
+        style={styles(height, width).editUserButton}
+      >
         <MaterialCommunityIcons
           name="circle-edit-outline"
           size={34}
           color="black"
         />
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

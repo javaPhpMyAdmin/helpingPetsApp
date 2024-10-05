@@ -8,25 +8,38 @@ import {
   useWindowDimensions,
   Image,
   Platform,
+  Modal,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { categories } from '@/MockedCategories';
 import { MockedPets } from '@/MockedPets';
-import { CategoryItem, EditUserButton, RenderItem } from './components';
+import {
+  CategoryItem,
+  EditUserButton,
+  RenderItem,
+  UserProfile,
+} from './components';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 
 import * as Location from 'expo-location';
+
 export const HomeScreen = () => {
   const { width, height } = useWindowDimensions();
   const [selectedCategory, setSelectedCategory] = useState('Todos');
+  const [isVisible, setIsVisibleModal] = useState(false);
   const [loaded] = useFonts({
     PlaypenSans: require('@/assets/fonts/PlaypenSans-SemiBold.ttf'),
   });
   const [currentPlaceName, setCurrentPlaceName] = useState('');
+
   const handleOnPress = (category: string) => {
     setSelectedCategory(category);
+  };
+
+  const handleOpenModal = () => {
+    setIsVisibleModal(!isVisible);
   };
 
   useEffect(() => {
@@ -57,60 +70,65 @@ export const HomeScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView style={styles(width, height).container}>
-      <View style={styles(width, height).userContainer}>
-        <Image
-          style={styles(height, width).userInfoAvatar}
-          source={require('@/assets/images/random_user.webp')}
-        />
-        <View style={styles(height, width).userInfoContainer}>
-          <View style={styles(height, width).userInfo}>
-            <Text style={styles(height, width, loaded).greetUser}>
-              Hola Usuario!
-            </Text>
-            <Text style={styles(height, width, loaded).userName}>
-              @usuarioLogueado
-            </Text>
-            <View style={styles(height, width).locationContainer}>
-              <MaterialCommunityIcons
-                name="map-marker-outline"
-                size={18}
-                color="red"
-              />
-              <Text style={styles(height, width, loaded).location}>
-                {currentPlaceName}
+    <>
+      <SafeAreaView style={styles(width, height).container}>
+        <View style={styles(width, height).userContainer}>
+          <Image
+            style={styles(height, width).userInfoAvatar}
+            source={require('@/assets/images/random_user.webp')}
+          />
+          <View style={styles(height, width).userInfoContainer}>
+            <View style={styles(height, width).userInfo}>
+              <Text style={styles(height, width, loaded).greetUser}>
+                Hola Usuario!
               </Text>
+              <Text style={styles(height, width, loaded).userName}>
+                @usuarioLogueado
+              </Text>
+              <View style={styles(height, width).locationContainer}>
+                <MaterialCommunityIcons
+                  name="map-marker-outline"
+                  size={18}
+                  color="red"
+                />
+                <Text style={styles(height, width, loaded).location}>
+                  {currentPlaceName}
+                </Text>
+              </View>
             </View>
+            <EditUserButton handleOpenModal={handleOpenModal} />
           </View>
-          <EditUserButton />
         </View>
-      </View>
-      <View style={styles(height, width).horizontalFlatlist}>
+        <View style={styles(height, width).horizontalFlatlist}>
+          <FlatList
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles(height, width).contentContainer}
+            keyExtractor={(item) => item.id}
+            data={categories}
+            horizontal
+            style={styles(height, width).categoryButton}
+            renderItem={({ item }) => (
+              <CategoryItem
+                handleOnPress={handleOnPress}
+                selectedCategory={selectedCategory}
+                item={item}
+              />
+            )}
+          />
+        </View>
         <FlatList
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles(height, width).contentContainer}
+          showsVerticalScrollIndicator={false}
+          data={MockedPets}
           keyExtractor={(item) => item.id}
-          data={categories}
-          horizontal
-          style={styles(height, width).categoryButton}
-          renderItem={({ item }) => (
-            <CategoryItem
-              handleOnPress={handleOnPress}
-              selectedCategory={selectedCategory}
-              item={item}
-            />
-          )}
+          renderItem={({ item, index }) => {
+            return <RenderItem item={item} index={index} />;
+          }}
         />
-      </View>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={MockedPets}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item, index }) => {
-          return <RenderItem item={item} index={index} />;
-        }}
-      />
-    </SafeAreaView>
+      </SafeAreaView>
+      <Modal transparent animationType="slide" visible={isVisible}>
+        <UserProfile setIsVisibleModal={setIsVisibleModal} />
+      </Modal>
+    </>
   );
 };
 

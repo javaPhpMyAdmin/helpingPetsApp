@@ -49,7 +49,7 @@ const CardInfo = () => {
         </View>
       </View>
       <View style={styles(loaded, width, height).helpmeContainer}>
-        <Text style={styles(loaded).helpmeText}>
+        <Text style={styles(loaded, width, height).helpmeText}>
           Ayúdame a encontrar a otros amigos perdidos o abandonados!
         </Text>
       </View>
@@ -63,7 +63,7 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
   StyleSheet.create({
     cardInfo: {
       width: width! * 0.96,
-      height: height! * 0.3,
+      height: height! * 0.27,
       backgroundColor: 'white',
       borderRadius: 20,
       borderColor: 'pink',
@@ -87,7 +87,7 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
       flexShrink: 1,
       fontSize: 16,
       fontFamily: loaded ? 'PlaypenSans' : '',
-      bottom: 80,
+      bottom: height! * 0.077,
       textAlign: 'center',
       textShadowColor: 'orange',
       textShadowRadius: 5,

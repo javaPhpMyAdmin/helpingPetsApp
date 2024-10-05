@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import React from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Octicons from '@expo/vector-icons/Octicons';
 
 interface CustomButtonProps {
   loaded: boolean;
@@ -26,7 +27,9 @@ const CustomButton = ({
       onPress={() =>
         type === 1
           ? router.push('/ReportPet/foundPet')
-          : router.push('/ReportPet/lostMyPet')
+          : type === 2
+            ? router.push('/ReportPet/lostMyPet')
+            : router.push('/(auth)/(tabs)/home')
       }
     >
       {/* <MaterialIcons name="pets" size={39} color="orange" /> */}
@@ -34,8 +37,10 @@ const CustomButton = ({
       <>
         {type === 1 ? (
           <FontAwesome name="paw" size={36} color="orange" />
-        ) : (
+        ) : type === 2 ? (
           <Feather name="alert-triangle" size={39} color="orange" />
+        ) : (
+          <Octicons name="report" size={34} color="orange" />
         )}
         <Text style={[styles().buttonText]}>{title}</Text>
       </>

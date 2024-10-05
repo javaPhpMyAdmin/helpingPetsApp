@@ -1,14 +1,10 @@
+/* eslint-disable import/order */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Link, router } from 'expo-router';
 import LottieView from 'lottie-react-native';
 import React, { useEffect, useRef } from 'react';
 import { type ComponentProps } from 'react';
-import {
-  View,
-  Animated as Anima,
-  Text,
-  useWindowDimensions,
-} from 'react-native';
+import { View, Text, useWindowDimensions } from 'react-native';
 import Animated, {
   FadeInDown,
   FadeInLeft,
@@ -22,33 +18,20 @@ type Href = ComponentProps<typeof Link>['href'];
 const Index = () => {
   const { authState } = useAuth();
   const isAuthenticated = authState?.authenticated;
-  const opacityAnimation = useRef(new Anima.Value(0.5)).current;
   const { width, height } = useWindowDimensions();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const animateElement = () => {
-    Anima.timing(opacityAnimation, {
-      toValue: 0,
-      duration: 1500,
-      useNativeDriver: true,
-    }).start(() => {
-      Anima.timing(opacityAnimation, {
-        toValue: 1,
-        duration: 1500,
-        useNativeDriver: true,
-      }).start();
-    });
-  };
+
   useEffect(() => {
-    animateElement();
     setTimeout(
       () =>
         isAuthenticated
-          ? router.replace('/(auth)/ReportPet')
+          ? // ? router.replace('/(auth)/ReportPet')
+            router.replace('/(auth)/(tabs)/home')
           : router.replace('/(public)/login/signup'), //router.replace('/(public)/login'),
       500
     );
-  }, [animateElement]);
+  }, []);
   return (
     <View
       style={{

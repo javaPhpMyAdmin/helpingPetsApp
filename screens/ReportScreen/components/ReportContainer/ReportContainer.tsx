@@ -33,6 +33,15 @@ const ReportContainer = () => {
           type={2}
         />
       </View>
+      <View style={styles(loaded, width, height).buttonReportContainer}>
+        <CustomButton
+          loaded={loaded}
+          width={width}
+          height={height}
+          title="Ver todos los reportes"
+          type={3}
+        />
+      </View>
     </View>
   );
 };
@@ -70,5 +79,6 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
       color: 'black',
       fontSize: 22,
       fontFamily: loaded ? 'PlaypenSans' : '',
+      top: 3,
     },
   });

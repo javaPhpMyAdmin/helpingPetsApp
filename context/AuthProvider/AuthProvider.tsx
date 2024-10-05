@@ -29,7 +29,7 @@ export const SessionProvider = ({
   children: React.ReactNode | React.ReactNode[];
 }) => {
   const [authState, setAuthState] = useState<AuthState>({
-    authenticated: false,
+    authenticated: true,
     user: UserEmpty,
   });
 

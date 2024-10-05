@@ -9,6 +9,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
+  TouchableOpacity,
 } from 'react-native';
 import React, { useState } from 'react';
 import Animated, { FadeInUp, FadeInDown } from 'react-native-reanimated';
@@ -19,6 +20,7 @@ import { SubmitButton } from '../SubmitButton';
 import { GoogleButton } from '../GoogleButton';
 import { NewAccountWrapper } from '../NewAccountWrapper';
 import { useAuth } from '@/context/AuthContext/AuthContext';
+import { Ionicons } from '@expo/vector-icons';
 
 interface FormProps {
   userEmail: string;
@@ -27,6 +29,7 @@ interface FormProps {
 
 const FormLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const { onLogin } = useAuth();
   const { width } = useWindowDimensions();
   const {
@@ -38,6 +41,10 @@ const FormLogin = () => {
     mode: 'onChange',
     resolver: yupResolver(formSchema),
   });
+
+  const handleSeePassword = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
 
   const onSubmit = (data: FormProps) => {
     setIsLoading(true);
@@ -102,7 +109,7 @@ const FormLogin = () => {
                   control={control}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                      secureTextEntry
+                      secureTextEntry={!isPasswordVisible}
                       placeholder="Contraseña"
                       placeholderTextColor="gray"
                       onBlur={onBlur}
@@ -111,6 +118,13 @@ const FormLogin = () => {
                     />
                   )}
                 />
+                <TouchableOpacity onPress={handleSeePassword}>
+                  {isPasswordVisible ? (
+                    <Ionicons name="eye-outline" size={34} color="black" />
+                  ) : (
+                    <Ionicons name="eye-off-outline" size={34} color="gray" />
+                  )}
+                </TouchableOpacity>
               </Animated.View>
               {errors.password && (
                 <Text style={styles().errorText}>
@@ -152,6 +166,8 @@ const styles = (error?: FieldError, width?: number, height?: number) =>
     passwordInput: {
       borderWidth: error ? 1.5 : 0,
       borderColor: error ? 'red' : 'gray',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
     },
     touchableContainer: {},
     buttonsContainer: {

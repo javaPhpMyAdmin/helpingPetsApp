@@ -5,33 +5,15 @@ import React, { useEffect } from 'react';
 interface SwitchButtonProps {
   tab1: string;
   tab2: string;
-  tab3?: string;
-  setSelectedSex?: (value: string) => void;
-  setSelectedSpecie?: (value: string) => void;
-  setSelectedReward?: (value: string) => void;
+  setSelectedMode?: (value: string) => void;
 }
 
-const SwitchButton = ({
-  tab1,
-  tab2,
-  tab3,
-  setSelectedReward,
-  setSelectedSpecie,
-  setSelectedSex,
-}: SwitchButtonProps) => {
+const SwitchButton = ({ tab1, tab2, setSelectedMode }: SwitchButtonProps) => {
   const [selectedTab, setSelectedTab] = React.useState<string>(tab1);
 
   useEffect(() => {
-    if (setSelectedSex) {
-      setSelectedSex(selectedTab);
-    }
-    if (setSelectedReward) {
-      setSelectedReward(selectedTab);
-    }
-    if (setSelectedSpecie) {
-      setSelectedSpecie(selectedTab);
-    }
-  }, [selectedTab, setSelectedReward, setSelectedSex, setSelectedSpecie]);
+    setSelectedMode!(selectedTab);
+  }, [selectedTab, setSelectedMode]);
   return (
     <View
       style={{

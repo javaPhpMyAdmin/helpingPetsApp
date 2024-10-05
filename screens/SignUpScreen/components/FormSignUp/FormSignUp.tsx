@@ -9,6 +9,7 @@ import {
   useWindowDimensions,
   TouchableWithoutFeedback,
   Text,
+  TouchableOpacity,
 } from 'react-native';
 import React, { useState } from 'react';
 import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
@@ -19,7 +20,8 @@ import { GoogleButton } from '../GoogleButton';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { formSchema } from './schemaValidation';
 import { useAuth } from '@/context/AuthContext/AuthContext';
-import { useKeyboardVisible } from '../../../../hooks/useIsKeyboardVisible';
+import { useKeyboardVisible } from '@/hooks/useIsKeyboardVisible';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 interface FormProps {
   userEmail: string;
@@ -32,6 +34,10 @@ const FormSignUp = () => {
   const { onSignIn } = useAuth();
   const { width, height } = useWindowDimensions();
   const isKeyboardVisible = useKeyboardVisible();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
+
   const {
     control,
     handleSubmit,
@@ -41,6 +47,14 @@ const FormSignUp = () => {
     mode: 'onChange',
     resolver: yupResolver(formSchema),
   });
+
+  const handleSeePassword = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
+
+  const handleSeeConfirmPassword = () => {
+    setIsConfirmPasswordVisible(!isConfirmPasswordVisible);
+  };
 
   const onSubmit = (data: FormProps) => {
     setIsLoading(true);
@@ -109,7 +123,7 @@ const FormSignUp = () => {
                   control={control}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                      secureTextEntry
+                      secureTextEntry={!isPasswordVisible}
                       placeholder="Contraseña"
                       placeholderTextColor="gray"
                       onBlur={onBlur}
@@ -118,6 +132,13 @@ const FormSignUp = () => {
                     />
                   )}
                 />
+                <TouchableOpacity onPress={handleSeePassword}>
+                  {isPasswordVisible ? (
+                    <Ionicons name="eye-outline" size={34} color="black" />
+                  ) : (
+                    <Ionicons name="eye-off-outline" size={34} color="gray" />
+                  )}
+                </TouchableOpacity>
               </Animated.View>
               {errors.password && (
                 <Text style={styles().errorText}>
@@ -134,7 +155,7 @@ const FormSignUp = () => {
                   control={control}
                   render={({ field: { onChange, onBlur, value } }) => (
                     <TextInput
-                      secureTextEntry
+                      secureTextEntry={!isConfirmPasswordVisible}
                       placeholder="Confirmar contraseña"
                       placeholderTextColor="gray"
                       onBlur={onBlur}
@@ -143,6 +164,13 @@ const FormSignUp = () => {
                     />
                   )}
                 />
+                <TouchableOpacity onPress={handleSeeConfirmPassword}>
+                  {isConfirmPasswordVisible ? (
+                    <Ionicons name="eye-outline" size={34} color="black" />
+                  ) : (
+                    <Ionicons name="eye-off-outline" size={34} color="gray" />
+                  )}
+                </TouchableOpacity>
               </Animated.View>
               {errors.confirmPassword && (
                 <Text style={styles().errorText}>
@@ -194,9 +222,13 @@ const styles = (error?: FieldError, width?: number, height?: number) =>
     passwordInput: {
       borderWidth: error ? 1.5 : 0,
       borderColor: error ? 'red' : 'gray',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
     },
     confirmPasswordInput: {
       borderWidth: error ? 1.5 : 0,
       borderColor: error ? 'red' : 'gray',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
     },
   });
