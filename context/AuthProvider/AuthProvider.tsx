@@ -23,6 +23,13 @@ const UserEmpty = {
   name: '',
 };
 
+const UserMocked = {
+  email: 'chelobat16411@gmail.com',
+  photo:
+    'https://lh3.googleusercontent.com/a/ACg8ocIxeLSjaXNYDkWZtk8G5aPK-_MWaOiTmp90RouXm7OTUgjy1Z69=s288-c-no',
+  name: 'powerRanger',
+};
+
 export const SessionProvider = ({
   children,
 }: {
@@ -30,7 +37,7 @@ export const SessionProvider = ({
 }) => {
   const [authState, setAuthState] = useState<AuthState>({
     authenticated: true,
-    user: UserEmpty,
+    user: UserMocked,
   });
 
   const login = async (username: string, password: string) => {

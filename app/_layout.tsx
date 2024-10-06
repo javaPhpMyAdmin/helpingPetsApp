@@ -17,16 +17,16 @@ const InitialLayout = () => {
   const segments = useSegments();
   const router = useRouter();
 
-  useEffect(() => {
-    const inTabsGroup = segments[0] === '(auth)';
+  // useEffect(() => {
+  //   const inTabsGroup = segments[0] === '(auth)';
 
-    if (isAuthenticated && !inTabsGroup) {
-      router.replace('/(auth)/ReportPet');
-    } else if (!isAuthenticated) {
-      router.replace('/(public)');
-    }
-    console.log({ authState });
-  }, [isAuthenticated]);
+  //   if (isAuthenticated && !inTabsGroup) {
+  //     router.replace('/(auth)/ReportPet');
+  //   } else if (!isAuthenticated) {
+  //     router.replace('/(public)');
+  //   }
+  //   console.log({ authState });
+  // }, [isAuthenticated]);
 
   return <Slot />;
 };

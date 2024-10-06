@@ -54,7 +54,7 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
       display: 'flex',
       justifyContent: 'flex-end',
       alignItems: 'flex-start',
-      gap: 15,
+      gap: 10,
       bottom: height! * 0.05,
     },
     buttonReportContainer: {

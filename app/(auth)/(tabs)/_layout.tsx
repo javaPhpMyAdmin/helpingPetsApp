@@ -14,14 +14,6 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="mapView"
-        options={{
-          headerTitle: 'Mapa',
-          headerShown: false,
-          tabBarLabel: 'Mapa',
-        }}
-      />
-      <Tabs.Screen
         name="newMarker"
         options={{
           headerTitle: 'Nuevo Registro',

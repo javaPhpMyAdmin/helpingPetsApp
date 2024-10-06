@@ -15,7 +15,7 @@ interface EditUserButtonProps {
 const EditUserButton = ({ handleOpenModal }: EditUserButtonProps) => {
   const { width, height } = useWindowDimensions();
   return (
-    <View style={{ left: width * 0.2 }}>
+    <View style={{ left: width * 0.17 }}>
       <TouchableOpacity
         onPress={handleOpenModal}
         style={styles(height, width).editUserButton}

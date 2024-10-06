@@ -34,7 +34,7 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
       style={styles(width).container}
       onPress={() =>
         router.push<Marker>({
-          pathname: `/testIdtest`,
+          pathname: '/(auth)/detailPet',
           params: {
             petId: item.id,
             image: item.image as string,
@@ -110,7 +110,7 @@ const styles = (width: number, randomColor?: string) =>
       borderRadius: 20,
       position: 'absolute',
       top: -(width * 0.042),
-      backgroundColor: randomColor ?? 'orange',
+      backgroundColor: '#f88f26',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',

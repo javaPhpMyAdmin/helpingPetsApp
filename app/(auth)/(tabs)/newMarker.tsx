@@ -1,12 +1,12 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import { router } from 'expo-router';
+import { useEffect } from 'react';
+import { View } from 'react-native';
 
 const NewMarker = () => {
-  return (
-    <View className="flex flex-1 justify-center">
-      <Text className="text-center">NewMarker</Text>
-    </View>
-  );
+  useEffect(() => {
+    router.push('/(auth)/ReportPet');
+  }, []);
+  return <View />;
 };
 
 export default NewMarker;

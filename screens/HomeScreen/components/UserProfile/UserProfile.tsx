@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import React, { useState } from 'react';
 import { SwitchButton } from '../SwitchButton';
+import { useAuth } from '@/context';
 
 interface UserProfileProps {
   setIsVisibleModal: (isVisible: boolean) => void;
@@ -18,6 +19,8 @@ interface UserProfileProps {
 const UserProfile = ({ setIsVisibleModal }: UserProfileProps) => {
   const { width, height } = useWindowDimensions();
   const [selectedMode, setSelectedMode] = useState<string>('Si');
+
+  const { authState } = useAuth();
 
   const onSubmit = () => {
     console.log(selectedMode);
@@ -31,7 +34,7 @@ const UserProfile = ({ setIsVisibleModal }: UserProfileProps) => {
     <View style={styles(width, height).container}>
       <View style={styles(width, height).userImageContainer}>
         <Image
-          source={require('@/assets/images/user.png')}
+          source={{ uri: authState?.user.photo! }}
           style={styles(width, height).userImage}
         />
         <TouchableOpacity
@@ -44,6 +47,7 @@ const UserProfile = ({ setIsVisibleModal }: UserProfileProps) => {
       <View style={styles(width, height).usernameContainer}>
         <Text style={styles().fieldText}>Usuario</Text>
         <TextInput
+          value={authState?.user.name}
           style={styles(width, height).usernameInput}
           placeholder="Nombre"
           placeholderTextColor="gray"
@@ -78,7 +82,7 @@ const styles = (width?: number, height?: number) =>
     container: {
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
-      backgroundColor: '#faeaea',
+      backgroundColor: '#fb632b',
       flex: 1,
       top: 170,
       width: '100%',
@@ -92,15 +96,31 @@ const styles = (width?: number, height?: number) =>
       justifyContent: 'center',
       alignItems: 'center',
       gap: 10,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 3,
+        height: 3,
+      },
+      shadowOpacity: 0.8,
+      shadowRadius: 4,
+      elevation: 9,
     },
     userImage: {
       width: width! * 0.5,
       height: width! * 0.5,
       borderRadius: 100,
-      borderColor: 'gray',
-      borderWidth: 0.3,
+      borderColor: 'white',
+      borderWidth: 0.5,
       padding: 5,
       bottom: 50,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 2,
+        height: 2,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 3,
+      elevation: 9,
     },
     usernameContainer: {
       width: '100%',
@@ -115,7 +135,7 @@ const styles = (width?: number, height?: number) =>
       width: '100%',
       height: width! * 0.14,
       borderRadius: 10,
-      backgroundColor: '#d6d6d6',
+      backgroundColor: '#f7f5f5',
       justifyContent: 'center',
       alignItems: 'center',
       paddingLeft: 10,
@@ -137,6 +157,14 @@ const styles = (width?: number, height?: number) =>
       backgroundColor: 'orange',
       justifyContent: 'center',
       alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 2,
+        height: 2,
+      },
+      shadowOpacity: 1,
+      shadowRadius: 3,
+      elevation: 9,
     },
     buttonText: {
       color: 'white',
@@ -155,7 +183,7 @@ const styles = (width?: number, height?: number) =>
       bottom: 40,
     },
     fieldText: {
-      color: 'gray',
+      color: 'white',
       fontSize: 22,
       fontWeight: 'bold',
       fontFamily: 'PlaypenSans',

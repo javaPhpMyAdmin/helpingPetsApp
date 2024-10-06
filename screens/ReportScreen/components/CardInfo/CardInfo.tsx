@@ -63,7 +63,7 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
   StyleSheet.create({
     cardInfo: {
       width: width! * 0.96,
-      height: height! * 0.27,
+      height: height! * 0.24,
       backgroundColor: 'white',
       borderRadius: 20,
       borderColor: 'pink',
