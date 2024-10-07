@@ -103,6 +103,7 @@ const styles = (width: number, height?: number, loaded?: boolean) =>
       fontSize: 15,
       fontFamily: loaded ? 'PlaypenSans' : '',
       bottom: width * 0.0044,
+      color: 'gray',
     },
     userInfo: {
       flexDirection: 'column',
@@ -119,5 +120,10 @@ const styles = (width: number, height?: number, loaded?: boolean) =>
       right: width * 0.005,
       // backgroundColor: 'pink',
     },
-    location: { left: 4, bottom: 2, fontFamily: loaded ? 'PlaypenSans' : '' },
+    location: {
+      left: 4,
+      bottom: 1,
+      fontFamily: loaded ? 'PlaypenSans' : '',
+      color: 'gray',
+    },
   });

@@ -16,9 +16,8 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="newMarker"
         options={{
-          headerTitle: 'Nuevo Registro',
-          // headerShown: false,
-          tabBarLabel: 'Nuevo',
+          headerShown: false,
+          tabBarLabel: 'Reportar',
         }}
       />
       <Tabs.Screen

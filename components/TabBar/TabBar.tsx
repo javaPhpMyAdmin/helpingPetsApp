@@ -1,5 +1,5 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -104,7 +104,7 @@ const styles = (height: number, width: number) =>
   StyleSheet.create({
     tabbar: {
       position: 'absolute',
-      bottom: width * 0.01,
+      bottom: width * 0.04,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',

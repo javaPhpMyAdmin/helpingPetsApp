@@ -1,13 +1,12 @@
+/* eslint-disable import/order */
 import { useEffect } from 'react';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import { AnimatedText } from 'react-native-reanimated/lib/typescript/reanimated2/component/Text';
-
 import { icon } from '@/constants/Icons';
 
 interface TabBarButtonProps {

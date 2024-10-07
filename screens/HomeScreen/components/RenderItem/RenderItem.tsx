@@ -100,20 +100,29 @@ const styles = (width: number, randomColor?: string) =>
     },
     image: {
       width: width * 0.4,
-      height: width * 0.44,
+      height: width * 0.46,
       borderRadius: 20,
       objectFit: 'cover',
     },
     squareImage: {
-      width: width * 0.44,
-      height: width * 0.472,
+      width: width * 0.41,
+      height: width * 0.47,
       borderRadius: 20,
       position: 'absolute',
-      top: -(width * 0.042),
+      top: -(width * 0.04),
       backgroundColor: '#f88f26',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
+      shadowColor: 'orange',
+      shadowOffset: {
+        width: 1,
+        height: 1,
+      },
+      shadowOpacity: 2,
+      shadowRadius: 4,
+
+      elevation: 8,
     },
     textContainer: {
       gap: 4,

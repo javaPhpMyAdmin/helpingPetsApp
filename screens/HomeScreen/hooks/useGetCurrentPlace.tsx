@@ -16,7 +16,7 @@ const useGetCurrentPlace = () => {
       if (
         currentPlace[0].city! !==
         (Platform.OS === 'ios'
-          ? currentPlace[0].region!
+          ? currentPlace[0].region
           : currentPlace[0].region?.split(' ')[2]!)
       ) {
         currentPlaceName = currentPlace[0].city!.concat(
@@ -25,8 +25,9 @@ const useGetCurrentPlace = () => {
             ? currentPlace[0].region!
             : currentPlace[0].region?.split(' ')[2]!
         );
+      } else {
+        currentPlaceName = currentPlace[0].city!;
       }
-      currentPlaceName = currentPlace[0].city!;
 
       setCurrentPlaceName(currentPlaceName ?? '');
     })();
