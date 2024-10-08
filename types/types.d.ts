@@ -39,3 +39,11 @@ export interface Pet {
   createdAt: string;
   gender?: string;
 }
+export interface PetForAdoption {
+  id: string;
+  photoUrl: string;
+  petName: string;
+  breed: string;
+  gender: string;
+  age: string;
+}

@@ -10,9 +10,9 @@ import {
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
-import { MockedPets } from '@/MockedPets';
 import { RenderItem } from './components';
 import { CategoryList } from '@/components';
+import { MockedPetsForAdoption } from '@/MockedPetsForAdoption';
 
 const AdoptPet = () => {
   const { width, height } = useWindowDimensions();
@@ -61,7 +61,7 @@ const AdoptPet = () => {
             contentContainerStyle={styles(height, width).contentContainer}
             showsHorizontalScrollIndicator={false}
             horizontal
-            data={MockedPets}
+            data={MockedPetsForAdoption}
             renderItem={({ item }) => <RenderItem pet={item} />}
             keyExtractor={(item) => item.id}
           />
