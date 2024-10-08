@@ -11,6 +11,7 @@ import React from 'react';
 import Foundation from '@expo/vector-icons/Foundation';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { PetForAdoption } from '@/types';
+import { router } from 'expo-router';
 
 interface RenderItemProps {
   pet: PetForAdoption;
@@ -20,7 +21,19 @@ const RenderItem = ({ pet }: RenderItemProps) => {
   const { width } = useWindowDimensions();
   return (
     <TouchableOpacity
-      onPress={() => Alert.alert('Soy yo', pet.petName)}
+      onPress={() =>
+        router.push({
+          pathname: '/(auth)/detailAdoptPet',
+          params: {
+            petId: pet.id,
+            petName: pet.petName,
+            breed: pet.breed,
+            age: pet.age,
+            gender: pet.gender,
+            photoUrl: pet.photoUrl,
+          },
+        })
+      }
       style={{ flex: 1, paddingHorizontal: 8, position: 'relative' }}
     >
       <Image

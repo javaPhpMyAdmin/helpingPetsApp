@@ -8,11 +8,13 @@ import {
   Image,
   TextInput,
   Alert,
+  ScrollView,
 } from 'react-native';
 import React, { useState } from 'react';
 import { SwitchButton } from '../SwitchButton';
 import { useAuth } from '@/context';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 interface UserProfileProps {
   setIsVisibleModal: (isVisible: boolean) => void;
@@ -20,7 +22,8 @@ interface UserProfileProps {
 
 const UserProfile = ({ setIsVisibleModal }: UserProfileProps) => {
   const { width, height } = useWindowDimensions();
-  const [selectedMode, setSelectedMode] = useState<string>('Si');
+  const [selectedMode, setSelectedMode] = useState<string>('No');
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('Español');
 
   const { authState } = useAuth();
 
@@ -34,6 +37,18 @@ const UserProfile = ({ setIsVisibleModal }: UserProfileProps) => {
 
   return (
     <View style={styles(width, height).container}>
+      <LinearGradient
+        colors={['#ba5370', '#f4e2d8']}
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: 0,
+          height: '100%',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+        }}
+      />
       <TouchableOpacity
         onPress={() => Alert.alert('NOS VEMOS DULIO')}
         style={{ position: 'absolute', right: 20, top: 20 }}
@@ -63,7 +78,20 @@ const UserProfile = ({ setIsVisibleModal }: UserProfileProps) => {
       </View>
       <View style={styles(width, height).modeContainer}>
         <Text style={styles().fieldText}>Modo Oscuro</Text>
-        <SwitchButton tab1="Si" tab2="No" setSelectedMode={setSelectedMode} />
+        <SwitchButton
+          type={1}
+          tab1="No"
+          tab2="Si"
+          setSelectedMode={setSelectedMode}
+        />
+      </View>
+      <View style={styles(width, height).languageContainer}>
+        <Text style={styles().fieldText}>Lenguaje</Text>
+        <SwitchButton
+          tab1="Español"
+          tab2="Inglés"
+          setSelectedLanguage={setSelectedLanguage}
+        />
       </View>
       <View style={styles(width, height).buttonsContainer}>
         <TouchableOpacity
@@ -90,9 +118,10 @@ const styles = (width?: number, height?: number) =>
     container: {
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
-      backgroundColor: '#fb632b',
+      // backgroundColor: '#fb632b',
+      // backgroundColor: grad('#ba5370', #f4e2d8),
       flex: 1,
-      top: 170,
+      top: 100,
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
@@ -112,6 +141,7 @@ const styles = (width?: number, height?: number) =>
       shadowOpacity: 0.8,
       shadowRadius: 4,
       elevation: 9,
+      bottom: 30,
     },
     userImage: {
       width: width! * 0.5,
@@ -156,7 +186,7 @@ const styles = (width?: number, height?: number) =>
       flexDirection: 'row',
       gap: 10,
       paddingHorizontal: 10,
-      bottom: height! * 0.06,
+      bottom: height! * 0.04,
     },
     button: {
       width: width! * 0.4,
@@ -182,13 +212,25 @@ const styles = (width?: number, height?: number) =>
     },
     modeContainer: {
       width: '100%',
+      height: width! * 0.36,
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'flex-start',
       flexDirection: 'column',
       gap: 20,
       paddingHorizontal: 10,
-      bottom: 40,
+      bottom: 20,
+    },
+    languageContainer: {
+      width: '100%',
+      height: width! * 0.36,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'flex-start',
+      flexDirection: 'column',
+      gap: 20,
+      paddingHorizontal: 10,
+      bottom: 50,
     },
     fieldText: {
       color: 'white',
@@ -197,6 +239,6 @@ const styles = (width?: number, height?: number) =>
       fontFamily: 'PlaypenSans',
     },
     editButton: {
-      bottom: 40,
+      bottom: 60,
     },
   });

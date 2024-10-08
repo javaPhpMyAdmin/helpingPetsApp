@@ -5,15 +5,27 @@ import React, { useEffect } from 'react';
 interface SwitchButtonProps {
   tab1: string;
   tab2: string;
+  type?: number;
   setSelectedMode?: (value: string) => void;
+  setSelectedLanguage?: (value: string) => void;
 }
 
-const SwitchButton = ({ tab1, tab2, setSelectedMode }: SwitchButtonProps) => {
+const SwitchButton = ({
+  tab1,
+  tab2,
+  type,
+  setSelectedMode,
+  setSelectedLanguage,
+}: SwitchButtonProps) => {
   const [selectedTab, setSelectedTab] = React.useState<string>(tab1);
 
   useEffect(() => {
-    setSelectedMode!(selectedTab);
-  }, [selectedTab, setSelectedMode]);
+    if (type === 1) {
+      setSelectedMode!(selectedTab);
+    } else {
+      setSelectedLanguage!(selectedTab);
+    }
+  }, [selectedTab, setSelectedMode, setSelectedLanguage, type]);
   return (
     <View
       style={{
@@ -21,15 +33,15 @@ const SwitchButton = ({ tab1, tab2, setSelectedMode }: SwitchButtonProps) => {
         justifyContent: 'center',
         alignItems: 'center',
         height: '20%',
+        backgroundColor: 'orange',
       }}
     >
       <View
         style={{
           width: '100%',
           height: 55,
-          borderWidth: 0.3,
           backgroundColor: 'white',
-          borderRadius: 15,
+          borderRadius: 10,
           flexDirection: 'row',
           alignItems: 'center',
           paddingHorizontal: 5,
@@ -40,7 +52,7 @@ const SwitchButton = ({ tab1, tab2, setSelectedMode }: SwitchButtonProps) => {
             width: '50%',
             height: 45,
             backgroundColor: selectedTab === tab1 ? '#f7991e' : 'transparent',
-            borderRadius: 15,
+            borderRadius: 10,
             justifyContent: 'center',
             alignItems: 'center',
           }}
