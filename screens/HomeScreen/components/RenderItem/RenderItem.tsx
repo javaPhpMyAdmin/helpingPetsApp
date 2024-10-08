@@ -65,9 +65,9 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
       </View>
       <View style={styles(width).gender}>
         {item.gender && item.gender === Gender.Male ? (
-          <Foundation name="male-symbol" size={24} color="green" />
+          <Foundation name="male-symbol" size={29} color="green" />
         ) : (
-          <Foundation name="female-symbol" size={24} color="hotpink" />
+          <Foundation name="female-symbol" size={29} color="hotpink" />
         )}
       </View>
     </Pressable>

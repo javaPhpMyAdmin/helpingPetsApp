@@ -7,10 +7,12 @@ import {
   useWindowDimensions,
   Image,
   TextInput,
+  Alert,
 } from 'react-native';
 import React, { useState } from 'react';
 import { SwitchButton } from '../SwitchButton';
 import { useAuth } from '@/context';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 interface UserProfileProps {
   setIsVisibleModal: (isVisible: boolean) => void;
@@ -32,6 +34,12 @@ const UserProfile = ({ setIsVisibleModal }: UserProfileProps) => {
 
   return (
     <View style={styles(width, height).container}>
+      <TouchableOpacity
+        onPress={() => Alert.alert('NOS VEMOS DULIO')}
+        style={{ position: 'absolute', right: 20, top: 20 }}
+      >
+        <MaterialIcons name="logout" size={44} color="black" />
+      </TouchableOpacity>
       <View style={styles(width, height).userImageContainer}>
         <Image
           source={{ uri: authState?.user.photo! }}
