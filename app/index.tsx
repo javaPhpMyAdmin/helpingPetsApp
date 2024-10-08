@@ -27,7 +27,8 @@ const Index = () => {
       () =>
         isAuthenticated
           ? // ? router.replace('/(auth)/ReportPet')
-            router.replace('/(auth)/(tabs)/home')
+            //router.replace('/(auth)/(tabs)/home')
+            router.replace('/(auth)/(tabs)/adopt')
           : router.replace('/(public)/login/signup'), //router.replace('/(public)/login'),
       500
     );

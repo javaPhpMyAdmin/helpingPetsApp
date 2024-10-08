@@ -5,3 +5,4 @@ export * from './FoundAPet';
 export * from './ILostMyPet';
 export * from './LoginScreen';
 export * from './SignUpScreen';
+export * from './AdoptPet';

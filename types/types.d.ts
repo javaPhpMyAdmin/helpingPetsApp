@@ -28,3 +28,14 @@ export interface Category {
   id: string;
   category: string;
 }
+
+export interface Pet {
+  id: string;
+  title: string;
+  image: string;
+  long: string;
+  lat: string;
+  userEmail: string;
+  createdAt: string;
+  gender?: string;
+}

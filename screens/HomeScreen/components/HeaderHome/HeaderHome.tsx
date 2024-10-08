@@ -66,7 +66,7 @@ const styles = (width: number, height?: number, loaded?: boolean) =>
       flexDirection: 'row',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      marginHorizontal: width * 0.0255,
+      marginHorizontal: width * 0.025,
       height: width * 0.22,
       backgroundColor: 'white',
       borderRadius: 10,

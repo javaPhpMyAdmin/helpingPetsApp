@@ -23,7 +23,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="adopt"
         options={{
-          headerTitle: 'Adoptar',
+          headerShown: false,
           tabBarLabel: 'Adoptar',
         }}
       />

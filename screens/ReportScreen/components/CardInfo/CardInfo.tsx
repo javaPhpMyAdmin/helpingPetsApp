@@ -63,7 +63,7 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
   StyleSheet.create({
     cardInfo: {
       width: width! * 0.96,
-      height: height! * 0.24,
+      height: height! * 0.258,
       backgroundColor: 'white',
       borderRadius: 20,
       borderColor: 'pink',
@@ -87,7 +87,7 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
       flexShrink: 1,
       fontSize: 16,
       fontFamily: loaded ? 'PlaypenSans' : '',
-      bottom: height! * 0.077,
+      bottom: height! * 0.088,
       textAlign: 'center',
       textShadowColor: 'orange',
       textShadowRadius: 5,
