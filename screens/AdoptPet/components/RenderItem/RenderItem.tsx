@@ -5,7 +5,6 @@ import {
   Image,
   useWindowDimensions,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import React from 'react';
 import Foundation from '@expo/vector-icons/Foundation';
