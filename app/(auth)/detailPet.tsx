@@ -18,7 +18,7 @@ const MarkerDetailTest = () => {
         <HeaderDetail />
         <Animated.Image
           resizeMode="cover"
-          sharedTransitionTag={String(petId)}
+          // sharedTransitionTag={String(petId)}
           style={{ width, height: width }}
           source={{
             uri: `${image}`,

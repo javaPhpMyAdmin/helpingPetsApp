@@ -46,7 +46,7 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
     >
       <View style={styles(width, randomColor).squareImage}>
         <Animated.Image
-          sharedTransitionTag={item.id}
+          // sharedTransitionTag={item.id}
           source={{ uri: item.image }}
           style={styles(width).image}
         />

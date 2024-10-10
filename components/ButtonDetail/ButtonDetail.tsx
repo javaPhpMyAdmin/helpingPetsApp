@@ -10,7 +10,7 @@ export const ButtonDetail = () => {
     <AnimatedPressable
       entering={FadeInDown.delay(1000)}
       style={[styles.container, { width: width * 0.9 }]}
-      onPress={() => router.push('/mapRoute')}
+      onPress={() => router.push('/(auth)/mapPets')}
     >
       <Text style={styles.text}>Ver en el mapa</Text>
     </AnimatedPressable>

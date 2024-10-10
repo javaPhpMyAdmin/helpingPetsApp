@@ -15,6 +15,7 @@ import {
   Image,
   Pressable,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import MapView, {
   Callout,
@@ -176,6 +177,7 @@ export default function MapScreen() {
   };
 
   const focusTap = () => {
+    console.log('anda ubicacion');
     mapRef.current?.animateToRegion(origin);
   };
 
@@ -292,24 +294,31 @@ export default function MapScreen() {
             </Marker>
           ))}
       </MapView>
-      <Pressable
-        style={{
-          position: 'absolute',
-          right: 40,
-          top: 60,
-          backgroundColor: 'skyblue',
-          padding: 5,
-          borderRadius: 10,
-          borderColor: 'black',
-        }}
-        onPress={focusTap}
-      >
-        <Text>MI UBICACION</Text>
-      </Pressable>
       <View
         style={[
           styles.container,
-          { top: Platform.OS === 'ios' ? inset.top : 50 },
+          { top: Platform.OS === 'ios' ? inset.top : 30 },
+        ]}
+      >
+        <TouchableOpacity
+          style={{
+            position: 'absolute',
+            right: 10,
+            top: 80,
+            backgroundColor: 'skyblue',
+            padding: 5,
+            borderRadius: 10,
+            borderColor: 'black',
+          }}
+          onPress={focusTap}
+        >
+          <Text>MI UBICACION</Text>
+        </TouchableOpacity>
+      </View>
+      <View
+        style={[
+          styles.container,
+          { top: Platform.OS === 'ios' ? inset.top : 80 },
         ]}
       >
         <Pressable onPress={() => router.back()}>

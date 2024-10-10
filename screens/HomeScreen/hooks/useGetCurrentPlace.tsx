@@ -7,6 +7,11 @@ const useGetCurrentPlace = () => {
   const [currentPlaceName, setCurrentPlaceName] = useState('');
   useEffect(() => {
     (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+        return;
+      }
       const location = await Location.getCurrentPositionAsync({});
       const currentPlace = await Location.reverseGeocodeAsync({
         latitude: location.coords.latitude,
