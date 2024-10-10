@@ -46,4 +46,6 @@ export interface PetForAdoption {
   breed: string;
   gender: string;
   age: string;
+  weight: number;
+  aboutPet: string;
 }

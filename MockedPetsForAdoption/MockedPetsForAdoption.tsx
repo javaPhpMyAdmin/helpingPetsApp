@@ -7,6 +7,9 @@ export const MockedPetsForAdoption = [
     breed: 'Labrador',
     gender: 'Hembra',
     age: '8 meses',
+    weight: 10,
+    aboutPet:
+      'loremp ipsum dolor sit amet consectetur adipisicing elit. Ratione laudantium, esse adipisci veniam veritatis sequi nostrum odit labore quibusdam ab rerum deleniti eveniet, quidem iusto provident dolores corrupti magnam fugit! lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione laudantium, esse adipisci veniam veritatis sequi nostrum odit labore quibusdam ab rerum deleniti eveniet, quidem iusto provident dolores corrupti magnam fugit!',
   },
   {
     id: '12312312aeasd232aas',
@@ -16,6 +19,9 @@ export const MockedPetsForAdoption = [
     breed: 'Doberman',
     gender: 'Macho',
     age: '10 meses',
+    weight: 5,
+    aboutPet:
+      'loremp ipsum dolor sit amet consectetur adipisicing elit. Ratione laudantium, esse adipisci veniam veritatis sequi nostrum odit labore quibusdam ab rerum deleniti eveniet, quidem iusto provident dolores corrupti magnam fugit! lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione laudantium, esse adipisci veniam veritatis sequi nostrum odit labore quibusdam ab rerum deleniti eveniet, quidem iusto provident dolores corrupti magnam fugit!',
   },
   {
     id: '1231xx312aeasd232aas',
@@ -25,6 +31,9 @@ export const MockedPetsForAdoption = [
     breed: 'Rottweiler',
     gender: 'Macho',
     age: '10 meses',
+    weight: 7,
+    aboutPet:
+      'loremp ipsum dolor sit amet consectetur adipisicing elit. Ratione laudantium, esse adipisci veniam veritatis sequi nostrum odit labore quibusdam ab rerum deleniti eveniet, quidem iusto provident dolores corrupti magnam fugit! lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione laudantium, esse adipisci veniam veritatis sequi nostrum odit labore quibusdam ab rerum deleniti eveniet, quidem iusto provident dolores corrupti magnam fugit!',
   },
   {
     id: '1231xx312aesdasdasd232aas',
@@ -34,6 +43,9 @@ export const MockedPetsForAdoption = [
     breed: 'Chihuahua',
     gender: 'Hembra',
     age: '1 año',
+    weight: 10,
+    aboutPet:
+      'loremp ipsum dolor sit amet consectetur adipisicing elit. Ratione laudantium, esse adipisci veniam veritatis sequi nostrum odit labore quibusdam ab rerum deleniti eveniet, quidem iusto provident dolores corrupti magnam fugit! lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione laudantium, esse adipisci veniam veritatis sequi nostrum odit labore quibusdam ab rerum deleniti eveniet, quidem iusto provident dolores corrupti magnam fugit!',
   },
   {
     id: '1231xx312aesdasdasdasdasdasdasdasdasdsd232aas',
@@ -43,6 +55,9 @@ export const MockedPetsForAdoption = [
     breed: 'Pitbull',
     gender: 'Macho',
     age: '2 años',
+    weight: 30,
+    aboutPet:
+      'loremp ipsum dolor sit amet consectetur adipisicing elit. Ratione laudantium, esse adipisci veniam veritatis sequi nostrum odit labore quibusdam ab rerum deleniti eveniet, quidem iusto provident dolores corrupti magnam fugit! lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione laudantium, esse adipisci veniam veritatis sequi nostrum odit labore quibusdam ab rerum deleniti eveniet, quidem iusto provident dolores corrupti magnam fugit!',
   },
   {
     id: '1231xx312aesdasdasdaasdsd232aas',
@@ -52,5 +67,8 @@ export const MockedPetsForAdoption = [
     breed: 'Golden',
     gender: 'Hembra',
     age: '18 meses',
+    weight: 35,
+    aboutPet:
+      'loremp ipsum dolor sit amet consectetur adipisicing elit. Ratione laudantium, esse adipisci veniam veritatis sequi nostrum odit labore quibusdam ab rerum deleniti eveniet, quidem iusto provident dolores corrupti magnam fugit! lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione laudantium, esse adipisci veniam veritatis sequi nostrum odit labore quibusdam ab rerum deleniti eveniet, quidem iusto provident dolores corrupti magnam fugit!',
   },
 ];

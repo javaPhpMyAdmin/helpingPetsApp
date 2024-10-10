@@ -9,7 +9,6 @@ const PetsForAdoptionList = () => {
   return (
     <View style={styles(width).listContainer}>
       <FlatList
-        style={{ paddingHorizontal: 10 }}
         contentContainerStyle={styles(height, width).contentContainer}
         showsHorizontalScrollIndicator={false}
         horizontal
