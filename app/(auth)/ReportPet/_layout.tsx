@@ -12,7 +12,7 @@ const ReportPetLayout = () => {
       <Stack.Screen
         redirect={!isAuthenticated}
         name="index"
-        options={{ headerShown: false }}
+        options={{ headerShown: false, headerBackTitle: '' }}
       />
       <Stack.Screen
         name="foundPet"

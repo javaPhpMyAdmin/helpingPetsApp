@@ -36,6 +36,8 @@ const FormLostMyPet = () => {
     resolver: yupResolver(formSchema),
   });
 
+  const fontScale = useWindowDimensions().fontScale;
+
   const submit = (data: FormProps) => {
     console.log({ data });
     console.log({ selectedSex });
@@ -50,15 +52,15 @@ const FormLostMyPet = () => {
   };
 
   return (
-    <View style={styles(width).formContainer}>
-      <View style={styles(width, height).titleContainer}>
-        <Text style={styles().titleText}>Nombre</Text>
+    <View style={styles({ width }).formContainer}>
+      <View style={styles({ width, height }).titleContainer}>
+        <Text style={styles({ fontScale }).titleText}>Nombre</Text>
         <Controller
           name="petName"
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={styles().titleInput}
+              style={styles({ fontScale }).titleInput}
               placeholder="Nombre de la mascota"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -67,19 +69,21 @@ const FormLostMyPet = () => {
           )}
         />
         {errors.petName && (
-          <Text style={styles().errorText}>{errors.petName.message}</Text>
+          <Text style={styles({ fontScale }).errorText}>
+            {errors.petName.message}
+          </Text>
         )}
       </View>
-      <View style={styles(width, height).titleContainer}>
-        <Text style={styles().titleText}>Sexo</Text>
+      <View style={styles({ width, height }).titleContainer}>
+        <Text style={styles({ fontScale }).titleText}>Sexo</Text>
         <SwitchButton
           setSelectedSex={setSelectedSex}
           tab1="Macho"
           tab2="Hembra"
         />
       </View>
-      <View style={styles(width, height).titleContainer}>
-        <Text style={styles().titleText}>Especie</Text>
+      <View style={styles({ width, height }).titleContainer}>
+        <Text style={styles({ fontScale }).titleText}>Especie</Text>
         <SwitchButton
           setSelectedSpecie={setSelectedSpecie}
           tab1="Perro"
@@ -87,7 +91,7 @@ const FormLostMyPet = () => {
           tab3="Otro"
         />
       </View>
-      <View style={styles(width, height).titleContainer}>
+      <View style={styles({ width, height }).titleContainer}>
         <TitleLostMyPet
           title="Raza"
           handleInfo={handleInfo}
@@ -106,7 +110,7 @@ const FormLostMyPet = () => {
           control={control}
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
-              style={styles().titleInput}
+              style={styles({ fontScale }).titleInput}
               placeholder="Raza de la mascota"
               onBlur={onBlur}
               onChangeText={onChange}
@@ -115,18 +119,20 @@ const FormLostMyPet = () => {
           )}
         />
         {errors.race && (
-          <Text style={styles().errorText}>{errors.race.message}</Text>
+          <Text style={styles({ fontScale }).errorText}>
+            {errors.race.message}
+          </Text>
         )}
       </View>
-      <View style={styles(width, height).titleContainer}>
-        <Text style={styles().titleText}>Recompensa</Text>
+      <View style={styles({ width, height }).titleContainer}>
+        <Text style={styles({ fontScale }).titleText}>Recompensa</Text>
         <SwitchButton
           setSelectedReward={setSelectedReward}
           tab1="SI"
           tab2="NO"
         />
       </View>
-      <View style={styles(width, height).aboutPetContainer}>
+      <View style={styles({ width, height }).aboutPetContainer}>
         <TitleLostMyPet
           title="Acerca del animal"
           handleInfo={handleInfo}
@@ -139,7 +145,7 @@ const FormLostMyPet = () => {
             <TextInput
               numberOfLines={5}
               multiline
-              style={styles().aboutPet}
+              style={styles({ fontScale }).aboutPet}
               placeholder="Breve descripción acerca del animal"
               textAlignVertical="top"
               onBlur={onBlur}
@@ -149,10 +155,12 @@ const FormLostMyPet = () => {
           )}
         />
         {errors.aboutPet && (
-          <Text style={styles().errorText}>{errors.aboutPet.message}</Text>
+          <Text style={styles({ fontScale }).errorText}>
+            {errors.aboutPet.message}
+          </Text>
         )}
       </View>
-      <View style={styles(width, height).sumbitButtonContainer}>
+      <View style={styles({ width, height }).sumbitButtonContainer}>
         <CustomSubmitButton
           //TODO: CHANGE IT WHEN USE REACT QUERY
           // isLoading={isLoading}
@@ -166,7 +174,13 @@ const FormLostMyPet = () => {
 
 export default FormLostMyPet;
 
-const styles = (width?: number, height?: number) =>
+interface CustomStyles {
+  fontScale?: number;
+  width?: number;
+  height?: number;
+}
+
+const styles = ({ fontScale, width, height }: CustomStyles) =>
   StyleSheet.create({
     formContainer: {
       display: 'flex',
@@ -212,7 +226,7 @@ const styles = (width?: number, height?: number) =>
     errorText: {
       color: 'red',
       top: 1,
-      fontSize: 16,
+      fontSize: fontScale! < 1 ? 24 : fontScale! > 1 ? 17 : 21,
       fontWeight: 'semibold',
       bottom: 5,
     },
@@ -224,8 +238,8 @@ const styles = (width?: number, height?: number) =>
       top: 40,
     },
     titleText: {
-      fontSize: 16,
-      fontWeight: '700',
+      fontSize: fontScale! < 1 ? 24 : fontScale! > 1 ? 17 : 21,
+      fontWeight: 'bold',
       top: 3,
     },
     iconInfo: {

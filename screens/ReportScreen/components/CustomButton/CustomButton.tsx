@@ -2,7 +2,12 @@
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+} from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Octicons from '@expo/vector-icons/Octicons';
 
@@ -21,9 +26,11 @@ const CustomButton = ({
   title,
   type,
 }: CustomButtonProps) => {
+  const fontScale = useWindowDimensions().fontScale;
+
   return (
     <TouchableOpacity
-      style={styles(loaded, width, height).buttonWrap}
+      style={styles(fontScale, loaded, width, height).buttonWrap}
       onPress={() =>
         type === 1
           ? router.push('/ReportPet/foundPet')
@@ -42,7 +49,7 @@ const CustomButton = ({
         ) : (
           <Octicons name="report" size={34} color="orange" />
         )}
-        <Text style={[styles().buttonText]}>{title}</Text>
+        <Text style={[styles(fontScale).buttonText]}>{title}</Text>
       </>
     </TouchableOpacity>
   );
@@ -50,7 +57,12 @@ const CustomButton = ({
 
 export default CustomButton;
 
-const styles = (loaded?: boolean, width?: number, height?: number) =>
+const styles = (
+  fontScale?: number,
+  loaded?: boolean,
+  width?: number,
+  height?: number
+) =>
   StyleSheet.create({
     buttonWrap: {
       flexDirection: 'row',
@@ -58,5 +70,10 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
       gap: 5,
       left: width! * 0.03,
     },
-    buttonText: { color: 'black', fontSize: 16, fontWeight: 'bold', left: 10 },
+    buttonText: {
+      color: 'black',
+      fontSize: fontScale! < 1 ? 21 : fontScale! > 1 ? 14 : 18,
+      fontWeight: 'bold',
+      left: 10,
+    },
   });

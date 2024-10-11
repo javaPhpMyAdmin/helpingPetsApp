@@ -28,10 +28,11 @@ interface RenderItemProps {
 const RenderItem = ({ item, index }: RenderItemProps) => {
   const { width } = useWindowDimensions();
   const randomColor = generateColor();
+  const fontScale = useWindowDimensions().fontScale;
 
   return (
     <Pressable
-      style={styles(width).container}
+      style={styles({ width }).container}
       onPress={() =>
         router.push<Marker>({
           pathname: '/(auth)/detailPet',
@@ -44,26 +45,32 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
         })
       }
     >
-      <View style={styles(width, randomColor).squareImage}>
+      <View style={styles({ width, randomColor }).squareImage}>
         <Animated.Image
           // sharedTransitionTag={item.id}
           source={{ uri: item.image }}
-          style={styles(width).image}
+          style={styles({ width }).image}
         />
       </View>
 
-      <View style={styles(width).textContainer}>
-        <Text style={styles(width).textTitle}>{item.title}</Text>
-        <Text style={styles(width).textUserEmail}>{item.userEmail}</Text>
-        <Text style={styles(width).textCreatedAt}>{item.createdAt}</Text>
-        <View style={styles(width).infoContainer}>
-          <Text style={styles(width).moreInformation}>Ver más información</Text>
-          <View style={styles(width).rightArrow}>
+      <View style={styles({ width }).textContainer}>
+        <Text style={styles({ fontScale }).textTitle}>{item.title}</Text>
+        <Text style={styles({ fontScale }).textUserEmail}>
+          {item.userEmail}
+        </Text>
+        <Text style={styles({ fontScale }).textCreatedAt}>
+          {item.createdAt}
+        </Text>
+        <View style={styles({ width }).infoContainer}>
+          <Text style={styles({ fontScale, width }).moreInformation}>
+            Ver más información
+          </Text>
+          <View style={styles({ width }).rightArrow}>
             <AntDesign name="arrowright" size={24} color="black" />
           </View>
         </View>
       </View>
-      <View style={styles(width).gender}>
+      <View style={styles({ width }).gender}>
         {item.gender && item.gender === Gender.Male ? (
           <Foundation name="male-symbol" size={29} color="green" />
         ) : (
@@ -74,7 +81,12 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
   );
 };
 export default RenderItem;
-const styles = (width: number, randomColor?: string) =>
+interface StylesProps {
+  fontScale?: number;
+  width?: number;
+  randomColor?: string;
+}
+const styles = ({ fontScale, width, randomColor }: StylesProps) =>
   StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -99,17 +111,17 @@ const styles = (width: number, randomColor?: string) =>
       bottom: width! * 0.02,
     },
     image: {
-      width: width * 0.4,
-      height: width * 0.46,
+      width: width! * 0.4,
+      height: width! * 0.46,
       borderRadius: 20,
       objectFit: 'cover',
     },
     squareImage: {
-      width: width * 0.41,
-      height: width * 0.47,
+      width: width! * 0.41,
+      height: width! * 0.47,
       borderRadius: 20,
       position: 'absolute',
-      top: -(width * 0.04),
+      top: -(width! * 0.04),
       backgroundColor: '#f88f26',
       display: 'flex',
       justifyContent: 'center',
@@ -129,37 +141,37 @@ const styles = (width: number, randomColor?: string) =>
       flexShrink: 1,
       justifyContent: 'flex-end',
       // backgroundColor: 'yellow',
-      width: width * 0.48,
-      height: width * 0.31,
+      width: width! * 0.48,
+      height: width! * 0.31,
       position: 'absolute',
-      right: 2,
-      top: width * 0.08,
+      right: width! * 0.02,
+      top: width! * 0.08,
     },
     textTitle: {
       color: '#323232',
-      fontSize: 15,
+      fontSize: fontScale! < 1 ? 20 : fontScale! > 1 ? 14 : 16,
       fontWeight: 'bold',
     },
     textUserEmail: {
       color: 'gray',
-      fontSize: 14,
+      fontSize: fontScale! < 1 ? 17 : fontScale! > 1 ? 12 : 16,
       fontWeight: '600',
       opacity: 0.92,
     },
     gender: {
       position: 'absolute',
       right: 20,
-      top: 0,
+      top: 6,
     },
     textCreatedAt: {
-      fontSize: 14,
+      fontSize: fontScale! < 1 ? 17 : fontScale! > 1 ? 12 : 15,
       fontWeight: 'bold',
       color: 'gray',
       opacity: 0.9,
     },
     moreInformation: {
       textShadowColor: 'blue',
-      fontSize: 14,
+      fontSize: fontScale! < 1 ? 20 : fontScale! > 1 ? 13 : 17,
       top: 4,
       fontStyle: 'italic',
       fontWeight: '800',
@@ -175,7 +187,7 @@ const styles = (width: number, randomColor?: string) =>
       alignItems: 'center',
       display: 'flex',
       justifyContent: 'center',
-      top: width * 0.015,
+      top: width! * 0.015,
       right: 2,
     },
   });

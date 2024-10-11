@@ -52,6 +52,7 @@ const ILostMyPet = () => {
       <Stack.Screen
         options={{
           headerBackVisible: true,
+          headerBackTitle: 'Volver',
         }}
       />
       <ScrollView style={styles().scroll}>

@@ -67,15 +67,15 @@ const styles = (
       elevation: 15,
     },
     welcome: {
-      fontSize: fontScale! < 1 ? 30 : fontScale! > 1 ? 24 : 27,
+      fontSize: fontScale! < 1 ? 32 : fontScale! > 1 ? 24 : 27,
       color: 'white',
       fontFamily: loaded ? 'PlaypenSans' : '',
-      left: width! * 0.02,
+      left: width! * 0.03,
     },
     meetYou: {
-      left: width! * 0.02,
+      left: width! * 0.03,
       color: 'white',
-      fontSize: fontScale! < 1 ? 20 : fontScale! > 1 ? 14 : 17,
+      fontSize: fontScale! < 1 ? 21 : fontScale! > 1 ? 14 : 17,
       fontFamily: loaded ? 'PlaypenSans' : '',
     },
     imageContainer: {

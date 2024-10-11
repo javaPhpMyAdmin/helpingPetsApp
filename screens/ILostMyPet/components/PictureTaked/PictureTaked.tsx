@@ -85,6 +85,5 @@ const styles = (width?: number, height?: number) =>
       height: 50,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: 'red',
     },
   });

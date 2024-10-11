@@ -1,5 +1,10 @@
 /* eslint-disable import/order */
-import { View, Text, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  useWindowDimensions,
+} from 'react-native';
 import React, { useEffect } from 'react';
 
 interface SwitchButtonProps {
@@ -21,6 +26,8 @@ const SwitchButton = ({
 }: SwitchButtonProps) => {
   const [selectedTab, setSelectedTab] = React.useState<string>(tab1);
 
+  const fontScale = useWindowDimensions().fontScale;
+
   useEffect(() => {
     if (setSelectedSex) {
       setSelectedSex(selectedTab);
@@ -38,16 +45,15 @@ const SwitchButton = ({
         // flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        height: '20%',
+        // height: '20%',
       }}
     >
       <View
         style={{
           width: '100%',
           height: 55,
-          borderWidth: 0.3,
           backgroundColor: 'white',
-          borderRadius: 15,
+          borderRadius: 10,
           flexDirection: 'row',
           alignItems: 'center',
           paddingHorizontal: 5,
@@ -58,7 +64,7 @@ const SwitchButton = ({
             width: '50%',
             height: 45,
             backgroundColor: selectedTab === tab1 ? '#f7991e' : 'transparent',
-            borderRadius: 15,
+            borderRadius: 10,
             justifyContent: 'center',
             alignItems: 'center',
           }}
@@ -67,7 +73,7 @@ const SwitchButton = ({
           <Text
             style={{
               color: selectedTab === tab1 ? 'white' : 'gray',
-              fontSize: 18,
+              fontSize: fontScale! < 1 ? 23 : fontScale! > 1 ? 16 : 19,
               fontWeight: '700',
             }}
           >
@@ -79,7 +85,7 @@ const SwitchButton = ({
             width: '50%',
             height: 45,
             backgroundColor: selectedTab === tab2 ? '#f7991e' : 'transparent',
-            borderRadius: 15,
+            borderRadius: 10,
             justifyContent: 'center',
             alignItems: 'center',
           }}
@@ -88,7 +94,7 @@ const SwitchButton = ({
           <Text
             style={{
               color: `{${selectedTab} === ${tab2} ? 'white' : 'gray'}`,
-              fontSize: 18,
+              fontSize: fontScale! < 1 ? 23 : fontScale! > 1 ? 16 : 19,
               fontWeight: '700',
             }}
           >

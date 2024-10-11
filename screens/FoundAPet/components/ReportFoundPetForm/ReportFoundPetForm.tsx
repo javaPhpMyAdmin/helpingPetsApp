@@ -65,18 +65,25 @@ const ReportFoundPetForm = ({
     }
   }, [isKeyboardVisible, setIsKeyboardVisible]);
 
+  const fontScale = useWindowDimensions().fontScale;
+
   return (
     <>
       <KeyboardAvoidingView
         behavior={BEHAVIOR}
-        style={styles(errors.reportDescription, width, height).container}
+        style={
+          styles({ error: errors.reportDescription, width, height }).container
+        }
       >
         <TouchableWithoutFeedback
-          style={styles().touchableContainer}
+          style={styles({}).touchableContainer}
           onPress={() => Keyboard.dismiss()}
         >
           <View
-            style={styles(errors.reportTitle, width, height).titleContainer}
+            style={
+              styles({ error: errors.reportTitle, width, height })
+                .titleContainer
+            }
           >
             <FormTitle
               title="Título"
@@ -88,7 +95,7 @@ const ReportFoundPetForm = ({
               control={control}
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
-                  style={styles(errors.reportTitle).titleInput}
+                  style={styles({ error: errors.reportTitle }).titleInput}
                   placeholder="Ingrese un título"
                   onBlur={onBlur}
                   onChangeText={onChange}
@@ -97,14 +104,14 @@ const ReportFoundPetForm = ({
               )}
             />
             {errors.reportTitle && (
-              <Text style={styles().errorText}>
+              <Text style={styles({ fontScale }).errorText}>
                 {errors.reportTitle.message}
               </Text>
             )}
           </View>
           <View
             style={
-              styles(errors.reportDescription, width, height)
+              styles({ error: errors.reportDescription, width, height })
                 .descriptionContainer
             }
           >
@@ -121,7 +128,10 @@ const ReportFoundPetForm = ({
                   onChangeText={onChange}
                   onBlur={onBlur}
                   value={value}
-                  style={styles(errors.reportDescription).descriptionInput}
+                  style={
+                    styles({ fontScale, error: errors.reportDescription })
+                      .descriptionInput
+                  }
                   multiline
                   numberOfLines={5}
                   placeholder="Ingrese una descripción"
@@ -130,7 +140,7 @@ const ReportFoundPetForm = ({
               )}
             />
             {errors.reportDescription && (
-              <Text style={styles().errorText}>
+              <Text style={styles({ fontScale }).errorText}>
                 {errors.reportDescription.message}
               </Text>
             )}
@@ -145,8 +155,13 @@ const ReportFoundPetForm = ({
 };
 
 export default ReportFoundPetForm;
-
-const styles = (error?: FieldError, width?: number, height?: number) =>
+interface StylesProps {
+  fontScale?: number;
+  error?: FieldError;
+  width?: number;
+  height?: number;
+}
+const styles = ({ fontScale, error, width, height }: StylesProps) =>
   StyleSheet.create({
     container: {
       display: 'flex',
@@ -196,10 +211,9 @@ const styles = (error?: FieldError, width?: number, height?: number) =>
     },
     errorText: {
       color: 'red',
-      top: 1,
-      fontSize: 16,
+      fontSize: fontScale! < 1 ? 19 : fontScale! > 1 ? 13 : 16,
       fontWeight: 'semibold',
-      bottom: 5,
+      bottom: 1,
     },
     touchableContainer: {
       display: 'flex',

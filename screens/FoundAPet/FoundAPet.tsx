@@ -37,6 +37,7 @@ const FoundAPet = () => {
       <Stack.Screen
         options={{
           headerBackVisible: true,
+          headerBackTitle: 'Volver',
         }}
       />
       <GestureHandlerRootView>

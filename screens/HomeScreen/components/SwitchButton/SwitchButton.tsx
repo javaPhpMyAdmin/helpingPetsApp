@@ -33,7 +33,7 @@ const SwitchButton = ({
         justifyContent: 'center',
         alignItems: 'center',
         height: '20%',
-        backgroundColor: 'orange',
+        // backgroundColor: 'orange',
       }}
     >
       <View
@@ -73,7 +73,7 @@ const SwitchButton = ({
             width: '50%',
             height: 45,
             backgroundColor: selectedTab === tab2 ? '#f7991e' : 'transparent',
-            borderRadius: 15,
+            borderRadius: 10,
             justifyContent: 'center',
             alignItems: 'center',
           }}

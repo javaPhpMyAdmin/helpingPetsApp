@@ -74,7 +74,7 @@ const styles = (
   StyleSheet.create({
     cardInfo: {
       width: width! * 0.96,
-      height: height! * 0.29,
+      height: height! * 0.26,
       backgroundColor: 'white',
       borderRadius: 20,
       borderColor: 'pink',
@@ -98,7 +98,7 @@ const styles = (
       flexShrink: 1,
       fontSize: fontScale! < 1 ? 20 : fontScale! > 1 ? 14 : 17,
       fontFamily: loaded ? 'PlaypenSans' : '',
-      bottom: height! * 0.069,
+      bottom: height! * 0.07,
       textAlign: 'center',
       textShadowColor: 'orange',
       textShadowRadius: 5,
@@ -109,7 +109,7 @@ const styles = (
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      top: 6,
+      top: 2,
     },
     imageCard: {
       width: width! * 0.33,
