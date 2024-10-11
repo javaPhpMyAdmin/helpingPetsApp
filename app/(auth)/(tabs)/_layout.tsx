@@ -25,6 +25,9 @@ export default function TabsLayout() {
         options={{
           headerShown: false,
           tabBarLabel: 'Adoptar',
+          tabBarStyle: {
+            display: usePathname().includes('detailAdoptPet') ? 'none' : 'flex',
+          },
         }}
       />
     </Tabs>
