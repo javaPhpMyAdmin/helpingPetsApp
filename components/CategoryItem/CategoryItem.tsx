@@ -15,17 +15,20 @@ const CategoryItem = ({
   selectedCategory,
 }: CategoryItemProps) => {
   const { width, height } = useWindowDimensions();
+
+  const fontScale = useWindowDimensions().fontScale;
+
   return (
     <Pressable
-      style={styles(width, height).buttonContainer}
+      style={styles(fontScale, width, height).buttonContainer}
       onPress={() => handleOnPress(item.category)}
     >
       {({ pressed }) => (
         <Text
           style={[
-            styles(width, height).categoryItem,
+            styles(fontScale, width, height).categoryItem,
             selectedCategory === item.category
-              ? styles(width, height).selectedCategory
+              ? styles(fontScale, width, height).selectedCategory
               : null,
           ]}
         >
@@ -38,19 +41,19 @@ const CategoryItem = ({
 
 export default CategoryItem;
 
-const styles = (width: number, height: number) =>
+const styles = (fontScale: number, width: number, height: number) =>
   StyleSheet.create({
     categoryItem: {
       fontStyle: 'normal',
       fontWeight: 'bold',
-      fontSize: 20,
+      fontSize: fontScale! < 1 ? 23 : fontScale! > 1 ? 17 : 20,
       marginHorizontal: 12,
       color: 'black',
       opacity: 0.3,
     },
     selectedCategory: {
       color: 'orange',
-      fontSize: 22,
+      fontSize: fontScale! < 1 ? 25 : fontScale! > 1 ? 18 : 22,
       fontWeight: '900',
       opacity: 1,
     },

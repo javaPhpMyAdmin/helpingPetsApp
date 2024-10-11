@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import React from 'react';
 import Foundation from '@expo/vector-icons/Foundation';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import { PetForAdoption } from '@/types';
 import { router } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
@@ -21,6 +20,8 @@ interface RenderItemProps {
 const RenderItem = ({ pet }: RenderItemProps) => {
   const { width, height } = useWindowDimensions();
 
+  const fontScale = useWindowDimensions().fontScale;
+
   return (
     <TouchableOpacity
       onPress={() =>
@@ -31,32 +32,32 @@ const RenderItem = ({ pet }: RenderItemProps) => {
           },
         })
       }
-      style={styles().buttonContainer}
+      style={styles(fontScale, width).buttonContainer}
     >
       <Image
-        style={styles(width, height).image}
+        style={styles(fontScale, width, height).image}
         source={{ uri: pet.photoUrl }}
       />
-      <View style={styles(width).detailContainer}>
-        <View style={styles(width, height).descriptionContainer}>
-          <Text style={styles().petName}>{pet.petName}</Text>
-          <Text style={styles().petBreed}>Raza: {pet.breed}</Text>
-          <View style={styles().footerContainer}>
-            <View style={styles().genderContainer}>
+      <View style={styles(fontScale, width).detailContainer}>
+        <View style={styles(fontScale, width, height).descriptionContainer}>
+          <Text style={styles(fontScale).petName}>{pet.petName}</Text>
+          <Text style={styles(fontScale).petBreed}>Raza: {pet.breed}</Text>
+          <View style={styles(fontScale).footerContainer}>
+            <View style={styles(fontScale).genderContainer}>
               {pet.gender === 'Hembra' ? (
                 <Foundation name="female-symbol" size={35} color="hotpink" />
               ) : (
                 <Foundation name="male-symbol" size={38} color="green" />
               )}
-              <Text style={styles().genderText}>{pet.gender}</Text>
+              <Text style={styles(fontScale).genderText}>{pet.gender}</Text>
             </View>
-            <View style={styles().ageContainer}>
+            <View style={styles(fontScale).ageContainer}>
               <FontAwesome
                 name="birthday-cake"
                 size={27}
                 color={pet.gender === 'Hembra' ? 'hotpink' : 'green'}
               />
-              <Text style={styles().ageText}>{pet.age}</Text>
+              <Text style={styles(fontScale).ageText}>{pet.age}</Text>
             </View>
           </View>
         </View>
@@ -67,7 +68,7 @@ const RenderItem = ({ pet }: RenderItemProps) => {
 
 export default RenderItem;
 
-const styles = (width?: number, height?: number) =>
+const styles = (fontScale?: number, width?: number, height?: number) =>
   StyleSheet.create({
     buttonContainer: { flex: 1, paddingHorizontal: 8, position: 'relative' },
     image: {
@@ -98,12 +99,26 @@ const styles = (width?: number, height?: number) =>
       top: width! * 0.007,
       gap: 7,
     },
-    petName: { fontSize: 33, fontWeight: 'bold', color: 'black' },
-    petBreed: { fontSize: 24, fontWeight: 'bold', color: '#5f4646' },
+    petName: {
+      fontSize: fontScale! < 1 ? 33 : fontScale! > 1 ? 27 : 31,
+      fontWeight: 'bold',
+      color: 'black',
+    },
+    petBreed: {
+      fontSize: fontScale! < 1 ? 26 : fontScale! > 1 ? 19 : 23,
+      fontWeight: 'bold',
+      color: '#5f4646',
+    },
     genderContainer: { flexDirection: 'row', gap: 10, alignItems: 'center' },
-    genderText: { fontSize: 21, fontWeight: 'bold' },
+    genderText: {
+      fontSize: fontScale! < 1 ? 25 : fontScale! > 1 ? 18 : 22,
+      fontWeight: 'bold',
+    },
     ageContainer: { flexDirection: 'row', gap: 10, alignItems: 'center' },
-    ageText: { fontSize: 21, fontWeight: 'bold' },
+    ageText: {
+      fontSize: fontScale! < 1 ? 25 : fontScale! > 1 ? 18 : 22,
+      fontWeight: 'bold',
+    },
     footerContainer: {
       flexDirection: 'row',
       gap: 24,

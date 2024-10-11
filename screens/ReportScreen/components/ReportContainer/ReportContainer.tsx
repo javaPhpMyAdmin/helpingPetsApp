@@ -9,13 +9,16 @@ const ReportContainer = () => {
   const [loaded] = useFonts({
     PlaypenSans: require('@/assets/fonts/PlaypenSans-SemiBold.ttf'),
   });
+  const fontScale = useWindowDimensions().fontScale;
 
   return (
-    <View style={styles(loaded, width, height).containerReport}>
-      <Text style={styles(loaded).reportTittle}>
+    <View style={styles(fontScale, loaded, width, height).containerReport}>
+      <Text style={styles(fontScale, loaded, width).reportTittle}>
         Reportar una mascota perdida
       </Text>
-      <View style={styles(loaded, width, height).buttonReportContainer}>
+      <View
+        style={styles(fontScale, loaded, width, height).buttonReportContainer}
+      >
         <CustomButton
           loaded={loaded}
           width={width}
@@ -24,7 +27,9 @@ const ReportContainer = () => {
           type={1}
         />
       </View>
-      <View style={styles(loaded, width, height).buttonReportContainer}>
+      <View
+        style={styles(fontScale, loaded, width, height).buttonReportContainer}
+      >
         <CustomButton
           loaded={loaded}
           width={width}
@@ -33,7 +38,9 @@ const ReportContainer = () => {
           type={2}
         />
       </View>
-      <View style={styles(loaded, width, height).buttonReportContainer}>
+      <View
+        style={styles(fontScale, loaded, width, height).buttonReportContainer}
+      >
         <CustomButton
           loaded={loaded}
           width={width}
@@ -48,7 +55,12 @@ const ReportContainer = () => {
 
 export default ReportContainer;
 
-const styles = (loaded?: boolean, width?: number, height?: number) =>
+const styles = (
+  fontScale?: number,
+  loaded?: boolean,
+  width?: number,
+  height?: number
+) =>
   StyleSheet.create({
     containerReport: {
       display: 'flex',
@@ -56,6 +68,7 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
       alignItems: 'flex-start',
       gap: 10,
       bottom: height! * 0.05,
+      left: width! * 0.002,
     },
     buttonReportContainer: {
       justifyContent: 'center',
@@ -76,9 +89,12 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
       elevation: 2.5,
     },
     reportTittle: {
+      flexShrink: 1,
       color: 'black',
-      fontSize: 22,
+      fontSize: fontScale! < 1 ? 24 : fontScale! > 1 ? 17 : 21,
       fontFamily: loaded ? 'PlaypenSans' : '',
       top: 3,
+      right: width! * 0.05,
+      left: width! * 0.05,
     },
   });

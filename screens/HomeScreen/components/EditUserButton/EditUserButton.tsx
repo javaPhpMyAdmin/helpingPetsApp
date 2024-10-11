@@ -35,6 +35,7 @@ export default EditUserButton;
 const styles = (width: number, height?: number) =>
   StyleSheet.create({
     editUserButton: {
+      position: 'absolute',
       width: 40,
       height: 40,
       borderColor: 'lightgray',
@@ -43,6 +44,7 @@ const styles = (width: number, height?: number) =>
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 6,
-      right: width! * 0.07,
+      right: width! * 0.103,
+      top: -height! * 0.18,
     },
   });

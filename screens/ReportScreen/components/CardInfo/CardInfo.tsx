@@ -17,22 +17,28 @@ const CardInfo = () => {
     PlaypenSans: require('@/assets/fonts/PlaypenSans-SemiBold.ttf'),
   });
 
+  const fontScale = useWindowDimensions().fontScale;
+
   const currentPet = useRandomPet();
 
   return (
     <>
-      <View style={styles(loaded, width, height).cardInfo}>
+      <View style={styles(fontScale, loaded, width, height).cardInfo}>
         {currentPet.image && (
           <Image
-            style={styles(loaded, width, height).imageCard}
+            style={styles(fontScale, loaded, width, height).imageCard}
             source={currentPet.image as ImageSourcePropType}
           />
         )}
-        <View style={styles(loaded, width, height).infoContainer}>
-          <Text style={styles(loaded, width, height).infoTitle}>
+        <View style={styles(fontScale, loaded, width, height).infoContainer}>
+          <Text style={styles(fontScale, loaded, width, height).infoTitle}>
             {currentPet.title}
           </Text>
-          <View style={styles(loaded, width, height).descriptionContainer}>
+          <View
+            style={
+              styles(fontScale, loaded, width, height).descriptionContainer
+            }
+          >
             <View style={styles().descriptionWrap}>
               <Text style={styles().textDescription}>Género</Text>
               <Text style={styles().textOpacity}>{currentPet.gender}</Text>
@@ -48,8 +54,8 @@ const CardInfo = () => {
           </View>
         </View>
       </View>
-      <View style={styles(loaded, width, height).helpmeContainer}>
-        <Text style={styles(loaded, width, height).helpmeText}>
+      <View style={styles(fontScale, loaded, width, height).helpmeContainer}>
+        <Text style={styles(fontScale, loaded, width, height).helpmeText}>
           Ayúdame a encontrar a otros amigos perdidos o abandonados!
         </Text>
       </View>
@@ -59,11 +65,16 @@ const CardInfo = () => {
 
 export default CardInfo;
 
-const styles = (loaded?: boolean, width?: number, height?: number) =>
+const styles = (
+  fontScale?: number,
+  loaded?: boolean,
+  width?: number,
+  height?: number
+) =>
   StyleSheet.create({
     cardInfo: {
       width: width! * 0.96,
-      height: height! * 0.258,
+      height: height! * 0.29,
       backgroundColor: 'white',
       borderRadius: 20,
       borderColor: 'pink',
@@ -85,9 +96,9 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
     helpmeText: {
       color: 'black',
       flexShrink: 1,
-      fontSize: 16,
+      fontSize: fontScale! < 1 ? 20 : fontScale! > 1 ? 14 : 17,
       fontFamily: loaded ? 'PlaypenSans' : '',
-      bottom: height! * 0.088,
+      bottom: height! * 0.069,
       textAlign: 'center',
       textShadowColor: 'orange',
       textShadowRadius: 5,
@@ -98,7 +109,7 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      top: 10,
+      top: 6,
     },
     imageCard: {
       width: width! * 0.33,
@@ -127,15 +138,19 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
       flexDirection: 'row',
       justifyContent: 'space-around',
     },
-    textDescription: { color: 'orange', fontWeight: 'bold', fontSize: 17 },
+    textDescription: {
+      color: 'orange',
+      fontWeight: 'bold',
+      fontSize: fontScale! < 1 ? 21 : fontScale! > 1 ? 13 : 18,
+    },
     textOpacity: {
       color: 'gray',
       fontWeight: 'bold',
-      fontSize: 16,
+      fontSize: fontScale! < 1 ? 21 : fontScale! > 1 ? 13 : 18,
       opacity: 0.65,
     },
     infoTitle: {
-      fontSize: 25,
+      fontSize: fontScale! < 1 ? 28 : fontScale! > 1 ? 22 : 25,
       fontFamily: loaded ? 'PlaypenSans' : '',
       bottom: height! * 0.05,
     },

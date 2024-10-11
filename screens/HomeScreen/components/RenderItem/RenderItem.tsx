@@ -96,7 +96,7 @@ const styles = (width: number, randomColor?: string) =>
       shadowRadius: 4,
 
       elevation: 8,
-      bottom: 4,
+      bottom: width! * 0.02,
     },
     image: {
       width: width * 0.4,
@@ -137,28 +137,29 @@ const styles = (width: number, randomColor?: string) =>
     },
     textTitle: {
       color: '#323232',
-      fontSize: 19,
+      fontSize: 15,
       fontWeight: 'bold',
     },
     textUserEmail: {
       color: 'gray',
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: '600',
       opacity: 0.92,
     },
     gender: {
       position: 'absolute',
-      right: 25,
-      top: 3,
+      right: 20,
+      top: 0,
     },
     textCreatedAt: {
+      fontSize: 14,
       fontWeight: 'bold',
       color: 'gray',
       opacity: 0.9,
     },
     moreInformation: {
       textShadowColor: 'blue',
-      fontSize: 16.6,
+      fontSize: 14,
       top: 4,
       fontStyle: 'italic',
       fontWeight: '800',
@@ -175,6 +176,6 @@ const styles = (width: number, randomColor?: string) =>
       display: 'flex',
       justifyContent: 'center',
       top: width * 0.015,
-      right: 3,
+      right: 2,
     },
   });

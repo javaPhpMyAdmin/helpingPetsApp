@@ -14,35 +14,38 @@ const InfoCard = () => {
   const [loaded] = useFonts({
     PlaypenSans: require('@/assets/fonts/PlaypenSans-SemiBold.ttf'),
   });
+
+  const fontScale = useWindowDimensions().fontScale;
+
   return (
-    <View style={styles(width).cardContainer}>
-      <View style={styles(width).cardInfo}>
-        <View style={styles(width).cardImageContainer}>
+    <View style={styles(fontScale, width).cardContainer}>
+      <View style={styles(fontScale, width).cardInfo}>
+        <View style={styles(fontScale, width).cardImageContainer}>
           <Image
-            style={styles(width).cardImage}
+            style={styles(fontScale, width).cardImage}
             source={require('@/assets/images/golden-pet.jpg')}
           />
         </View>
-        <Text style={styles(width, height, loaded).cardText}>
+        <Text style={styles(fontScale, width, height, loaded).cardText}>
           Adopta a un amigo hoy mismo!
         </Text>
       </View>
-      <View style={styles(width).thumbnailContainer}>
+      <View style={styles(fontScale, width).thumbnailContainer}>
         <Image
           source={require('@/assets/images/doberman.webp')}
-          style={styles(width, height, loaded).thumbnailImage}
+          style={styles(fontScale, width, height, loaded).thumbnailImage}
         />
         <Image
           source={require('@/assets/images/buldog.webp')}
-          style={styles(width, height, loaded).thumbnailImage}
+          style={styles(fontScale, width, height, loaded).thumbnailImage}
         />
         <Image
           source={require('@/assets/images/cool-cat.jpg')}
-          style={styles(width, height, loaded).thumbnailImage}
+          style={styles(fontScale, width, height, loaded).thumbnailImage}
         />
         <Image
           source={require('@/assets/images/michi.webp')}
-          style={styles(width, height, loaded).thumbnailImage}
+          style={styles(fontScale, width, height, loaded).thumbnailImage}
         />
       </View>
     </View>
@@ -51,7 +54,12 @@ const InfoCard = () => {
 
 export default InfoCard;
 
-const styles = (width?: number, height?: number, loaded?: boolean) =>
+const styles = (
+  fontScale?: number,
+  width?: number,
+  height?: number,
+  loaded?: boolean
+) =>
   StyleSheet.create({
     cardContainer: {
       width: '90%',
@@ -107,7 +115,7 @@ const styles = (width?: number, height?: number, loaded?: boolean) =>
       padding: 7,
       flexShrink: 1,
       color: 'black',
-      fontSize: 27,
+      fontSize: fontScale! < 1 ? 30 : fontScale! > 1 ? 23 : 27,
       fontFamily: loaded ? 'PlaypenSans' : '',
       bottom: 2,
     },
@@ -117,11 +125,11 @@ const styles = (width?: number, height?: number, loaded?: boolean) =>
       justifyContent: 'space-evenly',
       alignItems: 'center',
       gap: 10,
-      bottom: 3,
+      bottom: 4,
     },
     thumbnailImage: {
-      width: width! * 0.18,
-      height: width! * 0.18,
+      width: width! * 0.16,
+      height: width! * 0.16,
       borderRadius: 100,
     },
   });

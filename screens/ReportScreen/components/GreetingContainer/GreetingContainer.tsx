@@ -9,20 +9,28 @@ const GreetingContainer = () => {
   const [loaded] = useFonts({
     PlaypenSans: require('@/assets/fonts/PlaypenSans-SemiBold.ttf'),
   });
+  const fontScale = useWindowDimensions().fontScale;
+
   return (
-    <View style={styles(loaded, width, height).greetingContainer}>
+    <View style={styles(fontScale, loaded, width, height).greetingContainer}>
       <View style={{ left: width * 0.03, top: height * 0.03 }}>
-        <Text style={styles(loaded).meetYou}>Encantado de conocerte!</Text>
+        <Text style={styles(fontScale, loaded, width).meetYou}>
+          Encantado de conocerte!
+        </Text>
         <View>
-          <Text style={styles(loaded).welcome}>Bienvenido</Text>
-          <Text style={styles(loaded).welcome}>a</Text>
-          <Text style={styles(loaded).welcome}>Helping pets</Text>
+          <Text style={styles(fontScale, loaded, width).welcome}>
+            Bienvenido
+          </Text>
+          <Text style={styles(fontScale, loaded, width).welcome}>a</Text>
+          <Text style={styles(fontScale, loaded, width).welcome}>
+            Helping pets
+          </Text>
         </View>
       </View>
       <View>
         <Animated.Image
           entering={FadeInDown.delay(200).duration(2000).damping(4).springify()}
-          style={styles(loaded, width, height).imageContainer}
+          style={styles(fontScale, loaded, width, height).imageContainer}
           source={require('@/assets/images/paws.webp')}
         />
       </View>
@@ -32,7 +40,12 @@ const GreetingContainer = () => {
 
 export default GreetingContainer;
 
-const styles = (loaded?: boolean, width?: number, height?: number) =>
+const styles = (
+  fontScale?: number,
+  loaded?: boolean,
+  width?: number,
+  height?: number
+) =>
   StyleSheet.create({
     greetingContainer: {
       backgroundColor: 'orange',
@@ -54,19 +67,26 @@ const styles = (loaded?: boolean, width?: number, height?: number) =>
       elevation: 15,
     },
     welcome: {
-      fontSize: 30,
+      fontSize: fontScale! < 1 ? 30 : fontScale! > 1 ? 24 : 27,
       color: 'white',
       fontFamily: loaded ? 'PlaypenSans' : '',
+      left: width! * 0.02,
     },
     meetYou: {
+      left: width! * 0.02,
       color: 'white',
-      fontSize: 14,
+      fontSize: fontScale! < 1 ? 20 : fontScale! > 1 ? 14 : 17,
       fontFamily: loaded ? 'PlaypenSans' : '',
     },
     imageContainer: {
       width: width! * 0.56,
       height: height! * 0.25,
-      left: width! * 0.04,
+      left:
+        fontScale! < 1
+          ? width! * 0.01
+          : fontScale! > 1
+            ? width! * 0.003
+            : width! * 0.03,
       bottom: height! * 0.01,
     },
   });
