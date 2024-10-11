@@ -1,4 +1,4 @@
-import { Tabs } from 'expo-router';
+import { Tabs, usePathname } from 'expo-router';
 import React from 'react';
 
 import { TabBar } from '@/components/TabBar';
@@ -21,7 +21,7 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
-        name="adopt"
+        name="adoptPet"
         options={{
           headerShown: false,
           tabBarLabel: 'Adoptar',

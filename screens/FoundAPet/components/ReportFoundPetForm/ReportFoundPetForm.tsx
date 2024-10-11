@@ -182,7 +182,7 @@ const styles = ({ fontScale, error, width, height }: StylesProps) =>
     titleInput: {
       backgroundColor: 'white',
       width: '100%',
-      height: '60%',
+      height: '50%',
       borderRadius: 10,
       borderWidth: error ? 1 : 0.3,
       borderColor: error ? 'red' : 'gray',
@@ -211,7 +211,7 @@ const styles = ({ fontScale, error, width, height }: StylesProps) =>
     },
     errorText: {
       color: 'red',
-      fontSize: fontScale! < 1 ? 19 : fontScale! > 1 ? 13 : 16,
+      fontSize: fontScale! < 1 ? 20 : fontScale! > 1 ? 14 : 17,
       fontWeight: 'semibold',
       bottom: 1,
     },

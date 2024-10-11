@@ -74,7 +74,7 @@ const styles = (
   StyleSheet.create({
     cardInfo: {
       width: width! * 0.96,
-      height: height! * 0.26,
+      height: height! * 0.28,
       backgroundColor: 'white',
       borderRadius: 20,
       borderColor: 'pink',
@@ -91,14 +91,14 @@ const styles = (
       shadowOpacity: 1,
       shadowRadius: 2,
       elevation: 12,
-      top: height! * 0.02,
+      top: height! * 0.01,
     },
     helpmeText: {
       color: 'black',
       flexShrink: 1,
       fontSize: fontScale! < 1 ? 20 : fontScale! > 1 ? 14 : 17,
       fontFamily: loaded ? 'PlaypenSans' : '',
-      bottom: height! * 0.07,
+      bottom: height! * 0.078,
       textAlign: 'center',
       textShadowColor: 'orange',
       textShadowRadius: 5,
@@ -131,12 +131,11 @@ const styles = (
       minWidth: width! * 0.57,
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
-      gap: 1,
       right: 5,
     },
     descriptionWrap: {
       flexDirection: 'row',
-      justifyContent: 'space-around',
+      justifyContent: 'space-evenly',
     },
     textDescription: {
       color: 'orange',
@@ -146,7 +145,7 @@ const styles = (
     textOpacity: {
       color: 'gray',
       fontWeight: 'bold',
-      fontSize: fontScale! < 1 ? 21 : fontScale! > 1 ? 13 : 18,
+      fontSize: fontScale! < 1 ? 21 : fontScale! > 1 ? 12 : 18,
       opacity: 0.65,
     },
     infoTitle: {

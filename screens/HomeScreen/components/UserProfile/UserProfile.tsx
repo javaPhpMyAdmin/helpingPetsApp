@@ -10,6 +10,7 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
+  ActivityIndicator,
 } from 'react-native';
 import React, { useState } from 'react';
 import { SwitchButton } from '../SwitchButton';
@@ -17,6 +18,7 @@ import { useAuth } from '@/context';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useKeyboardVisible } from '@/hooks/useIsKeyboardVisible';
+import * as ImagePicker from 'expo-image-picker';
 
 interface UserProfileProps {
   setIsVisibleModal: (isVisible: boolean) => void;
@@ -28,15 +30,36 @@ const UserProfile = ({ setIsVisibleModal }: UserProfileProps) => {
   const [selectedLanguage, setSelectedLanguage] = useState<string>('Español');
   const { authState } = useAuth();
   const [userName, setUserName] = useState(authState?.user.name);
+  const [isLoadingImage, setIsLoadingImage] = useState(false);
+
+  const [image, setImage] = useState<string>(authState?.user.photo!);
   const isKeyboardVisible = useKeyboardVisible();
   const fontScale = useWindowDimensions().fontScale;
 
   const onSubmit = () => {
-    Alert.alert(JSON.stringify({ selectedLanguage, selectedMode, userName }));
+    Alert.alert(
+      JSON.stringify({ selectedLanguage, selectedMode, userName, image })
+    );
   };
 
-  const handleOpenPicker = () => {
-    console.log('picker');
+  const pickImage = async () => {
+    setIsLoadingImage(true);
+    try {
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [1, 1],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        setImage(result.assets[0].uri);
+      }
+    } catch (error) {
+      alert(`OCURRIÓ UN ERROR INESPERADO, REINTENTE POR FAVOR, ${error}`);
+    } finally {
+      setIsLoadingImage(false);
+    }
   };
 
   return (
@@ -55,9 +78,24 @@ const UserProfile = ({ setIsVisibleModal }: UserProfileProps) => {
       />
       <TouchableOpacity
         onPress={() => Alert.alert('NOS VEMOS DULIO')}
-        style={{ position: 'absolute', right: 20, top: 20 }}
+        style={{
+          position: 'absolute',
+          right: 10,
+          top: 20,
+          zIndex: 1000,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
       >
         <MaterialIcons name="logout" size={44} color="black" />
+        <Text
+          style={{
+            color: 'white',
+            fontSize: fontScale! < 1 ? 20 : fontScale! > 1 ? 13 : 14,
+          }}
+        >
+          Cerrar sesión
+        </Text>
       </TouchableOpacity>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -73,16 +111,22 @@ const UserProfile = ({ setIsVisibleModal }: UserProfileProps) => {
         //   styles({ isKeyboardVisible, width, height }).userImageContainer
         // }
         >
-          <Image
-            source={{ uri: authState?.user.photo! }}
-            style={styles({ isKeyboardVisible, width, height }).userImage}
-          />
-          <TouchableOpacity
-            style={styles({ isKeyboardVisible, width }).editButton}
-            onPress={handleOpenPicker}
-          >
-            <Text style={styles({ fontScale }).fieldText}>Editar</Text>
-          </TouchableOpacity>
+          {isLoadingImage ? (
+            <ActivityIndicator size="large" color="pink" />
+          ) : (
+            <>
+              <Image
+                source={{ uri: image }}
+                style={styles({ isKeyboardVisible, width, height }).userImage}
+              />
+              <TouchableOpacity
+                style={styles({ isKeyboardVisible, width }).editButton}
+                onPress={pickImage}
+              >
+                <Text style={styles({ fontScale }).fieldText}>Editar</Text>
+              </TouchableOpacity>
+            </>
+          )}
         </View>
         <View style={styles({ width, height }).usernameContainer}>
           <Text style={styles({ fontScale }).fieldText}>Usuario</Text>
@@ -144,8 +188,6 @@ const styles = ({ isKeyboardVisible, fontScale, width, height }: StylesProps) =>
     container: {
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
-      // backgroundColor: '#fb632b',
-      // backgroundColor: grad('#ba5370', #f4e2d8),
       flex: 1,
       top: !isKeyboardVisible ? height! * 0.15 : height! * 0.02,
       width: '100%',
@@ -153,24 +195,6 @@ const styles = ({ isKeyboardVisible, fontScale, width, height }: StylesProps) =>
       alignItems: 'center',
       marginVertical: 20,
     },
-    // userImageContainer: {
-    //   width: !isKeyboardVisible ? width! * 0.4 : width! * 0.4,
-    //   height: !isKeyboardVisible ? width! * 0.4 : width! * 0.4,
-    //   justifyContent: 'center',
-    //   alignItems: 'center',
-    //   gap: 10,
-    //   shadowColor: '#000',
-    //   shadowOffset: {
-    //     width: 3,
-    //     height: 3,
-    //   },
-    //   shadowOpacity: 0.8,
-    //   shadowRadius: 4,
-    //   elevation: 9,
-    //   bottom: !isKeyboardVisible ? height! * 0.09 : -height! * 0.02,
-    //   // opacity: isKeyboardVisible ? 0 : 1,
-    //   backgroundColor: 'red',
-    // },
     userImage: {
       width: width! * 0.5,
       height: width! * 0.5,

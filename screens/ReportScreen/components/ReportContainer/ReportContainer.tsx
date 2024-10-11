@@ -77,8 +77,8 @@ const styles = (
       width: width! * 0.9,
       backgroundColor: 'white',
       borderRadius: 12,
-      borderColor: 'gray',
-      borderWidth: 0.3,
+      // borderColor: 'gray',
+      // borderWidth: 0.3,
       shadowColor: 'black',
       shadowOffset: {
         width: 1.5,

@@ -26,11 +26,10 @@ const Index = () => {
     setTimeout(
       () =>
         isAuthenticated
-          ? // ? router.replace('/(auth)/ReportPet')
-            //router.replace('/(auth)/(tabs)/home')
-            router.replace('/(auth)/(tabs)/adopt')
-          : router.replace('/(public)/login/signup'), //router.replace('/(public)/login'),
-      500
+          ? router.replace('/(auth)/ReportPet')
+          : // router.replace('/(auth)/(tabs)/home')
+            // router.replace('/(auth)/(tabs)/adopt')
+            router.replace('/(public)/login/signup') //router.replace('/(public)/login'),
     );
   }, []);
   return (

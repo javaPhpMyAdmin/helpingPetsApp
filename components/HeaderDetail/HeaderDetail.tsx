@@ -3,7 +3,11 @@ import React from 'react';
 import { View, StyleSheet, Platform, Image, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export function HeaderDetail() {
+interface HeaderDetailProps {
+  routeBack?: string;
+}
+
+export function HeaderDetail({ routeBack }: HeaderDetailProps) {
   const inset = useSafeAreaInsets();
   return (
     <View

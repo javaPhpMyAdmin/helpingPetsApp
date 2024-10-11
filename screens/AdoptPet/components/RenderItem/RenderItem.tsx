@@ -26,7 +26,7 @@ const RenderItem = ({ pet }: RenderItemProps) => {
     <TouchableOpacity
       onPress={() =>
         router.push<PetForAdoption>({
-          pathname: '/(auth)/detailAdoptPet',
+          pathname: '/adoptPet/detailAdoptPet',
           params: {
             ...pet,
           },
@@ -74,7 +74,7 @@ const styles = (fontScale?: number, width?: number, height?: number) =>
     image: {
       width: width! * 0.78,
       height: width! * 0.99,
-      borderRadius: 50,
+      borderRadius: 40,
       borderWidth: 0.3,
       borderColor: 'orange',
     },
@@ -86,10 +86,10 @@ const styles = (fontScale?: number, width?: number, height?: number) =>
       opacity: 0.58,
       height: width! * 0.355,
       width: '100%',
-      borderBottomLeftRadius: 50,
-      borderBottomRightRadius: 50,
-      borderTopLeftRadius: 30,
-      borderTopRightRadius: 30,
+      borderBottomLeftRadius: 40,
+      borderBottomRightRadius: 40,
+      borderTopLeftRadius: 40,
+      borderTopRightRadius: 40,
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-evenly',
@@ -111,12 +111,12 @@ const styles = (fontScale?: number, width?: number, height?: number) =>
     },
     genderContainer: { flexDirection: 'row', gap: 10, alignItems: 'center' },
     genderText: {
-      fontSize: fontScale! < 1 ? 25 : fontScale! > 1 ? 18 : 22,
+      fontSize: fontScale! < 1 ? 24 : fontScale! > 1 ? 17 : 21,
       fontWeight: 'bold',
     },
-    ageContainer: { flexDirection: 'row', gap: 10, alignItems: 'center' },
+    ageContainer: { flexDirection: 'row', gap: 9, alignItems: 'center' },
     ageText: {
-      fontSize: fontScale! < 1 ? 25 : fontScale! > 1 ? 18 : 22,
+      fontSize: fontScale! < 1 ? 24 : fontScale! > 1 ? 17 : 21,
       fontWeight: 'bold',
     },
     footerContainer: {

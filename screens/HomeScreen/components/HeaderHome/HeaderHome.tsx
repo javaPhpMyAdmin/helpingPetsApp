@@ -45,7 +45,7 @@ const HeaderHome = ({ handleOpenModal }: HeaderHomeProps) => {
               Hola {authState?.user.name}!
             </Text>
             <Text style={styles(height, width, loaded, fontScale).userName}>
-              @{authState?.user.email}
+              {authState?.user.email}
             </Text>
 
             <View
@@ -65,7 +65,14 @@ const HeaderHome = ({ handleOpenModal }: HeaderHomeProps) => {
                   </Text>
                 </>
               ) : (
-                <ActivityIndicator style={{ bottom: 3 }} size="small" />
+                <>
+                  <ActivityIndicator style={{ bottom: 3 }} size="small" />
+                  <Text
+                    style={styles(height, width, loaded, fontScale).location}
+                  >
+                    Localizando...
+                  </Text>
+                </>
               )}
             </View>
           </View>
@@ -108,8 +115,8 @@ const styles = (
     userInfoAvatar: {
       marginHorizontal: 6,
       right: 2,
-      width: width * 0.09,
-      height: width * 0.092,
+      width: '20%', //width * 0.09,
+      height: '88%', //width * 0.092,
       borderRadius: 10,
     },
     userInfoContainer: {
@@ -120,7 +127,7 @@ const styles = (
       alignItems: 'center',
     },
     greetUser: {
-      fontSize: fontScale! < 1 ? 22 : fontScale! > 1 ? 18 : 21,
+      fontSize: fontScale! < 1 ? 24 : fontScale! > 1 ? 18 : 22,
       fontFamily: loaded ? 'PlaypenSans' : '',
     },
     userName: {
@@ -140,8 +147,8 @@ const styles = (
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
       padding: 2,
-      bottom: 2,
-      right: width * 0.005,
+      bottom: 1,
+      right: width * 0.009,
       // backgroundColor: 'pink',
     },
     location: {
