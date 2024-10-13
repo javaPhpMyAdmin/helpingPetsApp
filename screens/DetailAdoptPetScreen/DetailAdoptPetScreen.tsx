@@ -24,18 +24,12 @@ const DetailAdoptPet = () => {
 
   return (
     <View style={styles({}).container}>
-      <Tabs.Screen
-      // options={{
-      //   tabBarVisibilityAnimationConfig:{
-      //     show: false
-      //   }
-      // }}
-      />
+      <Tabs.Screen />
       <Image
         source={{ uri: params.photoUrl as string }}
         style={styles({ height }).imagePet}
       />
-      <HeaderDetail routeBack="/(auth)/(tabs)/adopt" />
+      <HeaderDetail routeBack="/(auth)/(tabs)/adoptPet" />
       <View style={styles({ height }).cardContainer}>
         <View
           style={

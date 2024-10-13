@@ -1,4 +1,4 @@
-import { router } from 'expo-router';
+import { Href, router } from 'expo-router';
 import React from 'react';
 import { View, StyleSheet, Platform, Image, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -16,7 +16,11 @@ export function HeaderDetail({ routeBack }: HeaderDetailProps) {
         { top: Platform.OS === 'ios' ? inset.top : 50 },
       ]}
     >
-      <Pressable onPress={() => router.back()}>
+      <Pressable
+        onPress={() =>
+          routeBack ? router.replace(routeBack as Href) : router.back()
+        }
+      >
         <Image
           style={styles.chevron}
           source={require('@/assets/images/chevron.png')}

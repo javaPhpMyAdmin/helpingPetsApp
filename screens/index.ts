@@ -7,3 +7,4 @@ export * from './LoginScreen';
 export * from './SignUpScreen';
 export * from './AdoptPet';
 export * from './DetailAdoptPetScreen';
+export * from './NewPet';

@@ -49,3 +49,10 @@ export interface PetForAdoption {
   weight: number;
   aboutPet: string;
 }
+export interface FormAddNewPetProps {
+  petName: string;
+  aboutPet: string;
+  race: string;
+  age: string;
+  weight: string;
+}

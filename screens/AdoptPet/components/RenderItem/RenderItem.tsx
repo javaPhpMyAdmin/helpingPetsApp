@@ -26,7 +26,7 @@ const RenderItem = ({ pet }: RenderItemProps) => {
     <TouchableOpacity
       onPress={() =>
         router.push<PetForAdoption>({
-          pathname: '/adoptPet/detailAdoptPet',
+          pathname: '/(auth)/detailAdoptPet',
           params: {
             ...pet,
           },

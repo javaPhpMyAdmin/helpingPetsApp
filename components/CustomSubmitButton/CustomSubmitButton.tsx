@@ -9,18 +9,12 @@ import {
 import React from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { UseFormHandleSubmit } from 'react-hook-form';
+import { FormAddNewPetProps } from '@/types';
 
 interface SubmitButtonProps {
   handleSubmit: UseFormHandleSubmit<FormProps, undefined>;
   submit: (data: FormProps) => void;
   isLoading?: boolean;
-}
-interface FormAddNewPetProps {
-  petName: string;
-  aboutPet: string;
-  race: string;
-  age: string;
-  weight: string;
 }
 
 interface FormProps extends FormAddNewPetProps {

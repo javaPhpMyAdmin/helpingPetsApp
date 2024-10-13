@@ -1,4 +1,4 @@
-import { Tabs, usePathname } from 'expo-router';
+import { Tabs } from 'expo-router';
 import React from 'react';
 
 import { TabBar } from '@/components/TabBar';
@@ -25,9 +25,6 @@ export default function TabsLayout() {
         options={{
           headerShown: false,
           tabBarLabel: 'Adoptar',
-          tabBarStyle: {
-            display: usePathname().includes('detailAdoptPet') ? 'none' : 'flex',
-          },
         }}
       />
     </Tabs>

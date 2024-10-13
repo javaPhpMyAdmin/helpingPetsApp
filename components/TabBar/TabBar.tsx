@@ -104,7 +104,7 @@ const styles = (height: number, width: number) =>
   StyleSheet.create({
     tabbar: {
       position: 'absolute',
-      bottom: height! * 0.002,
+      bottom: height! * 0.015,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
