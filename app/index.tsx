@@ -26,9 +26,9 @@ const Index = () => {
     setTimeout(
       () =>
         isAuthenticated
-          ? router.replace('/(auth)/addNewPet')
-          : // ? router.replace('/(auth)/ReportPet')
-            // router.replace('/(auth)/(tabs)/home')
+          ? // ? router.replace('/(auth)/addNewPet')
+            router.replace('/(auth)/ReportPet')
+          : // router.replace('/(auth)/(tabs)/home')
             // router.replace('/(auth)/(tabs)/adopt')
             router.replace('/(public)/login/signup') //router.replace('/(public)/login'),
     );

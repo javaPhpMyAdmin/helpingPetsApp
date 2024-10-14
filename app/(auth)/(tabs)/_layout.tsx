@@ -21,6 +21,13 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="favPets"
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Favoritos',
+        }}
+      />
+      <Tabs.Screen
         name="adoptPet"
         options={{
           headerShown: false,

@@ -94,7 +94,7 @@ const FormAddNewPet = () => {
                 <TextInput
                   keyboardType="numeric"
                   style={styles({}).ageInput}
-                  placeholder="Edad de la mascota"
+                  placeholder="Edad"
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
@@ -119,7 +119,7 @@ const FormAddNewPet = () => {
               render={({ field: { onChange, onBlur, value } }) => (
                 <TextInput
                   style={styles({}).ageInput}
-                  placeholder="Peso de la mascota"
+                  placeholder="Peso"
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}

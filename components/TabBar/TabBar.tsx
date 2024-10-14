@@ -13,6 +13,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { TabBarButton } from '@/components/TabBarButton';
+import { usePathname } from 'expo-router';
 
 export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const { width, height } = useWindowDimensions();
@@ -33,6 +34,9 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
       transform: [{ translateX: tabPositionX.value }],
     };
   });
+
+  const currentRoute = usePathname();
+  console.log({ currentRoute });
 
   return (
     <View onLayout={onTabbarLayout} style={styles(height, width).tabbar}>
@@ -59,6 +63,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
               : route.name;
 
         const isFocused = state.index === index;
+        console.log('ROUTE NAME', route.name);
 
         const onPress = () => {
           tabPositionX.value = withSpring(buttonWidth * index, {
@@ -87,7 +92,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             key={route.key}
             name={route.name}
             label={label}
-            isFocused={isFocused}
+            isFocused={isFocused || currentRoute === `/${route.name}`}
             tabBarAccessibilityLabel={options.tabBarAccessibilityLabel}
             testId={options.tabBarTestID}
             onPress={onPress}

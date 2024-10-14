@@ -46,6 +46,7 @@ const NewPetScreen = () => {
       setIsLoadingImage(false);
     }
   };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#efeeee' }}>
       <ScrollView style={styles({}).scroll}>

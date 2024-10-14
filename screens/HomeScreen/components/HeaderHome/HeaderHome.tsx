@@ -66,7 +66,7 @@ const HeaderHome = ({ handleOpenModal }: HeaderHomeProps) => {
                 </>
               ) : (
                 <>
-                  <ActivityIndicator style={{ bottom: 3 }} size="small" />
+                  <ActivityIndicator style={{ top: 2 }} size="small" />
                   <Text
                     style={styles(height, width, loaded, fontScale).location}
                   >
