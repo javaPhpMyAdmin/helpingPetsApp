@@ -88,7 +88,6 @@ const NewPetScreen = () => {
               )}
             </View>
           </View>
-
           <GestureHandlerRootView>
             <FormAddNewPet />
           </GestureHandlerRootView>

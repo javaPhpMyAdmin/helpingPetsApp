@@ -15,6 +15,7 @@ interface SubmitButtonProps {
   handleSubmit: UseFormHandleSubmit<FormProps, undefined>;
   submit: (data: FormProps) => void;
   isLoading?: boolean;
+  isValid: boolean;
 }
 
 interface FormProps extends FormAddNewPetProps {
@@ -27,6 +28,7 @@ const CustomSubmitButton = ({
   handleSubmit,
   submit,
   isLoading = false,
+  isValid = false,
 }: SubmitButtonProps) => {
   const { width, height } = useWindowDimensions();
 
@@ -35,7 +37,7 @@ const CustomSubmitButton = ({
       <TouchableOpacity
         style={styles(width, height).buttonContainer}
         onPress={handleSubmit(submit)}
-        disabled={isLoading}
+        disabled={isLoading || !isValid}
       >
         {!isLoading ? (
           <>

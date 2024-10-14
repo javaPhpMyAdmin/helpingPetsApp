@@ -15,6 +15,7 @@ import { alertRace, alertAboutPet } from '../../../ILostMyPet/helpers';
 import { infoTypes } from '../../helpers';
 import { formSchema } from './schemaValidation';
 import { CustomSubmitButton } from '@/components';
+import { CustomSelect } from '../CustomSelect';
 
 interface FormAddNewPetProps {
   petName: string;
@@ -29,11 +30,14 @@ const FormAddNewPet = () => {
   const [selectedSex, setSelectedSex] = useState('');
   const [selectedReward, setSelectedReward] = useState('');
   const [selectedSpecie, setSelectedSpecie] = useState('');
+  const [selectedTypeAge, setSelectedTypeAge] = useState('');
+  const [selectedTypeWeight, setSelectedTypeWeight] = useState('');
+
   const {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormAddNewPetProps>({
     mode: 'onChange',
     resolver: yupResolver(formSchema),
@@ -46,6 +50,8 @@ const FormAddNewPet = () => {
     console.log({ selectedSex });
     console.log({ selectedReward });
     console.log({ selectedSpecie });
+    console.log({ selectedTypeAge });
+    console.log({ selectedTypeWeight });
     reset();
   };
 
@@ -53,6 +59,7 @@ const FormAddNewPet = () => {
     if (type === infoTypes.RACE) alertRace();
     if (type === infoTypes.ABOUT_PET) alertAboutPet();
   };
+
   return (
     <View style={styles({ width }).formContainer}>
       <View style={styles({ width, height }).titleContainer}>
@@ -94,7 +101,13 @@ const FormAddNewPet = () => {
                 />
               )}
             />
-            <Text style={styles({ fontScale }).ageText}>Meses</Text>
+            <CustomSelect
+              data={[
+                { title: 'Años', value: 'Years' },
+                { title: 'Meses', value: 'Months' },
+              ]}
+              selectType={setSelectedTypeAge}
+            />
           </View>
         </View>
         <View style={styles({}).controllerAge}>
@@ -113,7 +126,13 @@ const FormAddNewPet = () => {
                 />
               )}
             />
-            <Text style={styles({ fontScale }).ageText}>Kilos</Text>
+            <CustomSelect
+              data={[
+                { title: 'Kilos', value: 'Kilos' },
+                { title: 'Gramos', value: 'gramos' },
+              ]}
+              selectType={setSelectedTypeWeight}
+            />
           </View>
         </View>
       </View>
@@ -199,7 +218,7 @@ const FormAddNewPet = () => {
             />
           )}
         />
-        {errors.aboutPet && (
+        {errors.aboutPet && !isValid && (
           <Text style={styles({ fontScale }).errorText}>
             {errors.aboutPet.message}
           </Text>
@@ -207,6 +226,7 @@ const FormAddNewPet = () => {
       </View>
       <View style={styles({ width, height }).sumbitButtonContainer}>
         <CustomSubmitButton
+          isValid={isValid}
           //TODO: CHANGE IT WHEN USE REACT QUERY
           // isLoading={isLoading}
           handleSubmit={handleSubmit}
@@ -270,7 +290,7 @@ const styles = ({ fontScale, width, height }: CustomStyles) =>
     },
     errorText: {
       color: 'red',
-      top: 1,
+      top: 5,
       fontSize: fontScale! < 1 ? 24 : fontScale! > 1 ? 17 : 21,
       fontWeight: 'semibold',
       bottom: 5,
@@ -299,10 +319,10 @@ const styles = ({ fontScale, width, height }: CustomStyles) =>
     ageContainer: {
       flexDirection: 'row',
       width: '100%',
-      gap: 10,
-      height: 60,
+      gap: 5,
+      height: 50,
       alignItems: 'center',
-      padding: 5,
+      top: 10,
     },
     ageInput: {
       backgroundColor: 'white',
@@ -316,13 +336,13 @@ const styles = ({ fontScale, width, height }: CustomStyles) =>
     ageText: {
       fontSize: fontScale! < 1 ? 24 : fontScale! > 1 ? 17 : 21,
       fontWeight: '500',
-      top: 3,
     },
     ageWeightContainer: {
       flexDirection: 'row',
-      gap: 10,
       justifyContent: 'center',
       alignItems: 'center',
+      left: 20,
+      bottom: 5,
     },
     controllerAge: {
       flexDirection: 'column',
