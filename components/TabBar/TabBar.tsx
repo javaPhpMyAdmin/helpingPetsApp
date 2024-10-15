@@ -1,3 +1,4 @@
+/* eslint-disable import/order */
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { useState } from 'react';
 import {
@@ -109,11 +110,11 @@ const styles = (height: number, width: number) =>
   StyleSheet.create({
     tabbar: {
       position: 'absolute',
-      bottom: height! * 0.015,
+      bottom: height! * 0.01,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      backgroundColor: '#efd4d4',
+      backgroundColor: 'white',
       marginHorizontal: width * 0.005,
       paddingVertical: 9,
       borderRadius: 5,

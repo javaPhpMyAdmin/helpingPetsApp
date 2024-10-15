@@ -68,7 +68,10 @@ export const TabBarButton = ({
         {icon(name, color)}
       </Animated.View>
       <Animated.Text
-        style={[{ color: `${color}`, fontSize: 12 }, animatedTextStyle]}
+        style={[
+          { color: `${color}`, fontSize: 15, fontWeight: 'bold' },
+          animatedTextStyle,
+        ]}
       >
         {label}
       </Animated.Text>
@@ -82,5 +85,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 5,
+    bottom: 5,
+    top: 1,
   },
 });

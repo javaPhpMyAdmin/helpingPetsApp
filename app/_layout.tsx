@@ -5,6 +5,7 @@ import 'react-native-reanimated';
 import { SessionProvider } from '../context/AuthProvider/AuthProvider';
 import { useAuth } from '../context/AuthContext/AuthContext';
 import { ComponentProps, useEffect } from 'react';
+import { PetsProvider } from '../context';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 // SplashScreen.preventAutoHideAsync();
@@ -48,7 +49,9 @@ export default function RootLayout() {
 
   return (
     <SessionProvider>
-      <InitialLayout />
+      <PetsProvider>
+        <InitialLayout />
+      </PetsProvider>
     </SessionProvider>
   );
 }
