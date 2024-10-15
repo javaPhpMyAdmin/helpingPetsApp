@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 5,
-    bottom: 5,
+    gap: 1,
+    bottom: 10,
     top: 1,
   },
 });

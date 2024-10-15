@@ -12,6 +12,7 @@ const FavPets = () => {
       style={{
         flex: 1,
         justifyContent: 'flex-start',
+        // backgroundColor: 'red',
       }}
     >
       <Stack.Screen options={{ headerShown: true, title: 'Mis favoritos' }} />
@@ -21,6 +22,7 @@ const FavPets = () => {
           alignItems: 'center',
           height: '100%',
           top: -width * 0.14,
+          paddingVertical: 5,
         }}
       >
         {/* <Text>FavPets</Text> */}

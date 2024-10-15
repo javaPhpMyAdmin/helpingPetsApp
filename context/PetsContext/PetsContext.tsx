@@ -5,7 +5,7 @@ import { PetForAdoption } from '../../types';
 interface PetsProps {
   getFavs: () => PetForAdoption[];
   addToFavs: (pet: PetForAdoption) => void;
-  removeToFavs: (pet: PetForAdoption) => void;
+  removeFromFavs: (pet: PetForAdoption) => void;
 }
 
 export const PetsContext = createContext<Partial<PetsProps>>({});

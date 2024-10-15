@@ -15,10 +15,22 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Foundation } from '@expo/vector-icons';
+import { MarkFav } from './components';
+import { PetForAdoption } from '../../types';
 
 const DetailAdoptPet = () => {
   const { width, height } = useWindowDimensions();
   const params = useLocalSearchParams();
+  const currentPet: PetForAdoption = {
+    id: params.id as string,
+    petName: params.petName as string,
+    breed: params.breed as string,
+    gender: params.gender as string,
+    age: params.age as string,
+    weight: Number(params.weight),
+    photoUrl: params.photoUrl as string,
+    aboutPet: params.aboutPet as string,
+  };
 
   const fontScale = useWindowDimensions().fontScale;
 
@@ -47,19 +59,7 @@ const DetailAdoptPet = () => {
                 <Foundation name="male-symbol" size={38} color="gray" />
               )}
             </View>
-            <MaterialIcons
-              style={styles({ height, width }).favouriteIcon}
-              name="favorite"
-              size={34}
-              color="red"
-            />
-
-            <MaterialIcons
-              style={styles({ height, width }).favouriteIcon}
-              name="favorite-outline"
-              size={34}
-              color="red"
-            />
+            <MarkFav pet={currentPet} />
           </View>
           <View style={styles({}).locationContainer}>
             <FontAwesome5
@@ -229,7 +229,6 @@ const styles = ({ fontScale, height, width, gender }: StylesProps) =>
       alignItems: 'center',
       width: '100%',
     },
-    favouriteIcon: { position: 'absolute', left: width! * 0.8, top: 0 },
     iconContainer: {
       height: 45,
       width: 45,

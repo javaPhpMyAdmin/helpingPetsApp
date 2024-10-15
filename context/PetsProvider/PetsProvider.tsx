@@ -20,14 +20,14 @@ const PetsProvider = ({
     setFavsPets([...favsPets, pet]);
   };
 
-  const removeToFavs = (pet: PetForAdoption) => {
+  const removeFromFavs = (pet: PetForAdoption) => {
     setFavsPets(favsPets.filter((petToRemove) => petToRemove.id !== pet.id));
   };
 
   const value = {
     getFavs: getFavsPets,
     addToFavs,
-    removeToFavs,
+    removeFromFavs,
   };
   return <PetsContext.Provider value={value}>{children}</PetsContext.Provider>;
 };

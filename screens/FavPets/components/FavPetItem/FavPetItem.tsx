@@ -11,6 +11,7 @@ import React from 'react';
 import { PetForAdoption } from '../../../../types';
 import { Foundation, FontAwesome } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { RemoveFromFavs } from '../RemoveFromFavs';
 
 interface FavPetItemProps {
   pet: PetForAdoption;
@@ -36,6 +37,7 @@ const FavPetItem = ({ pet }: FavPetItemProps) => {
         style={styles(fontScale, width, height).image}
         source={{ uri: pet.photoUrl }}
       />
+      <RemoveFromFavs pet={pet} />
       <View style={styles(fontScale, width).detailContainer}>
         <View style={styles(fontScale, width, height).descriptionContainer}>
           <Text style={styles(fontScale).petName}>{pet.petName}</Text>
@@ -68,10 +70,14 @@ export default FavPetItem;
 
 const styles = (fontScale?: number, width?: number, height?: number) =>
   StyleSheet.create({
-    buttonContainer: { flex: 1, paddingVertical: 8, position: 'relative' },
+    buttonContainer: {
+      flex: 1,
+      paddingVertical: 8,
+      position: 'relative',
+    },
     image: {
       width: width! * 0.95,
-      height: width! * 0.7,
+      height: width! * 0.6,
       borderRadius: 40,
       borderWidth: 0.3,
       borderColor: 'orange',
@@ -82,7 +88,7 @@ const styles = (fontScale?: number, width?: number, height?: number) =>
       left: width! * 0.001,
       backgroundColor: 'white',
       opacity: 0.58,
-      height: width! * 0.355,
+      height: width! * 0.3,
       width: '100%',
       borderBottomLeftRadius: 40,
       borderBottomRightRadius: 40,
@@ -95,7 +101,7 @@ const styles = (fontScale?: number, width?: number, height?: number) =>
     descriptionContainer: {
       left: width! * 0.07,
       top: width! * 0.007,
-      gap: 7,
+      gap: 3,
     },
     petName: {
       fontSize: fontScale! < 1 ? 33 : fontScale! > 1 ? 27 : 31,
@@ -119,9 +125,10 @@ const styles = (fontScale?: number, width?: number, height?: number) =>
     },
     footerContainer: {
       flexDirection: 'row',
-      gap: width! * 0.27,
+      gap: width! * 0.2,
       alignItems: 'center',
       justifyContent: 'center',
-      right: width! * 0.08,
+      right: width! * 0.07,
+      bottom: 5,
     },
   });

@@ -110,13 +110,13 @@ const styles = (height: number, width: number) =>
   StyleSheet.create({
     tabbar: {
       position: 'absolute',
-      bottom: height! * 0.01,
+      bottom: height! * 0.001,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
       backgroundColor: 'white',
       marginHorizontal: width * 0.005,
-      paddingVertical: 9,
+      // paddingVertical: 2,
       borderRadius: 5,
       shadowColor: '#000',
       // shadowOffset: { width: 0, height: 10 },
