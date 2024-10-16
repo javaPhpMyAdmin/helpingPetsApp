@@ -42,6 +42,7 @@ const DetailAdoptPet = () => {
         style={styles({ height }).imagePet}
       />
       <HeaderDetail routeBack="/(auth)/(tabs)/adoptPet" />
+      {/* <HeaderDetail /> */}
       <View style={styles({ height }).cardContainer}>
         <View
           style={

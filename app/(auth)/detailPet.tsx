@@ -15,7 +15,7 @@ const MarkerDetailTest = () => {
     <View style={styles.container}>
       <Stack.Screen options={{ headerShown: false }} />
       <View>
-        <HeaderDetail />
+        <HeaderDetail routeBack="/(auth)/(tabs)/home" />
         <Animated.Image
           resizeMode="cover"
           // sharedTransitionTag={String(petId)}

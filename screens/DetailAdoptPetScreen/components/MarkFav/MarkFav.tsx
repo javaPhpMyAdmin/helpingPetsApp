@@ -18,9 +18,11 @@ const MarkFav = ({ pet }: MarkFavProps) => {
   const { getFavs, addToFavs, removeFromFavs } = usePets();
   const favsPets = getFavs!();
 
+  const petsIds = favsPets.map((pet) => pet.id);
+
   return (
     <>
-      {favsPets.includes(pet) ? (
+      {petsIds.includes(pet.id) ? (
         <TouchableOpacity
           onPress={() => removeFromFavs!(pet)}
           style={styles({ width }).favouriteIcon}

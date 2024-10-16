@@ -62,9 +62,9 @@ export const TabBarButton = ({
       testID={testId}
       onPress={onPress}
       onLongPress={onLongPress}
-      style={styles.tabbarItem}
+      style={styles(isFocused).tabbarItem}
     >
-      <Animated.View style={animatedIconStyle}>
+      <Animated.View style={[{}, animatedIconStyle]}>
         {icon(name, color)}
       </Animated.View>
       <Animated.Text
@@ -79,13 +79,17 @@ export const TabBarButton = ({
   );
 };
 
-const styles = StyleSheet.create({
-  tabbarItem: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 1,
-    bottom: 10,
-    top: 1,
-  },
-});
+const styles = (isFocused?: boolean) =>
+  StyleSheet.create({
+    tabbarItem: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 1,
+      bottom: 10,
+      top: 1,
+      backgroundColor: isFocused ? 'hotpink' : 'transparent',
+      width: 50,
+      height: 50,
+    },
+  });

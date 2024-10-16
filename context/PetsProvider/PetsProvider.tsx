@@ -11,7 +11,7 @@ const PetsProvider = ({
 }: {
   children: React.ReactNode | React.ReactNode[];
 }) => {
-  const [favsPets, setFavsPets] = useState<PetForAdoption[]>(initialFavsPets);
+  const [favsPets, setFavsPets] = useState<PetForAdoption[]>([]);
 
   const getFavsPets = () => {
     return favsPets;

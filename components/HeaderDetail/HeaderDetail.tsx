@@ -17,8 +17,9 @@ export function HeaderDetail({ routeBack }: HeaderDetailProps) {
       ]}
     >
       <Pressable
-        onPress={() =>
-          routeBack ? router.replace(routeBack as Href) : router.back()
+        onPress={
+          // () => router.back()
+          () => (routeBack ? router.push(routeBack as Href) : router.back())
         }
       >
         <Image

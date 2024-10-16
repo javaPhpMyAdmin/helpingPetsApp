@@ -4,7 +4,7 @@ import { View } from 'react-native';
 
 const NewMarker = () => {
   useEffect(() => {
-    router.push('/(auth)/ReportPet');
+    router.replace('/(auth)/ReportPet');
   }, []);
   return <View />;
 };
