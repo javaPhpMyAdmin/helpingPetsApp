@@ -13,13 +13,13 @@ export default function TabsLayout() {
           tabBarLabel: 'Inicio',
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="newMarker"
         options={{
           headerShown: false,
           tabBarLabel: 'Reportar',
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="favPets"
         options={{

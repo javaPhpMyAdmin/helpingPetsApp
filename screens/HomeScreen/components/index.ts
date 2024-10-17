@@ -5,3 +5,5 @@ export * from './UserProfile';
 export * from './HeaderHome';
 export * from './CategoryList';
 export * from './PetsList';
+export * from './ModalAddReport';
+export * from './ButtonAddReport';

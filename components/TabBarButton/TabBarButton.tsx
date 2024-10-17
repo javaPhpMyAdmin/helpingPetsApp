@@ -82,14 +82,14 @@ export const TabBarButton = ({
 const styles = (isFocused?: boolean) =>
   StyleSheet.create({
     tabbarItem: {
-      flex: 1,
+      // flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      gap: 1,
       bottom: 10,
-      top: 1,
-      backgroundColor: isFocused ? 'hotpink' : 'transparent',
-      width: 50,
+      top: 5,
+      backgroundColor: isFocused ? 'orange' : 'transparent',
+      width: '20%',
       height: 50,
+      borderRadius: 30,
     },
   });

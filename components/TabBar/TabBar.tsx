@@ -1,21 +1,16 @@
 /* eslint-disable import/order */
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   View,
   StyleSheet,
   LayoutChangeEvent,
   useWindowDimensions,
 } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from 'react-native-reanimated';
+import { useSharedValue, withSpring } from 'react-native-reanimated';
 
 import { TabBarButton } from '@/components/TabBarButton';
-import { router, usePathname } from 'expo-router';
-import { ParamListBase, TabNavigationState } from '@react-navigation/native';
+import { usePathname } from 'expo-router';
 
 export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const { width, height } = useWindowDimensions();
@@ -31,33 +26,13 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   };
 
   const tabPositionX = useSharedValue(0);
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateX: tabPositionX.value }],
-    };
-  });
-  let indexAux = 0;
-  let isFocused = false;
-  let routeAux: TabNavigationState<ParamListBase>;
+  // const animatedStyle = useAnimatedStyle(() => {
+  //   return {
+  //     transform: [{ translateX: tabPositionX.value }],
+  //   };
+  // });
 
   const currentRoute = usePathname();
-  //TODO: DELETE AFTER TESTING
-  console.log({ currentRoute });
-
-  // useEffect(() => {
-  //   tabPositionX.value = withSpring(buttonWidth * indexAux, {
-  //     duration: 1500,
-  //   });
-  //   const event = navigation.emit({
-  //     type: 'tabPress',
-  //     target: routeAux.key,
-  //     canPreventDefault: true,
-  //   });
-
-  //   if (!isFocused && !event.defaultPrevented) {
-  //     navigation.navigate(routeAux.routes[0].name, routeAux.routes[0].params);
-  //   }
-  // }, [currentRoute]);
 
   return (
     <View onLayout={onTabbarLayout} style={styles(height, width).tabbar}>
@@ -84,11 +59,6 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
               : route.name;
 
         const isFocused = currentRoute === `/${route.name}`;
-        console.log('STATE INDEX', state.index);
-        console.log('INDEX', index);
-        console.log('ROUTE NAME', `/${route.name}`);
-        console.log('CURRENT ROUTE', currentRoute);
-        console.log('IS FOCUSED', isFocused);
 
         const onPress = () => {
           tabPositionX.value = withSpring(buttonWidth * index, {
@@ -133,12 +103,13 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
 const styles = (height: number, width: number) =>
   StyleSheet.create({
     tabbar: {
+      width: '100%',
       position: 'absolute',
       bottom: height! * 0.025,
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'space-evenly',
       alignItems: 'center',
-      backgroundColor: 'white',
+      backgroundColor: '#eeeded',
       marginHorizontal: width * 0.005,
       // paddingVertical: 2,
       borderRadius: 5,
