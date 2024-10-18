@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import Foundation from '@expo/vector-icons/Foundation';
-import { PetForAdoption } from '@/types';
+import { PetForAdoption, Photo } from '@/types';
 import { router } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -19,8 +19,9 @@ interface RenderItemProps {
 
 const RenderItem = ({ pet }: RenderItemProps) => {
   const { width, height } = useWindowDimensions();
-
   const fontScale = useWindowDimensions().fontScale;
+
+  // console.log('PET render item adopt pet', pet.photos);
 
   return (
     <TouchableOpacity
@@ -28,7 +29,7 @@ const RenderItem = ({ pet }: RenderItemProps) => {
         router.push<PetForAdoption>({
           pathname: '/(auth)/detailAdoptPet',
           params: {
-            ...pet,
+            id: pet.id,
           },
         })
       }
@@ -36,7 +37,7 @@ const RenderItem = ({ pet }: RenderItemProps) => {
     >
       <Image
         style={styles(fontScale, width, height).image}
-        source={{ uri: pet.photoUrl }}
+        source={{ uri: pet.photos[0].uri }}
       />
       <View style={styles(fontScale, width).detailContainer}>
         <View style={styles(fontScale, width, height).descriptionContainer}>

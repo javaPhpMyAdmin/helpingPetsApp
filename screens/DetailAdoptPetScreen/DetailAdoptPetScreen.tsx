@@ -2,45 +2,50 @@
 import {
   View,
   Text,
-  Image,
   useWindowDimensions,
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
 import React from 'react';
-import { Tabs, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { HeaderDetail } from '../../components';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Foundation } from '@expo/vector-icons';
-import { MarkFav } from './components';
-import { PetForAdoption } from '../../types';
+import { Carousel, MarkFav } from './components';
+import { Pet, PetForAdoption, Photo } from '../../types';
+import { MockedPetsForAdoption } from '../../MockedPetsForAdoption';
 
 const DetailAdoptPet = () => {
   const { width, height } = useWindowDimensions();
   const params = useLocalSearchParams();
+  console.log('PARAMS', params);
+  const petcurrent = MockedPetsForAdoption.find((pet) => pet.id === params.id);
+  console.log('CURRENT PET', petcurrent);
   const currentPet: PetForAdoption = {
-    id: params.id as string,
-    petName: params.petName as string,
-    breed: params.breed as string,
-    gender: params.gender as string,
-    age: params.age as string,
-    weight: Number(params.weight),
-    photoUrl: params.photoUrl as string,
-    aboutPet: params.aboutPet as string,
+    id: petcurrent?.id as string,
+    petName: petcurrent?.petName as string,
+    breed: petcurrent?.breed as string,
+    gender: petcurrent?.gender as string,
+    age: petcurrent?.age as string,
+    weight: Number(petcurrent?.weight),
+    photos: petcurrent?.photos as [],
+    aboutPet: petcurrent?.aboutPet as string,
   };
 
   const fontScale = useWindowDimensions().fontScale;
+  console.log('PARAMS', params);
+  // console.log('CURRENTE PET PHOTOS', currentPet.photos[0].uri);
 
   return (
     <View style={styles({}).container}>
-      <Tabs.Screen />
-      <Image
+      {/* <Image
         source={{ uri: params.photoUrl as string }}
         style={styles({ height }).imagePet}
-      />
+      /> */}
+      <Carousel photosUrl={currentPet.photos as []} />
       <HeaderDetail routeBack="/(auth)/(tabs)/adoptPet" />
       {/* <HeaderDetail /> */}
       <View style={styles({ height }).cardContainer}>
@@ -52,9 +57,9 @@ const DetailAdoptPet = () => {
           <View style={styles({}).headerContainer}>
             <View style={styles({}).nameContainer}>
               <Text style={styles({ fontScale }).petName}>
-                {params.petName}
+                {currentPet.petName}
               </Text>
-              {params.gender === 'Hembra' ? (
+              {currentPet.gender === 'Hembra' ? (
                 <Foundation name="female-symbol" size={35} color="gray" />
               ) : (
                 <Foundation name="male-symbol" size={38} color="gray" />
@@ -77,18 +82,22 @@ const DetailAdoptPet = () => {
                 <FontAwesome
                   name="birthday-cake"
                   size={30}
-                  color={params.gender === 'Hembra' ? 'hotpink' : 'skyblue'}
+                  color={currentPet.gender === 'Hembra' ? 'hotpink' : 'skyblue'}
                 />
               </View>
               <View>
                 <Text style={styles({ fontScale }).infoPet}>Edad</Text>
                 <Text
                   style={
-                    styles({ fontScale, width, height, gender: params.gender })
-                      .textDescriptive
+                    styles({
+                      fontScale,
+                      width,
+                      height,
+                      gender: currentPet.gender,
+                    }).textDescriptive
                   }
                 >
-                  {params.age}
+                  {currentPet.age}
                 </Text>
               </View>
             </View>
@@ -97,18 +106,22 @@ const DetailAdoptPet = () => {
                 <MaterialCommunityIcons
                   name="weight-kilogram"
                   size={42}
-                  color={params.gender === 'Hembra' ? 'hotpink' : 'skyblue'}
+                  color={currentPet.gender === 'Hembra' ? 'hotpink' : 'skyblue'}
                 />
               </View>
               <View>
                 <Text style={styles({ fontScale }).infoPet}>Peso</Text>
                 <Text
                   style={
-                    styles({ fontScale, width, height, gender: params.gender })
-                      .textDescriptive
+                    styles({
+                      fontScale,
+                      width,
+                      height,
+                      gender: currentPet.gender,
+                    }).textDescriptive
                   }
                 >
-                  {params.weight} Kg
+                  {currentPet.weight} Kg
                 </Text>
               </View>
             </View>
@@ -117,25 +130,29 @@ const DetailAdoptPet = () => {
                 <MaterialIcons
                   name="pets"
                   size={42}
-                  color={params.gender === 'Hembra' ? 'hotpink' : 'skyblue'}
+                  color={currentPet.gender === 'Hembra' ? 'hotpink' : 'skyblue'}
                 />
               </View>
               <View>
                 <Text style={styles({ fontScale }).infoPet}>Raza</Text>
                 <Text
                   style={
-                    styles({ fontScale, width, height, gender: params.gender })
-                      .textDescriptive
+                    styles({
+                      fontScale,
+                      width,
+                      height,
+                      gender: currentPet.gender,
+                    }).textDescriptive
                   }
                 >
-                  {params.breed}
+                  {currentPet.breed}
                 </Text>
               </View>
             </View>
           </View>
 
           <Text style={styles({ fontScale }).aboutText}>
-            Acerca de {params.petName}
+            Acerca de {currentPet.petName}
           </Text>
           <Text
             style={
@@ -143,10 +160,10 @@ const DetailAdoptPet = () => {
                 .textAbout
             }
           >
-            {params.aboutPet}
+            {currentPet.aboutPet}
           </Text>
           <TouchableOpacity
-            style={styles({ height, width, gender: params.gender }).button}
+            style={styles({ height, width, gender: currentPet.gender }).button}
           >
             <Text style={styles({ fontScale }).buttonText}>
               Se mi nuevo amigo
@@ -169,7 +186,11 @@ interface StylesProps {
 
 const styles = ({ fontScale, height, width, gender }: StylesProps) =>
   StyleSheet.create({
-    container: { flex: 1, justifyContent: 'flex-start', alignItems: 'center' },
+    container: {
+      flex: 1,
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+    },
     imagePet: { width: '100%', height: height! * 0.5 },
     textDescriptive: {
       fontWeight: '900',

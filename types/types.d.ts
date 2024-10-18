@@ -41,13 +41,17 @@ export interface Pet {
 }
 export interface PetForAdoption {
   id: string;
-  photoUrl: string;
+  photos: Photo[];
   petName: string;
   breed: string;
   gender: string;
   age: string;
   weight: number;
   aboutPet: string;
+}
+
+export interface Photo {
+  uri: string;
 }
 export interface FormAddNewPetProps {
   petName: string;
