@@ -8,7 +8,6 @@ interface ItemCarouselProps {
 
 const ItemCarousel = ({ photoUrl }: ItemCarouselProps) => {
   const { width, height } = useWindowDimensions();
-  console.log({ photoUrl });
   return (
     <Image
       source={{ uri: photoUrl }}

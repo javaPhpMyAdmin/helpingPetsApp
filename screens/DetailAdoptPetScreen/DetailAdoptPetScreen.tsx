@@ -8,50 +8,44 @@ import {
 } from 'react-native';
 import React from 'react';
 import { useLocalSearchParams } from 'expo-router';
-import { HeaderDetail } from '../../components';
+import { HeaderDetail } from '@/components';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Foundation } from '@expo/vector-icons';
-import { Carousel, MarkFav } from './components';
-import { Pet, PetForAdoption, Photo } from '../../types';
-import { MockedPetsForAdoption } from '../../MockedPetsForAdoption';
+import { Carousel, MarkFav, Pagination } from './components';
+import { PetForAdoption } from '@/types';
+import { MockedPetsForAdoption } from '@/MockedPetsForAdoption';
 
 const DetailAdoptPet = () => {
   const { width, height } = useWindowDimensions();
   const params = useLocalSearchParams();
-  console.log('PARAMS', params);
-  const petcurrent = MockedPetsForAdoption.find((pet) => pet.id === params.id);
-  console.log('CURRENT PET', petcurrent);
+  // console.log('PARAMS', params);
+  const petFounded = MockedPetsForAdoption.find((pet) => pet.id === params.id);
+  // console.log('CURRENT PET', petcurrent);
   const currentPet: PetForAdoption = {
-    id: petcurrent?.id as string,
-    petName: petcurrent?.petName as string,
-    breed: petcurrent?.breed as string,
-    gender: petcurrent?.gender as string,
-    age: petcurrent?.age as string,
-    weight: Number(petcurrent?.weight),
-    photos: petcurrent?.photos as [],
-    aboutPet: petcurrent?.aboutPet as string,
+    id: petFounded?.id as string,
+    petName: petFounded?.petName as string,
+    breed: petFounded?.breed as string,
+    gender: petFounded?.gender as string,
+    age: petFounded?.age as string,
+    weight: Number(petFounded?.weight),
+    photos: petFounded?.photos as [],
+    aboutPet: petFounded?.aboutPet as string,
   };
 
   const fontScale = useWindowDimensions().fontScale;
-  console.log('PARAMS', params);
-  // console.log('CURRENTE PET PHOTOS', currentPet.photos[0].uri);
 
   return (
     <View style={styles({}).container}>
-      {/* <Image
-        source={{ uri: params.photoUrl as string }}
-        style={styles({ height }).imagePet}
-      /> */}
       <Carousel photosUrl={currentPet.photos as []} />
       <HeaderDetail routeBack="/(auth)/(tabs)/adoptPet" />
-      {/* <HeaderDetail /> */}
       <View style={styles({ height }).cardContainer}>
         <View
           style={
-            styles({ height, width, gender: params.gender }).cardInfoContainer
+            styles({ height, width, gender: currentPet.gender })
+              .cardInfoContainer
           }
         >
           <View style={styles({}).headerContainer}>
@@ -156,7 +150,7 @@ const DetailAdoptPet = () => {
           </Text>
           <Text
             style={
-              styles({ fontScale, height, width, gender: params.gender })
+              styles({ fontScale, height, width, gender: currentPet.gender })
                 .textAbout
             }
           >

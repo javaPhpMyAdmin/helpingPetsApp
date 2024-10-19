@@ -19,35 +19,17 @@ const ReportContainer = () => {
       <View
         style={styles(fontScale, loaded, width, height).buttonReportContainer}
       >
-        <CustomButton
-          loaded={loaded}
-          width={width}
-          height={height}
-          title="He encontrado una mascota"
-          type={1}
-        />
+        <CustomButton title="He encontrado una mascota" type={1} />
       </View>
       <View
         style={styles(fontScale, loaded, width, height).buttonReportContainer}
       >
-        <CustomButton
-          loaded={loaded}
-          width={width}
-          height={height}
-          title="He perdido a mi mascota"
-          type={2}
-        />
+        <CustomButton title="He perdido a mi mascota" type={2} />
       </View>
       <View
         style={styles(fontScale, loaded, width, height).buttonReportContainer}
       >
-        <CustomButton
-          loaded={loaded}
-          width={width}
-          height={height}
-          title="Ver todos los reportes"
-          type={3}
-        />
+        <CustomButton title="Ver todos los reportes" type={3} />
       </View>
     </View>
   );

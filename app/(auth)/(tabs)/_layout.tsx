@@ -34,6 +34,13 @@ export default function TabsLayout() {
           tabBarLabel: 'Adoptar',
         }}
       />
+      <Tabs.Screen
+        name="chats"
+        options={{
+          headerShown: false,
+          tabBarLabel: 'Chats',
+        }}
+      />
     </Tabs>
   );
 }

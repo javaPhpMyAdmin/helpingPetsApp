@@ -92,7 +92,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             testId={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
-            color={isFocused ? '#FFF' : '#222'}
+            color={isFocused ? '#FFF' : '#f96f2aed'}
           />
         );
       })}
@@ -105,17 +105,16 @@ const styles = (height: number, width: number) =>
     tabbar: {
       width: '100%',
       position: 'absolute',
-      bottom: height! * 0.025,
+      height: height! * 0.1,
+      bottom: height! * 0.01,
       flexDirection: 'row',
       justifyContent: 'space-evenly',
       alignItems: 'center',
-      backgroundColor: '#eeeded',
-      marginHorizontal: width * 0.005,
-      // paddingVertical: 2,
       borderRadius: 5,
-      shadowColor: '#000',
+      // shadowColor: '#000',
       // shadowOffset: { width: 0, height: 10 },
       // shadowRadius: 10,
       // shadowOpacity: 0.1,
+      // elevation: 10,
     },
   });

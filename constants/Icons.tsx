@@ -8,4 +8,6 @@ export const icon = (name: string, color: string) => {
   if (name === 'newMarker')
     return <Ionicons name="add-circle-outline" size={30} color="black" />;
   if (name === 'home') return <Feather name="home" size={30} color={color} />;
+  if (name === 'chats')
+    return <Ionicons name="chatbox-ellipses-outline" size={30} color={color} />;
 };

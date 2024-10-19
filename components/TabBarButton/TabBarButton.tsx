@@ -1,6 +1,6 @@
 /* eslint-disable import/order */
 import { useEffect } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, useWindowDimensions } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -31,6 +31,7 @@ export const TabBarButton = ({
   color,
 }: TabBarButtonProps) => {
   const scale = useSharedValue(0);
+  const fontScale = useWindowDimensions().fontScale;
 
   useEffect(() => {
     scale.value = withSpring(
@@ -62,16 +63,13 @@ export const TabBarButton = ({
       testID={testId}
       onPress={onPress}
       onLongPress={onLongPress}
-      style={styles(isFocused).tabbarItem}
+      style={styles({ isFocused }).tabbarItem}
     >
       <Animated.View style={[{}, animatedIconStyle]}>
         {icon(name, color)}
       </Animated.View>
       <Animated.Text
-        style={[
-          { color: `${color}`, fontSize: 15, fontWeight: 'bold' },
-          animatedTextStyle,
-        ]}
+        style={[styles({ fontScale, color }).labelText, animatedTextStyle]}
       >
         {label}
       </Animated.Text>
@@ -79,17 +77,26 @@ export const TabBarButton = ({
   );
 };
 
-const styles = (isFocused?: boolean) =>
+interface StylesProps {
+  isFocused?: boolean;
+  color?: string;
+  fontScale?: number;
+}
+
+const styles = ({ isFocused, fontScale, color }: StylesProps) =>
   StyleSheet.create({
     tabbarItem: {
-      // flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      bottom: 10,
-      top: 5,
+      top: 8,
       backgroundColor: isFocused ? 'orange' : 'transparent',
       width: '20%',
-      height: 50,
-      borderRadius: 30,
+      height: 60,
+      borderRadius: 20,
+    },
+    labelText: {
+      color: color!,
+      fontSize: fontScale! < 1 ? 21 : fontScale! > 1 ? 13 : 17,
+      fontWeight: 'bold',
     },
   });

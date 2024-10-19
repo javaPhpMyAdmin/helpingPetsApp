@@ -20,7 +20,7 @@ const ButtonAddReport = ({ handleOpenAddModal }: ButtonAddReportProps) => {
       style={styles({ width }).buttonContainer}
     >
       {/* <Text style={{ color: 'white' }}>NUEVO</Text> */}
-      <AntDesign name="pluscircle" size={74} color="#f7923b" />
+      <AntDesign name="plus" size={74} color="#f86e05" />
     </TouchableOpacity>
   );
 };
@@ -38,12 +38,12 @@ const styles = ({ width }: StylesProps) =>
   StyleSheet.create({
     buttonContainer: {
       position: 'absolute',
-      right: 20,
-      bottom: width! * 0.2,
-      width: 100,
-      height: 100,
-      backgroundColor: 'transparent',
-      borderRadius: 10,
+      right: 14,
+      bottom: width! * 0.02,
+      width: width! * 0.2,
+      height: width! * 0.2,
+      backgroundColor: 'orange',
+      borderRadius: 100,
       justifyContent: 'center',
       alignItems: 'center',
     },
