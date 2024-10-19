@@ -19,9 +19,14 @@ const FavPetsList = () => {
   return (
     <View style={styles({ width }).listContainer}>
       {favsPets.length === 0 && (
-        <Text style={styles({ width, fontScale }).noFavsText}>
-          Aún no tienes favoritos 😢
-        </Text>
+        <View style={styles({ width, height, fontScale }).noFavsContainer}>
+          <Text style={styles({ width, fontScale }).noFavsText}>
+            Aún no tienes favoritos 😢
+          </Text>
+          <Text style={styles({ width, fontScale }).noFavsSecondText}>
+            Tus favoritos aparecerán aquí 😉
+          </Text>
+        </View>
       )}
       <FlatList
         contentContainerStyle={styles({ width, height }).contentContainer}
@@ -47,6 +52,7 @@ const styles = ({ fontScale, width, height }: CustomStyles) =>
     contentContainer: {
       position: 'static',
       padding: 5,
+
       // backgroundColor: 'blue',
     },
     listContainer: {
@@ -55,6 +61,7 @@ const styles = ({ fontScale, width, height }: CustomStyles) =>
       height: width! * 1.2,
       display: 'flex',
       justifyContent: 'center',
+      alignItems: 'center',
       // margin: 10,
       //   right: width! * 0.0,
     },
@@ -62,7 +69,18 @@ const styles = ({ fontScale, width, height }: CustomStyles) =>
       fontSize: fontScale! < 1 ? 24 : fontScale! > 1 ? 17 : 21,
       fontWeight: 'bold',
       color: 'black',
-      top: width! * 0.2,
+    },
+    noFavsSecondText: {
+      fontSize: fontScale! < 1 ? 24 : fontScale! > 1 ? 17 : 21,
+      fontWeight: 'bold',
+      color: 'gray',
       left: width! * 0.01,
+    },
+    noFavsContainer: {
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      top: height! * 0.35,
+      // left: width! * 0.01,
     },
   });

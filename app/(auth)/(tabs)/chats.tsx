@@ -8,6 +8,9 @@ const Chats = () => {
       <Text style={styles().textInformation}>
         Aún no tienes conversaciones 😿{' '}
       </Text>
+      <Text style={styles().conversationsInformation}>
+        Tus conversaciones aparecerán aquí 😉
+      </Text>
     </View>
   );
 };
@@ -23,8 +26,13 @@ const styles = () =>
       alignItems: 'center',
     },
     textInformation: {
+      color: 'black',
+      fontSize: 25,
+      fontWeight: 'bold',
+    },
+    conversationsInformation: {
       color: 'gray',
-      fontSize: 20,
+      fontSize: 18,
       fontWeight: 'bold',
     },
   });

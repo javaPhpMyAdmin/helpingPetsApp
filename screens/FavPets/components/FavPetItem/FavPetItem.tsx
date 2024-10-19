@@ -27,7 +27,7 @@ const FavPetItem = ({ pet }: FavPetItemProps) => {
         router.push<PetForAdoption>({
           pathname: '/(auth)/detailAdoptPet',
           params: {
-            ...pet,
+            id: pet.id,
           },
         })
       }
@@ -35,7 +35,7 @@ const FavPetItem = ({ pet }: FavPetItemProps) => {
     >
       <Image
         style={styles(fontScale, width, height).image}
-        source={{ uri: pet.photoUrl }}
+        source={{ uri: pet.photos[0].uri }}
       />
       <RemoveFromFavs pet={pet} />
       <View style={styles(fontScale, width).detailContainer}>

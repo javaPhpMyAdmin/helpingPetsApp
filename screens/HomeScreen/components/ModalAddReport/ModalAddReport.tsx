@@ -119,7 +119,7 @@ const styles = ({ fontScale, width, height }: StylesProps) =>
       shadowOpacity: 1,
       shadowRadius: 2,
       elevation: 2.5,
-      top: 20,
+      top: height! * 0.001,
     },
     closeButton: {
       // position: 'absolute',

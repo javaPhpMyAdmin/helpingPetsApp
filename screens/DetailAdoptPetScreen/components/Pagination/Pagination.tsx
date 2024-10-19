@@ -22,25 +22,25 @@ const Pagination = ({ scrollX, paginationIndex, items }: PaginationProps) => {
     <View style={styles().container}>
       {items.map((_, index) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const pgAnimationStyle = useAnimatedStyle(() => {
-          const dotWidth = interpolate(
-            scrollX.value,
-            [(index - 1) * width, index * width, (index + 1) * width],
-            [8, 20, 8],
-            Extrapolation.CLAMP
-          );
-          return {
-            width: dotWidth,
-          };
-        });
+        // const pgAnimationStyle = useAnimatedStyle(() => {
+        //   const dotWidth = interpolate(
+        //     scrollX.value,
+        //     [(index - 1) * width, index * width, (index + 1) * width],
+        //     [8, 20, 8],
+        //     Extrapolation.CLAMP
+        //   );
+        //   return {
+        //     width: dotWidth,
+        //   };
+        // });
         return (
           <Animated.View
-            key={index}
+            key={index * width}
             style={[
               styles().dot,
               //   pgAnimationStyle,
               {
-                backgroundColor: paginationIndex === index ? 'white' : 'black',
+                backgroundColor: paginationIndex === index ? 'white' : 'orange',
               },
             ]}
           />
@@ -72,7 +72,6 @@ const styles = () =>
       fontWeight: 'bold',
     },
     dot: {
-      backgroundColor: 'red',
       height: 12,
       width: 12,
       borderRadius: 32,
