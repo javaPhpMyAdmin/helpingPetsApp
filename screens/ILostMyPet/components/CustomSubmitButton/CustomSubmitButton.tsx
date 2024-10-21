@@ -9,21 +9,17 @@ import {
 import React from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { UseFormHandleSubmit } from 'react-hook-form';
+import { Marker } from '../../../../types';
 
 interface SubmitButtonProps {
   handleSubmit: UseFormHandleSubmit<FormProps, undefined>;
   submit: (data: FormProps) => void;
   isLoading?: boolean;
-}
-interface FormAddNewPetProps {
-  petName: string;
-  aboutPet: string;
-  race: string;
-  age: string;
-  weight: string;
+  isValid?: boolean;
 }
 
-interface FormProps extends FormAddNewPetProps {
+interface FormProps {
+  reportTitle: string;
   petName: string;
   aboutPet: string;
   race: string;
@@ -33,6 +29,7 @@ const CustomSubmitButton = ({
   handleSubmit,
   submit,
   isLoading = false,
+  isValid = false,
 }: SubmitButtonProps) => {
   const { width, height } = useWindowDimensions();
 
@@ -41,7 +38,7 @@ const CustomSubmitButton = ({
       <TouchableOpacity
         style={styles(width, height).buttonContainer}
         onPress={handleSubmit(submit)}
-        disabled={isLoading}
+        disabled={isLoading || !isValid}
       >
         {!isLoading ? (
           <>

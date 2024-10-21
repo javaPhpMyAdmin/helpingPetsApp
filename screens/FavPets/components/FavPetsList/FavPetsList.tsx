@@ -71,7 +71,7 @@ const styles = ({ fontScale, width, height }: CustomStyles) =>
       color: 'black',
     },
     noFavsSecondText: {
-      fontSize: fontScale! < 1 ? 24 : fontScale! > 1 ? 17 : 21,
+      fontSize: fontScale! < 1 ? 23 : fontScale! > 1 ? 15 : 19,
       fontWeight: 'bold',
       color: 'gray',
       left: width! * 0.01,

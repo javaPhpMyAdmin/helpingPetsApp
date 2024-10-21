@@ -1,10 +1,8 @@
 /* eslint-disable import/order */
 import React, { useState } from 'react';
 import { PetsContext } from '../PetsContext/PetsContext';
-import { PetForAdoption } from '@/types';
-import { MockedPetsForAdoption } from '../../MockedPetsForAdoption';
-
-const initialFavsPets: PetForAdoption[] = MockedPetsForAdoption.slice(0, 3);
+import { Pet, PetForAdoption } from '@/types';
+import { MockedPets } from '@/MockedPets';
 
 const PetsProvider = ({
   children,
@@ -12,6 +10,7 @@ const PetsProvider = ({
   children: React.ReactNode | React.ReactNode[];
 }) => {
   const [favsPets, setFavsPets] = useState<PetForAdoption[]>([]);
+  const [pets, setPets] = useState<Pet[]>(MockedPets);
 
   const getFavsPets = () => {
     return favsPets;
@@ -24,10 +23,16 @@ const PetsProvider = ({
     setFavsPets(favsPets.filter((petToRemove) => petToRemove.id !== pet.id));
   };
 
+  const addPet = (pet: Pet) => {
+    setPets([...pets, pet]);
+  };
+
   const value = {
     getFavs: getFavsPets,
     addToFavs,
     removeFromFavs,
+    addPet,
+    pets,
   };
   return <PetsContext.Provider value={value}>{children}</PetsContext.Provider>;
 };

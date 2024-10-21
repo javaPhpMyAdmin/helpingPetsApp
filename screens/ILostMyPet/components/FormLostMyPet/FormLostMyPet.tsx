@@ -14,14 +14,22 @@ import { Controller, useForm } from 'react-hook-form';
 import { TitleLostMyPet } from '../TitleLostMyPet';
 import { alertAboutPet, alertRace, infoTypes } from '../../helpers';
 import { formSchema } from './schemaValidation';
+import { useAuth, usePets } from '@/context';
+import useUserLocation from '@/hooks/useUserLocation';
+import Toast from 'react-native-root-toast';
 
 interface FormProps {
+  reportTitle: string;
   petName: string;
   aboutPet: string;
   race: string;
 }
 
-const FormLostMyPet = () => {
+interface FormLostMyPetProps {
+  images: string[];
+}
+
+const FormLostMyPet = ({ images }: FormLostMyPetProps) => {
   const { width, height } = useWindowDimensions();
   const [selectedSex, setSelectedSex] = useState('');
   const [selectedReward, setSelectedReward] = useState('');
@@ -30,19 +38,44 @@ const FormLostMyPet = () => {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormProps>({
     mode: 'onChange',
     resolver: yupResolver(formSchema),
   });
+  // const { addPet } = usePets();
+  const { authState } = useAuth();
+  const userLocation = useUserLocation();
 
   const fontScale = useWindowDimensions().fontScale;
 
   const submit = (data: FormProps) => {
-    console.log({ data });
-    console.log({ selectedSex });
-    console.log({ selectedReward });
-    console.log({ selectedSpecie });
+    console.log('SUBMITTING.....');
+    //TODO: CREATE A METHOD TO CREATE PET
+    const petToAdd = {
+      id: Math.random().toString(),
+      title: data.petName,
+      image: images,
+      long: userLocation.longitude,
+      lat: userLocation.latitude,
+      userEmail: authState?.user.email,
+      createdAt: new Date().toISOString(),
+      gender: selectedSex,
+      aboutPet: data.aboutPet,
+      reward: selectedReward,
+      race: data.race,
+      specie: selectedSpecie,
+    };
+    console.log({ petToAdd });
+    Toast.show('REPORTE AGREGADO CON ÉXITO.', {
+      duration: Toast.durations.LONG,
+      position: Toast.positions.BOTTOM,
+      shadow: true,
+      animation: true,
+      hideOnPress: false,
+      backgroundColor: 'green',
+    });
+    // addPet!(petToAdd);
     reset();
   };
 
@@ -53,6 +86,27 @@ const FormLostMyPet = () => {
 
   return (
     <View style={styles({ width }).formContainer}>
+      <View style={styles({ width, height }).titleContainer}>
+        <Text style={styles({ fontScale }).titleText}>Título del reporte</Text>
+        <Controller
+          name="reportTitle"
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              style={styles({ fontScale }).titleInput}
+              placeholder="Ingrese un título para el reporte"
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
+        />
+        {errors.reportTitle && (
+          <Text style={styles({ fontScale }).errorText}>
+            {errors.reportTitle.message}
+          </Text>
+        )}
+      </View>
       <View style={styles({ width, height }).titleContainer}>
         <Text style={styles({ fontScale }).titleText}>Nombre</Text>
         <Controller
@@ -97,14 +151,6 @@ const FormLostMyPet = () => {
           handleInfo={handleInfo}
           type={infoTypes.RACE}
         />
-        {/* <Text style={styles().titleText}>Raza</Text>
-        <TouchableWithoutFeedback
-          onPress={() => alert('Esta funcionalidad no esta disponible')}
-        >
-          <View style={styles().iconInfo}>
-            <FontAwesome6 name="info" size={15} color="orange" />
-          </View>
-        </TouchableWithoutFeedback> */}
         <Controller
           name="race"
           control={control}
@@ -148,9 +194,8 @@ const FormLostMyPet = () => {
               style={styles({ fontScale }).aboutPet}
               placeholder="Breve descripción acerca del animal"
               textAlignVertical="top"
-              onBlur={onBlur}
               onChangeText={onChange}
-              value={value}
+              value={value || ' '}
             />
           )}
         />
@@ -166,6 +211,7 @@ const FormLostMyPet = () => {
           // isLoading={isLoading}
           handleSubmit={handleSubmit}
           submit={submit}
+          isValid={isValid && images.length > 0}
         />
       </View>
     </View>

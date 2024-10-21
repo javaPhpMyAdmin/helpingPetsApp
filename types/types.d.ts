@@ -16,12 +16,16 @@ export interface DestinationProps {
 export interface Marker {
   id: string;
   title: string;
-  image: string;
+  image: string | string[];
   long: string;
   lat: string;
   userEmail: string;
   createdAt: string;
   gender?: string;
+  aboutPet?: string;
+  reward?: string;
+  race?: string;
+  specie?: string;
 }
 
 export interface Category {

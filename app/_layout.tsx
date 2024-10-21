@@ -6,11 +6,10 @@ import { SessionProvider } from '../context/AuthProvider/AuthProvider';
 import { useAuth } from '../context/AuthContext/AuthContext';
 import { ComponentProps, useEffect } from 'react';
 import { PetsProvider } from '../context';
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 // SplashScreen.preventAutoHideAsync();
-
-type href = ComponentProps<typeof Link>['href'];
 
 const InitialLayout = () => {
   const { authState } = useAuth();
@@ -50,7 +49,9 @@ export default function RootLayout() {
   return (
     <SessionProvider>
       <PetsProvider>
-        <InitialLayout />
+        <RootSiblingParent>
+          <InitialLayout />
+        </RootSiblingParent>
       </PetsProvider>
     </SessionProvider>
   );

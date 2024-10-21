@@ -97,7 +97,7 @@ const ILostMyPet = () => {
           </View>
 
           <GestureHandlerRootView>
-            <FormLostMyPet />
+            <FormLostMyPet images={images} />
           </GestureHandlerRootView>
         </View>
       </ScrollView>

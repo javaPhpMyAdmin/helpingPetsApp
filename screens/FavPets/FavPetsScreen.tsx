@@ -1,5 +1,5 @@
 /* eslint-disable import/order */
-import { View, StyleSheet, useWindowDimensions, Platform } from 'react-native';
+import { View, StyleSheet, useWindowDimensions } from 'react-native';
 import React from 'react';
 import { FavPetsList } from './components';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,7 +21,6 @@ const FavPets = () => {
         }}
       />
       <View style={styles(width).favContainer}>
-        {/* <Text>FavPets</Text> */}
         <FavPetsList />
       </View>
     </SafeAreaView>
