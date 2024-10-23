@@ -5,7 +5,6 @@ import * as Location from 'expo-location';
 
 const useGetCurrentPlace = () => {
   const [currentPlaceName, setCurrentPlaceName] = useState('');
-  const [userLocation, setUserLocation] = useState<Location.LocationObject>();
 
   useEffect(() => {
     (async () => {
@@ -15,7 +14,6 @@ const useGetCurrentPlace = () => {
           return;
         }
         const location = await Location.getCurrentPositionAsync({});
-        setUserLocation(location);
         const currentPlace = await Location.reverseGeocodeAsync({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
@@ -47,7 +45,7 @@ const useGetCurrentPlace = () => {
     })();
   }, [currentPlaceName]);
 
-  return [currentPlaceName, userLocation];
+  return currentPlaceName;
 };
 
 export default useGetCurrentPlace;

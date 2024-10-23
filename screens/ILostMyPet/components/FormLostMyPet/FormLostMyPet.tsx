@@ -43,7 +43,7 @@ const FormLostMyPet = ({ images }: FormLostMyPetProps) => {
     mode: 'onChange',
     resolver: yupResolver(formSchema),
   });
-  // const { addPet } = usePets();
+  const { addPet } = usePets();
   const { authState } = useAuth();
   const userLocation = useUserLocation();
 
@@ -58,7 +58,7 @@ const FormLostMyPet = ({ images }: FormLostMyPetProps) => {
       image: images,
       long: userLocation.longitude,
       lat: userLocation.latitude,
-      userEmail: authState?.user.email,
+      userEmail: authState?.user?.email || '',
       createdAt: new Date().toISOString(),
       gender: selectedSex,
       aboutPet: data.aboutPet,
@@ -75,7 +75,7 @@ const FormLostMyPet = ({ images }: FormLostMyPetProps) => {
       hideOnPress: false,
       backgroundColor: 'green',
     });
-    // addPet!(petToAdd);
+    addPet!(petToAdd);
     reset();
   };
 

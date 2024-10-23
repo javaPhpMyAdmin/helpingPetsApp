@@ -17,8 +17,8 @@ export interface Marker {
   id: string;
   title: string;
   image: string | string[];
-  long: string;
-  lat: string;
+  long: number;
+  lat: number;
   userEmail: string;
   createdAt: string;
   gender?: string;
