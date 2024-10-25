@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-import { Marker, MarkerLostPet } from '@/types/types';
+import { Marker, MarkerLostPet, Photo } from '@/types/types';
 import { generateColor } from '@/utils/generateRandomColor';
 
 enum Gender {
@@ -29,6 +29,7 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
   const { width } = useWindowDimensions();
   const randomColor = generateColor();
   const fontScale = useWindowDimensions().fontScale;
+  console.log(item.photos[0].uri);
 
   return (
     <Pressable
@@ -38,9 +39,6 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
           pathname: '/(auth)/detailPet',
           params: {
             petId: item.id,
-            image: item.image as string,
-            title: item.title,
-            userEmail: item.userEmail,
           },
         })
       }
@@ -48,7 +46,7 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
       <View style={styles({ width, randomColor }).squareImage}>
         <Animated.Image
           // sharedTransitionTag={item.id}
-          source={{ uri: item.image[0] }}
+          source={{ uri: item.photos[0].uri }}
           style={styles({ width }).image}
         />
       </View>

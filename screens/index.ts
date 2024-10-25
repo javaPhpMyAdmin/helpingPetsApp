@@ -10,3 +10,4 @@ export * from './DetailAdoptPetScreen';
 export * from './NewPet';
 export * from './FavPets';
 export * from './ChatsScreen';
+export * from './DetailPet';

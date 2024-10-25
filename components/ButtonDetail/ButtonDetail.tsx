@@ -3,7 +3,12 @@ import React from 'react';
 import { Text, useWindowDimensions, Pressable, StyleSheet } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
-export const ButtonDetail = () => {
+interface ButtonDetailProps {
+  lat: number;
+  long: number;
+}
+
+export const ButtonDetail = ({ lat, long }: ButtonDetailProps) => {
   const { width } = useWindowDimensions();
   const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
   return (

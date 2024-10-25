@@ -16,7 +16,7 @@ export interface DestinationProps {
 export interface Marker {
   id: string;
   title: string;
-  image: string | string[];
+  photos: Photo[];
   long: number;
   lat: number;
   userEmail: string;
@@ -32,7 +32,7 @@ export interface MarkerLostPet {
   id: string;
   title: string;
   name: string;
-  image: string[];
+  photos: Photo[];
   long: number;
   lat: number;
   userEmail: string;

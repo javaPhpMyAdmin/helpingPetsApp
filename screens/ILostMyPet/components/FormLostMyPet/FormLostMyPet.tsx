@@ -64,7 +64,7 @@ const FormLostMyPet = ({ images }: FormLostMyPetProps) => {
       id: Math.random().toString(),
       title: data.reportTitle,
       name: data.petName,
-      image: images,
+      photos: images,
       long: userLocation.longitude,
       lat: userLocation.latitude,
       userEmail: authState?.user?.email || '',
