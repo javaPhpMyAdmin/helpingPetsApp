@@ -28,6 +28,23 @@ export interface Marker {
   specie?: string;
 }
 
+export interface MarkerLostPet {
+  id: string;
+  title: string;
+  name: string;
+  image: string[];
+  long: number;
+  lat: number;
+  userEmail: string;
+  createdAt: string;
+  gender?: string;
+  aboutPet?: string;
+  reward?: string;
+  race?: string;
+  specie?: string;
+  lost?: boolean;
+}
+
 export interface Category {
   id: string;
   category: string;

@@ -23,7 +23,6 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="favPets"
         options={{
-          headerShown: false,
           tabBarLabel: 'Favoritos',
         }}
       />
@@ -37,7 +36,6 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="chats"
         options={{
-          headerShown: false,
           tabBarLabel: 'Chats',
         }}
       />

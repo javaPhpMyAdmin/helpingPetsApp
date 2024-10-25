@@ -49,22 +49,32 @@ const FormLostMyPet = ({ images }: FormLostMyPetProps) => {
 
   const fontScale = useWindowDimensions().fontScale;
 
+  const formatCurrentDate = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${day}-${month}-${year}`;
+  };
+
   const submit = (data: FormProps) => {
     console.log('SUBMITTING.....');
     //TODO: CREATE A METHOD TO CREATE PET
     const petToAdd = {
       id: Math.random().toString(),
-      title: data.petName,
+      title: data.reportTitle,
+      name: data.petName,
       image: images,
       long: userLocation.longitude,
       lat: userLocation.latitude,
       userEmail: authState?.user?.email || '',
-      createdAt: new Date().toISOString(),
+      createdAt: formatCurrentDate(),
       gender: selectedSex,
       aboutPet: data.aboutPet,
       reward: selectedReward,
       race: data.race,
       specie: selectedSpecie,
+      lost: true,
     };
     console.log({ petToAdd });
     Toast.show('REPORTE AGREGADO CON ÉXITO.', {

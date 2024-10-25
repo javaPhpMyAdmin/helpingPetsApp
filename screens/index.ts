@@ -9,3 +9,4 @@ export * from './AdoptPet';
 export * from './DetailAdoptPetScreen';
 export * from './NewPet';
 export * from './FavPets';
+export * from './ChatsScreen';

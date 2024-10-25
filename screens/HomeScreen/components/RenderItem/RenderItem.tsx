@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-import { Marker } from '@/types/types';
+import { Marker, MarkerLostPet } from '@/types/types';
 import { generateColor } from '@/utils/generateRandomColor';
 
 enum Gender {
@@ -21,7 +21,7 @@ enum Gender {
   Female = 'female',
 }
 interface RenderItemProps {
-  item: Marker;
+  item: Marker & MarkerLostPet;
   index: number;
 }
 
@@ -48,15 +48,20 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
       <View style={styles({ width, randomColor }).squareImage}>
         <Animated.Image
           // sharedTransitionTag={item.id}
-          source={{ uri: item.image }}
+          source={{ uri: item.image[0] }}
           style={styles({ width }).image}
         />
       </View>
 
       <View style={styles({ width }).textContainer}>
+        {item.lost && (
+          <Text style={styles({ fontScale }).textTitle}>PERDIDO</Text>
+        )}
         <Text style={styles({ fontScale }).textTitle}>{item.title}</Text>
         <Text style={styles({ fontScale }).textUserEmail}>
-          {item.userEmail}
+          {item.userEmail.split('').length > 19
+            ? item.userEmail.slice(0, 19) + '...'
+            : item.userEmail}
         </Text>
         <Text style={styles({ fontScale }).textCreatedAt}>
           {item.createdAt}

@@ -1,5 +1,5 @@
 /* eslint-disable import/order */
-import { router, Stack, useLocalSearchParams } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { View, Text, StyleSheet, useWindowDimensions } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
@@ -10,6 +10,7 @@ import { ButtonDetail } from '@/components/ButtonDetail';
 const MarkerDetailTest = () => {
   const { width } = useWindowDimensions();
   const { petId, image, title, userEmail } = useLocalSearchParams();
+  console.log(image);
 
   return (
     <View style={styles.container}>
@@ -21,7 +22,7 @@ const MarkerDetailTest = () => {
           // sharedTransitionTag={String(petId)}
           style={{ width, height: width }}
           source={{
-            uri: `${image}`,
+            uri: String(image),
           }}
         />
         <Animated.View
