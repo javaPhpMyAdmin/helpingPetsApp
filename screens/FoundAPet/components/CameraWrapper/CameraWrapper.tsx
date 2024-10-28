@@ -15,7 +15,7 @@ const facing = 'back';
 
 interface CameraWapperProps {
   setShowCamera: (value: boolean) => void;
-  setImage: (value: string | null | undefined) => void;
+  setImage: (value: string[] | null | undefined) => void;
 }
 
 const CameraWrapper = ({ setShowCamera, setImage }: CameraWapperProps) => {
@@ -31,7 +31,7 @@ const CameraWrapper = ({ setShowCamera, setImage }: CameraWapperProps) => {
         quality: 1,
         exif: false,
       });
-      setImage(photo?.uri);
+      setImage([photo?.uri!]);
       setShowCamera(false);
     }
   };

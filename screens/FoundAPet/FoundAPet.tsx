@@ -13,7 +13,7 @@ import {
 
 const FoundAPet = () => {
   const [showCamera, setShowCamera] = useState(false);
-  const [image, setImage] = useState<string | null | undefined>(null);
+  const [image, setImage] = useState<string[] | null | undefined>(null);
   const { width, height } = useWindowDimensions();
   const [isKeyboardVisble, setIsKeyboardVisible] = useState(false);
 
@@ -58,12 +58,15 @@ const FoundAPet = () => {
                 ) : (
                   <PictureTakedWrapper
                     isKeyboardVisible={isKeyboardVisble}
-                    image={image}
+                    image={image[0]}
                     handleCancelPhoto={handleCancelPhoto}
                   />
                 )}
               </View>
-              <ReportFoundPetForm setIsKeyboardVisible={setIsKeyboardVisible} />
+              <ReportFoundPetForm
+                images={image!}
+                setIsKeyboardVisible={setIsKeyboardVisible}
+              />
             </>
           )}
         </View>

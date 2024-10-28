@@ -7,6 +7,6 @@ export const formSchema = object().shape({
     .max(50, 'El título debe tener menos de 50 caracteres'),
   reportDescription: string()
     .required('La descripción es requerida')
-    .min(25, 'La descripción debe tener al menos 25 caracteres')
+    // .min(25, 'La descripción debe tener al menos 25 caracteres')
     .max(70, 'La descripción debe tener menos de 100 caracteres'),
 });

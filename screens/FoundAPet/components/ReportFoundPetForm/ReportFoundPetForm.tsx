@@ -18,6 +18,9 @@ import { useKeyboardVisible } from '@/hooks/useIsKeyboardVisible';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { alertDescription, alertTitle, infoTypes } from '../../helpers';
 import { formSchema } from './schemaValidation';
+import { Marker, Photo } from '@/types';
+import { useAuth, usePets } from '@/context';
+import useUserLocation from '../../../../hooks/useUserLocation';
 
 interface FormProps {
   reportTitle: string;
@@ -26,12 +29,14 @@ interface FormProps {
 
 interface ReportFoundPetFormProps {
   setIsKeyboardVisible: (visible: boolean) => void;
+  images: string[];
 }
 
 const BEHAVIOR = Platform.OS === 'ios' ? 'padding' : 'height';
 
 const ReportFoundPetForm = ({
   setIsKeyboardVisible,
+  images,
 }: ReportFoundPetFormProps) => {
   const {
     control,
@@ -47,14 +52,51 @@ const ReportFoundPetForm = ({
 
   const isKeyboardVisible = useKeyboardVisible();
 
+  const { addPet } = usePets();
+  const { authState } = useAuth();
+  const { latitude, longitude } = useUserLocation();
+
   const openModal = (type: number) => {
     if (type === infoTypes.TITLE) alertTitle();
     if (type === infoTypes.DESCRIPTION) alertDescription();
   };
 
+  const formatCurrentDate = () => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    return `${day}-${month}-${year}`;
+  };
+
+  const formatImageToPhotoType = (images: string[]) => {
+    const photosAdapted: Photo[] = [];
+
+    return images.map((image) => {
+      const photo = {
+        uri: image,
+      };
+      photosAdapted.push(photo);
+      return photo;
+    });
+  };
+
   const submit = (data: FormProps) => {
-    console.log({ data });
+    const petToAadd: Marker = {
+      id: Math.random().toString(),
+      photos: formatImageToPhotoType(images),
+      title: data.reportTitle,
+      aboutPet: data.reportDescription,
+      lat: latitude,
+      long: longitude,
+      userEmail: authState?.user.email!,
+      createdAt: formatCurrentDate(),
+    };
+    addPet!(petToAadd);
+    // console.log({ data });
     reset();
+    //TODO: PASS SETIMAGE TO SET THE IMAGE TO NULL
+    //TODO: ADD TOAST TO SHOW SUCCESS MESSAGE
   };
 
   useEffect(() => {
@@ -127,7 +169,7 @@ const ReportFoundPetForm = ({
                 <TextInput
                   onChangeText={onChange}
                   onBlur={onBlur}
-                  value={value}
+                  value={value || ''}
                   style={
                     styles({ fontScale, error: errors.reportDescription })
                       .descriptionInput

@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-import { Marker, MarkerLostPet, Photo } from '@/types/types';
+import { Marker, MarkerLostPet } from '@/types/types';
 import { generateColor } from '@/utils/generateRandomColor';
 
 enum Gender {
@@ -29,7 +29,6 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
   const { width } = useWindowDimensions();
   const randomColor = generateColor();
   const fontScale = useWindowDimensions().fontScale;
-  console.log(item.photos[0].uri);
 
   return (
     <Pressable

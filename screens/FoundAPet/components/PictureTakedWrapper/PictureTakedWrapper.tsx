@@ -46,7 +46,6 @@ const styles = (width?: number, height?: number) =>
     },
     imageTakedExist: {
       flex: 1,
-      backgroundColor: 'red',
       width: '100%',
       position: 'relative',
       borderRadius: 15,

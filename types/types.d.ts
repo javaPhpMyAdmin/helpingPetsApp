@@ -31,7 +31,7 @@ export interface Marker {
 export interface MarkerLostPet {
   id: string;
   title: string;
-  name: string;
+  name?: string;
   photos: Photo[];
   long: number;
   lat: number;
