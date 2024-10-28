@@ -52,9 +52,16 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
       </View>
 
       <View style={styles({ width }).textContainer}>
-        {item.lost && (
-          <Text style={styles({ fontScale }).textTitle}>PERDIDO</Text>
+        {item.lost ? (
+          <View style={styles({ width }).textLostContainer}>
+            <Text style={styles({ fontScale }).textLost}>SE ME PERDIÓ</Text>
+          </View>
+        ) : (
+          <View style={styles({ width }).textFoundContainer}>
+            <Text style={styles({ fontScale }).textFound}>ABANDONADO</Text>
+          </View>
         )}
+
         <Text style={styles({ fontScale }).textTitle}>{item.title}</Text>
         <Text style={styles({ fontScale }).textUserEmail}>
           {item.userEmail.split('').length > 19
@@ -192,5 +199,41 @@ const styles = ({ fontScale, width, randomColor }: StylesProps) =>
       justifyContent: 'center',
       top: width! * 0.015,
       right: 2,
+    },
+    textLost: {
+      color: 'white',
+      fontSize: fontScale! < 1 ? 20 : fontScale! > 1 ? 13 : 16,
+      fontWeight: 'bold',
+    },
+    textLostContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 10,
+      bottom: width! * 0.04,
+      borderColor: 'red',
+      borderWidth: 1,
+      width: width! * 0.33,
+      borderRadius: 12,
+      backgroundColor: 'red',
+    },
+    textFound: {
+      color: 'white',
+      fontSize: fontScale! < 1 ? 20 : fontScale! > 1 ? 13 : 16,
+      fontWeight: 'bold',
+    },
+    textFoundContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: 10,
+      bottom: width! * 0.001,
+      borderColor: 'orange',
+      borderWidth: 1,
+      width: width! * 0.33,
+      borderRadius: 12,
+      backgroundColor: 'orange',
     },
   });

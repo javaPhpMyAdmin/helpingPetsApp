@@ -16,7 +16,7 @@ import { CarouselDetailPet } from './components/CarouselDetailPet';
 import { usePets } from '../../context';
 
 const DetailPet = () => {
-  const { height } = useWindowDimensions();
+  const { width, height } = useWindowDimensions();
   const { petId } = useLocalSearchParams();
 
   const { pets } = usePets();
@@ -29,18 +29,10 @@ const DetailPet = () => {
       <Stack.Screen options={{ headerShown: false }} />
       <View>
         <HeaderDetail routeBack="/(auth)/(tabs)/home" />
-        {/* <Animated.Image
-          resizeMode="cover"
-          // sharedTransitionTag={String(petId)}
-          style={{ width, height: width * 0.95 }}
-          source={{
-            uri: String(images),
-          }}
-        /> */}
-        <CarouselDetailPet photosUrl={petFounded?.photos as []} />
+        <CarouselDetailPet photosUrl={petFounded?.photos!} />
         <Animated.View
           entering={FadeInDown.delay(400)}
-          style={styles({ height }).textContainer}
+          style={styles({ height, width }).textContainer}
         >
           <Text style={styles({}).textName}>{petFounded?.title}</Text>
           <Text style={styles({}).textLocation}>{petFounded?.userEmail}</Text>
@@ -83,8 +75,9 @@ const styles = ({ fontScale, height, width }: StylesProps) =>
     },
     textContainer: {
       position: 'absolute',
-      bottom: 30,
+      bottom: width! * 0.12,
       backgroundColor: 'rgba(0,0,0,0.5)',
+      // opacity: 0.6,
       left: 10,
       right: 10,
       padding: 16,

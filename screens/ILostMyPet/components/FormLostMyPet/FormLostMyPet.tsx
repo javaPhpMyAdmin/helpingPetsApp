@@ -17,6 +17,7 @@ import { formSchema } from './schemaValidation';
 import { useAuth, usePets } from '@/context';
 import useUserLocation from '@/hooks/useUserLocation';
 import Toast from 'react-native-root-toast';
+import { Photo } from '../../../../types';
 
 interface FormProps {
   reportTitle: string;
@@ -57,6 +58,18 @@ const FormLostMyPet = ({ images }: FormLostMyPetProps) => {
     return `${day}-${month}-${year}`;
   };
 
+  const formatImageToPhotoType = (images: string[]) => {
+    const photosAdapted: Photo[] = [];
+
+    return images.map((image) => {
+      const photo = {
+        uri: image,
+      };
+      photosAdapted.push(photo);
+      return photo;
+    });
+  };
+
   const submit = (data: FormProps) => {
     console.log('SUBMITTING.....');
     //TODO: CREATE A METHOD TO CREATE PET
@@ -64,7 +77,7 @@ const FormLostMyPet = ({ images }: FormLostMyPetProps) => {
       id: Math.random().toString(),
       title: data.reportTitle,
       name: data.petName,
-      photos: images,
+      photos: formatImageToPhotoType(images),
       long: userLocation.longitude,
       lat: userLocation.latitude,
       userEmail: authState?.user?.email || '',

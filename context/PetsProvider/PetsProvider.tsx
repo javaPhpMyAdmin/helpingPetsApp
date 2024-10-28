@@ -43,7 +43,7 @@ const PetsProvider = ({
     addToFavs,
     removeFromFavs,
     addPet,
-    pets,
+    pets: orderPetsByDate(pets),
   };
   return <PetsContext.Provider value={value}>{children}</PetsContext.Provider>;
 };
