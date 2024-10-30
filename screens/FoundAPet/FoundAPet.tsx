@@ -66,6 +66,7 @@ const FoundAPet = () => {
               <ReportFoundPetForm
                 images={image!}
                 setIsKeyboardVisible={setIsKeyboardVisible}
+                resetImage={setImage}
               />
             </>
           )}

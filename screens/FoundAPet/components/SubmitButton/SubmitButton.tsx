@@ -1,5 +1,10 @@
 /* eslint-disable import/order */
-import { Text, StyleSheet, Pressable, useWindowDimensions } from 'react-native';
+import {
+  Text,
+  StyleSheet,
+  useWindowDimensions,
+  TouchableOpacity,
+} from 'react-native';
 import React from 'react';
 import { UseFormHandleSubmit } from 'react-hook-form';
 import { Entypo } from '@expo/vector-icons';
@@ -18,17 +23,15 @@ const SubmitButton = ({ handleSubmit, submit }: SubmitButtonProps) => {
   const { width, height } = useWindowDimensions();
   return (
     <>
-      <Pressable
+      <TouchableOpacity
         style={styles(width, height).buttonContainer}
         onPress={handleSubmit(submit)}
       >
-        {({ pressed }) => (
-          <>
-            <Entypo name="check" size={60} color="white" />
-            <Text style={styles().buttonText}>Reportar</Text>
-          </>
-        )}
-      </Pressable>
+        <>
+          <Entypo name="check" size={60} color="white" />
+          <Text style={styles().buttonText}>Reportar</Text>
+        </>
+      </TouchableOpacity>
     </>
   );
 };

@@ -7,19 +7,21 @@ import {
   StyleSheet,
   useWindowDimensions,
   StatusBar,
+  TouchableOpacity,
 } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
 import { HeaderDetail } from '@/components/HeaderDetail';
 import { ButtonDetail } from '@/components/ButtonDetail';
 import { CarouselDetailPet } from './components/CarouselDetailPet';
-import { usePets } from '../../context';
+import { useAuth, usePets } from '@/context';
 
 const DetailPet = () => {
   const { width, height } = useWindowDimensions();
   const { petId } = useLocalSearchParams();
 
   const { pets } = usePets();
+  const { authState } = useAuth();
 
   const petFounded = pets?.find((pet) => pet.id === petId);
 
@@ -40,6 +42,24 @@ const DetailPet = () => {
       </View>
       <View style={styles({ height }).cardContainer}>
         <Animated.View entering={FadeInDown.delay(800)}>
+          {authState?.user.email === petFounded?.userEmail && (
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 10,
+              }}
+            >
+              <TouchableOpacity>
+                <Text>EDITAR</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text>ELIMINAR</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+
           <Text style={styles({}).textTitle}>Descripción del reporte </Text>
           <Text style={styles({}).textDescription}>
             {petFounded?.aboutPet}

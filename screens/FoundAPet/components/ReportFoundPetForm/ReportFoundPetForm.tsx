@@ -21,6 +21,7 @@ import { formSchema } from './schemaValidation';
 import { Marker, Photo } from '@/types';
 import { useAuth, usePets } from '@/context';
 import useUserLocation from '../../../../hooks/useUserLocation';
+import Toast from 'react-native-root-toast';
 
 interface FormProps {
   reportTitle: string;
@@ -30,6 +31,7 @@ interface FormProps {
 interface ReportFoundPetFormProps {
   setIsKeyboardVisible: (visible: boolean) => void;
   images: string[];
+  resetImage?: (image: string[] | null | undefined) => void;
 }
 
 const BEHAVIOR = Platform.OS === 'ios' ? 'padding' : 'height';
@@ -37,6 +39,7 @@ const BEHAVIOR = Platform.OS === 'ios' ? 'padding' : 'height';
 const ReportFoundPetForm = ({
   setIsKeyboardVisible,
   images,
+  resetImage,
 }: ReportFoundPetFormProps) => {
   const {
     control,
@@ -92,11 +95,20 @@ const ReportFoundPetForm = ({
       userEmail: authState?.user.email!,
       createdAt: formatCurrentDate(),
     };
+
     addPet!(petToAadd);
+    Toast.show('REPORTE AGREGADO CON ÉXITO.', {
+      duration: Toast.durations.LONG,
+      position: Toast.positions.BOTTOM,
+      shadow: true,
+      animation: true,
+      hideOnPress: false,
+      backgroundColor: 'green',
+    });
     // console.log({ data });
     reset();
+    resetImage!(null);
     //TODO: PASS SETIMAGE TO SET THE IMAGE TO NULL
-    //TODO: ADD TOAST TO SHOW SUCCESS MESSAGE
   };
 
   useEffect(() => {

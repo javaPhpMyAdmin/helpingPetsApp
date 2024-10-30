@@ -13,9 +13,7 @@ const CarouselDetailPet = ({ photosUrl }: CarouselDetailPetProps) => {
   const { height } = useWindowDimensions();
 
   return (
-    <View
-      style={{ width: '100%', height: height! * 0.5, backgroundColor: 'red' }}
-    >
+    <View style={{ width: '100%', height: height! * 0.5 }}>
       <FlatList
         horizontal
         data={photosUrl}
