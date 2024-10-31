@@ -8,6 +8,7 @@ import {
   useWindowDimensions,
   StatusBar,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 
@@ -15,6 +16,7 @@ import { HeaderDetail } from '@/components/HeaderDetail';
 import { ButtonDetail } from '@/components/ButtonDetail';
 import { CarouselDetailPet } from './components/CarouselDetailPet';
 import { useAuth, usePets } from '@/context';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const DetailPet = () => {
   const { width, height } = useWindowDimensions();
@@ -24,6 +26,18 @@ const DetailPet = () => {
   const { authState } = useAuth();
 
   const petFounded = pets?.find((pet) => pet.id === petId);
+
+  const handleDelete = () => {
+    Alert.alert('Eliminar Reporte', '¿Estás seguro de eliminar este reporte?', [
+      {
+        text: 'Cancelar',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      //TODO: AGREGAR ELIMINAR REPORTE DEL ARRAY DE MASCOTAS DEL CONTEXTO
+      { text: 'OK', onPress: () => console.log('OK Pressed') },
+    ]);
+  };
 
   return (
     <View style={styles({}).container}>
@@ -43,19 +57,21 @@ const DetailPet = () => {
       <View style={styles({ height }).cardContainer}>
         <Animated.View entering={FadeInDown.delay(800)}>
           {authState?.user.email === petFounded?.userEmail && (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 10,
-              }}
-            >
-              <TouchableOpacity>
-                <Text>EDITAR</Text>
+            <View style={styles({ width }).buttonsContainer}>
+              <TouchableOpacity style={styles({ width }).editButton}>
+                <View style={styles({}).iconContainer}>
+                  <AntDesign name="edit" size={27} color="white" />
+                  <Text style={styles({}).buttonText}>EDITAR</Text>
+                </View>
               </TouchableOpacity>
-              <TouchableOpacity>
-                <Text>ELIMINAR</Text>
+              <TouchableOpacity
+                onPress={handleDelete}
+                style={styles({ width }).deleteButton}
+              >
+                <View style={styles({}).iconContainer}>
+                  <AntDesign name="delete" size={27} color="white" />
+                  <Text style={styles({}).buttonText}>ELIMINAR</Text>
+                </View>
               </TouchableOpacity>
             </View>
           )}
@@ -133,5 +149,58 @@ const styles = ({ fontScale, height, width }: StylesProps) =>
       borderTopRightRadius: 30,
       justifyContent: 'space-evenly',
       alignItems: 'center',
+    },
+    buttonsContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-evenly',
+      gap: 10,
+      bottom: width! * 0.11,
+    },
+    editButton: {
+      backgroundColor: '#a80ffad9',
+      width: width! * 0.32,
+      height: width! * 0.09,
+      borderRadius: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 1,
+        height: 1,
+      },
+      shadowOpacity: 2,
+      shadowRadius: 4,
+
+      elevation: 9,
+    },
+    deleteButton: {
+      backgroundColor: 'red',
+      width: width! * 0.32,
+      height: width! * 0.09,
+      borderRadius: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 1,
+        height: 1,
+      },
+      shadowOpacity: 2,
+      shadowRadius: 4,
+
+      elevation: 9,
+    },
+    buttonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    iconContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 10,
     },
   });
