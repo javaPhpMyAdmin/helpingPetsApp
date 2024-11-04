@@ -18,7 +18,7 @@ const PetsProvider = ({
     return pets.sort((a, b) => {
       const petB = new Date(b.createdAt);
       const petA = new Date(a.createdAt);
-      return petB.getTime() - petA.getTime();
+      return petA.getTime() - petB.getTime();
     });
   };
 
@@ -38,12 +38,20 @@ const PetsProvider = ({
     setPets(sortedPets);
   };
 
+  const removePet = (pet: Marker & MarkerLostPet) => {
+    const sortedPets = orderPetsByDate(
+      pets.filter((petToRemove) => petToRemove.id !== pet.id)
+    );
+    setPets(sortedPets);
+  };
+
   const value = {
     getFavs: getFavsPets,
     addToFavs,
     removeFromFavs,
     addPet,
     pets: orderPetsByDate(pets),
+    removePet,
   };
   return <PetsContext.Provider value={value}>{children}</PetsContext.Provider>;
 };

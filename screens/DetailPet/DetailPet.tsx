@@ -1,5 +1,5 @@
 /* eslint-disable import/order */
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { router, Stack, useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import {
   View,
@@ -17,12 +17,13 @@ import { ButtonDetail } from '@/components/ButtonDetail';
 import { CarouselDetailPet } from './components/CarouselDetailPet';
 import { useAuth, usePets } from '@/context';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import Toast from 'react-native-root-toast';
 
 const DetailPet = () => {
   const { width, height } = useWindowDimensions();
   const { petId } = useLocalSearchParams();
 
-  const { pets } = usePets();
+  const { pets, removePet } = usePets();
   const { authState } = useAuth();
 
   const petFounded = pets?.find((pet) => pet.id === petId);
@@ -34,8 +35,21 @@ const DetailPet = () => {
         onPress: () => console.log('Cancel Pressed'),
         style: 'cancel',
       },
-      //TODO: AGREGAR ELIMINAR REPORTE DEL ARRAY DE MASCOTAS DEL CONTEXTO
-      { text: 'OK', onPress: () => console.log('OK Pressed') },
+      {
+        text: 'OK',
+        onPress: () => {
+          removePet!(petFounded!);
+          Toast.show('REPORTE ELIMINADO CON ÉXITO.', {
+            duration: Toast.durations.SHORT,
+            position: Toast.positions.BOTTOM,
+            shadow: true,
+            animation: true,
+            hideOnPress: false,
+            backgroundColor: 'green',
+          });
+          router.back();
+        },
+      },
     ]);
   };
 

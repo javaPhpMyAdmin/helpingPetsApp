@@ -8,7 +8,7 @@ interface PetsProps {
   removeFromFavs: (pet: PetForAdoption) => void;
   pets: Marker[] & MarkerLostPet[];
   addPet: (pet: Marker & MarkerLostPet) => void;
-  // removePet: (pet: PetForAdoption) => void;
+  removePet: (pet: Marker & MarkerLostPet) => void;
 }
 
 export const PetsContext = createContext<Partial<PetsProps>>({});

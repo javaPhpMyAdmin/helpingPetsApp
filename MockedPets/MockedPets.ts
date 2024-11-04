@@ -16,7 +16,7 @@ export const MockedPets = [
     lat: 0,
     long: 0,
     userEmail: 'chelobat@gmail.com',
-    createdAt: '10-10-2024',
+    createdAt: '10-10-2024-00-06-07',
     gender: 'female',
   },
   {
@@ -31,7 +31,7 @@ export const MockedPets = [
     lat: 0,
     long: 0,
     userEmail: 'chelobat1@gmail.com',
-    createdAt: '09-10-2024',
+    createdAt: '09-10-2024-00-05-06',
     gender: 'male',
   },
   {
@@ -46,7 +46,7 @@ export const MockedPets = [
     lat: 0,
     long: 0,
     userEmail: 'chelobat2@gmail.com',
-    createdAt: '08-10-2024',
+    createdAt: '08-10-2024-00-04-05',
     gender: 'male',
   },
   {
@@ -61,7 +61,7 @@ export const MockedPets = [
     lat: 0,
     long: 0,
     userEmail: 'chelobat3@gmail.com',
-    createdAt: '07-10-2024',
+    createdAt: '07-10-2024-00-03-04',
     gender: 'male',
   },
   {
@@ -76,7 +76,7 @@ export const MockedPets = [
     lat: 0,
     long: 0,
     userEmail: 'chelobat4@gmail.com',
-    createdAt: '07-10-2024',
+    createdAt: '07-10-2024-00-02-03',
     gender: 'male',
   },
   {
@@ -91,7 +91,7 @@ export const MockedPets = [
     lat: 0,
     long: 0,
     userEmail: 'chelobat5@gmail.com',
-    createdAt: '06-10-2024',
+    createdAt: '06-10-2024-00-01-02',
     gender: 'male',
   },
   {
@@ -106,7 +106,7 @@ export const MockedPets = [
     lat: 0,
     long: 0,
     userEmail: 'chelobat6@gmail.com',
-    createdAt: '06-10-2024',
+    createdAt: '05-10-2024-00-00-01',
     gender: 'male',
   },
   {
@@ -121,7 +121,7 @@ export const MockedPets = [
     lat: 0,
     long: 0,
     userEmail: 'chelobat7@gmail.com',
-    createdAt: '04-10-2024',
+    createdAt: '04-10-2024-00-00-00',
     gender: 'male',
   },
   // {

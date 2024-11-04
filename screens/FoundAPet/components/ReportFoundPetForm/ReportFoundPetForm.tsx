@@ -69,7 +69,10 @@ const ReportFoundPetForm = ({
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    return `${day}-${month}-${year}`;
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const second = date.getSeconds();
+    return `0${day}-${month}-${year}-${hour}-${minute}-${second}`;
   };
 
   const formatImageToPhotoType = (images: string[]) => {
@@ -108,7 +111,6 @@ const ReportFoundPetForm = ({
     // console.log({ data });
     reset();
     resetImage!(null);
-    //TODO: PASS SETIMAGE TO SET THE IMAGE TO NULL
   };
 
   useEffect(() => {
