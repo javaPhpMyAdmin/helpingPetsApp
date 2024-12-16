@@ -88,10 +88,10 @@ const styles = ({ isFocused, fontScale, color }: StylesProps) =>
     tabbarItem: {
       justifyContent: 'center',
       alignItems: 'center',
-      top: 8,
+      top: 5,
       backgroundColor: isFocused ? 'orange' : 'transparent',
       width: '20%',
-      height: 60,
+      height: 58,
       borderRadius: 20,
     },
     labelText: {

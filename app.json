@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "helpingPetsApp",
+    "scheme": ["helpingpetsapp"],
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -13,6 +13,7 @@
       "backgroundColor": "#ffba64"
     },
     "ios": {
+      "ios.config.googleMapsApiKey": "AIzaSyDCreVv8ymu6vWBQ3GYm-HN8MySmEPzfsI",
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.helpingPetsApp",
       "infoPlist": {
@@ -26,6 +27,11 @@
       }
     },
     "android": {
+      "newArchEnabled": false,
+      "experimental": {
+        "enableFabricRenderer": false
+      },
+      "android.config.googleMapsApiKey": "AIzaSyCbHAKvVJjpmPy6jdgSdw92DcP6UfT5XJk",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffba64"
@@ -68,7 +74,8 @@
         {
           "photosPermission": "Allow Helping Pets to access your photos."
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true

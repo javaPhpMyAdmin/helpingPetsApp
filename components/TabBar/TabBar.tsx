@@ -89,7 +89,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             label={label}
             isFocused={isFocused}
             tabBarAccessibilityLabel={options.tabBarAccessibilityLabel}
-            testId={options.tabBarTestID}
+            testId={route.key}
             onPress={onPress}
             onLongPress={onLongPress}
             color={isFocused ? '#FFF' : '#f96f2aed'}
@@ -105,7 +105,8 @@ const styles = (height: number, width: number) =>
     tabbar: {
       width: '100%',
       position: 'absolute',
-      height: height! * 0.1,
+      backgroundColor: 'white',
+      height: height! * 0.09,
       bottom: height! * 0.01,
       flexDirection: 'row',
       justifyContent: 'space-evenly',

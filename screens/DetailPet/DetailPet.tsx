@@ -40,7 +40,7 @@ const DetailPet = () => {
         onPress: () => {
           removePet!(petFounded!);
           Toast.show('REPORTE ELIMINADO CON ÉXITO.', {
-            duration: Toast.durations.SHORT,
+            duration: Toast.durations.LONG,
             position: Toast.positions.BOTTOM,
             shadow: true,
             animation: true,

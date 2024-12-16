@@ -24,7 +24,7 @@ const FavPetItem = ({ pet }: FavPetItemProps) => {
   return (
     <TouchableOpacity
       onPress={() =>
-        router.push<PetForAdoption>({
+        router.push({
           pathname: '/(auth)/detailAdoptPet',
           params: {
             id: pet.id,
@@ -74,6 +74,8 @@ const styles = (fontScale?: number, width?: number, height?: number) =>
       flex: 1,
       paddingVertical: 8,
       position: 'relative',
+      marginBottom: width! * 0.06,
+      marginTop: 20,
     },
     image: {
       width: width! * 0.95,

@@ -10,6 +10,7 @@ import {
   Pressable,
   StyleSheet,
   useWindowDimensions,
+  Image,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 
@@ -34,7 +35,7 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
     <Pressable
       style={styles({ width }).container}
       onPress={() =>
-        router.push<Marker>({
+        router.push({
           pathname: '/(auth)/detailPet',
           params: {
             petId: item.id,
@@ -43,7 +44,7 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
       }
     >
       <View style={styles({ width, randomColor }).squareImage}>
-        <Animated.Image
+        <Image
           // sharedTransitionTag={item.id}
           source={{ uri: item.photos[0].uri }}
           style={styles({ width }).image}

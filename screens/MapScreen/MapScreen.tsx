@@ -119,8 +119,6 @@ export default function MapScreen() {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       });
-      console.log('CITY', currentPlace[0].city);
-      console.log('DEPARTMENT', currentPlace[0].region);
       setOrigin(origenAux);
     })();
   }, []);
@@ -177,7 +175,6 @@ export default function MapScreen() {
   };
 
   const focusTap = () => {
-    console.log('anda ubicacion');
     mapRef.current?.animateToRegion(origin);
   };
 
@@ -193,7 +190,7 @@ export default function MapScreen() {
         style={[StyleSheet.absoluteFill]}
         ref={mapRef}
         zoomEnabled
-        mapType="mutedStandard"
+        // mapType="mutedStandard"
         showsMyLocationButton
         className="relative"
         // onPress={(event) => console.log(event.nativeEvent.coordinate)}
@@ -202,7 +199,7 @@ export default function MapScreen() {
           <Polyline
             coordinates={coords}
             strokeWidth={8}
-            key={gmapk}
+            // key="AIzaSyDCreVv8ymu6vWBQ3GYm-HN8MySmEPzfsI"
             strokeColor="skyblue"
           />
         )}
@@ -222,7 +219,7 @@ export default function MapScreen() {
             >
               <Image
                 style={{ width: 40, height: 40 }}
-                source={require('@/assets/images/user.png')}
+                source={require('@/assets/images/april.jpg')}
               />
             </View>
           </Marker>
@@ -237,60 +234,18 @@ export default function MapScreen() {
                 handleSelectedDestination(event, marker.identifier)
               }
             >
-              <>
-                <Image
-                  style={{
-                    width: 50,
-                    height: 50,
-                    // backgroundColor: 'transparent',
-                    borderRadius: 50,
-                    padding: 3,
-                    borderColor: 'black',
-                    borderWidth: 2,
-                  }}
-                  source={{ uri: marker.image }}
-                />
-                <Callout
-                  style={{
-                    width: 200,
-                    height: 70,
-                    flexDirection: 'column',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    flex: 1,
-                  }}
-                >
-                  {/* {Platform.OS === 'android' ? (
-                    <WebView
-                      style={{
-                        widht: 80,
-                        height: 80,
-                      }}
-                      source={require('@/assets/images/paws.webp')}
-                    />
-                  ) : (
-                    <Image
-                      style={{
-                        justifyContent: 'center',
-                        width: 80,
-                        height: 80,
-                        backgroundColor: 'transparent',
-                      }}
-                      source={require('@/assets/images/paws.webp')}
-                    />
-                  )} */}
-
-                  <Text className="font-medium">{marker.title}</Text>
-                  <View
-                    style={{
-                      borderBottomColor: 'black',
-                      borderBottomWidth: StyleSheet.hairlineWidth,
-                      alignSelf: 'stretch',
-                    }}
-                  />
-                  <Text>{marker.description}</Text>
-                </Callout>
-              </>
+              <Image
+                style={{
+                  width: 50,
+                  height: 50,
+                  backgroundColor: 'transparent',
+                  borderRadius: 50,
+                  padding: 3,
+                  borderColor: 'black',
+                  borderWidth: 2,
+                }}
+                source={{ uri: marker.image }}
+              />
             </Marker>
           ))}
       </MapView>

@@ -1,5 +1,7 @@
 const gmd = process.env.EXPO_PUBLIC_GOOGLE_MAPS_DIRECTIONS;
 
+// const gmd = 'AIzaSyDCreVv8ymu6vWBQ3GYm-HN8MySmEPzfsI';
+
 interface Destination {
   latitude: number;
   longitude: number;

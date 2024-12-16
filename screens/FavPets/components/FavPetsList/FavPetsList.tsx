@@ -52,13 +52,15 @@ const styles = ({ fontScale, width, height }: CustomStyles) =>
     contentContainer: {
       position: 'static',
       padding: 5,
-
+      marginTop: height! * 0.05,
+      // height: '100%',
+      // bottom: 30,
       // backgroundColor: 'blue',
     },
     listContainer: {
       flex: 1,
-      top: width! * 0.01,
-      height: width! * 1.2,
+      top: width! * 0.04,
+      height: '100%',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -80,7 +82,7 @@ const styles = ({ fontScale, width, height }: CustomStyles) =>
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
-      top: height! * 0.35,
+      top: height! * 0.3,
       // left: width! * 0.01,
     },
   });
