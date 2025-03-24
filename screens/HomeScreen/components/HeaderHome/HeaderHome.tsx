@@ -21,9 +21,8 @@ interface HeaderHomeProps {
 
 const HeaderHome = ({ handleOpenModal }: HeaderHomeProps) => {
   const { width, height } = useWindowDimensions();
-  const { authState } = useAuth();
+  const { currentUser } = useAuth();
   const currentPlaceName = useGetCurrentPlace();
-
   const [loaded] = useFonts({
     PlaypenSans: require('@/assets/fonts/PlaypenSans-SemiBold.ttf'),
   });
@@ -35,17 +34,17 @@ const HeaderHome = ({ handleOpenModal }: HeaderHomeProps) => {
       <View style={styles(width, height, loaded, fontScale).userContainer}>
         <Image
           style={styles(height, width, loaded, fontScale).userInfoAvatar}
-          source={{ uri: authState?.user.photo! }}
+          source={{ uri: currentUser?.photo! }}
         />
         <View
           style={styles(height, width, loaded, fontScale).userInfoContainer}
         >
           <View style={styles(height, width, loaded, fontScale).userInfo}>
             <Text style={styles(height, width, loaded, fontScale).greetUser}>
-              Hola {authState?.user.name}!
+              Hola {currentUser?.name}!
             </Text>
             <Text style={styles(height, width, loaded, fontScale).userName}>
-              {authState?.user.email}
+              {currentUser?.email}
             </Text>
 
             <View

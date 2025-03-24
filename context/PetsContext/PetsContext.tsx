@@ -1,13 +1,13 @@
 /* eslint-disable import/order */
 import { createContext, useContext } from 'react';
-import { Marker, MarkerLostPet, PetForAdoption } from '@/types';
+import { Marker, MarkerLostPet, PetsForAdoptionApi } from '@/types';
 
 interface PetsProps {
-  getFavs: () => PetForAdoption[];
-  addToFavs: (pet: PetForAdoption) => void;
-  removeFromFavs: (pet: PetForAdoption) => void;
-  pets: Marker[] & MarkerLostPet[];
+  getFavs: () => PetsForAdoptionApi[];
+  addToFavs: (pet: PetsForAdoptionApi) => void;
+  removeFromFavs: (pet: PetsForAdoptionApi) => void;
   addPet: (pet: Marker & MarkerLostPet) => void;
+  getPets: () => any;
   removePet: (pet: Marker & MarkerLostPet) => void;
 }
 

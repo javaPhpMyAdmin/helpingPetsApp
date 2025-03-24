@@ -6,6 +6,41 @@ export interface Origin {
   initialZoom?: number;
 }
 
+export interface ReportLostPetApi {
+  breed: string;
+  contactEmail: string;
+  description: string;
+  id: number;
+  title: string;
+  imagesLostPet: string[];
+  imageFoundPet: string;
+  petName: string;
+  reportType: string;
+  reportedAt: string;
+  reportedBy?: string;
+  status: string;
+  updatedAt: string;
+}
+
+export interface PetsForAdoptionApi {
+  breed: string;
+  createdAt: string;
+  description: string;
+  id: number;
+  imageUrls: [string];
+  name: string;
+  ownerId: number;
+  status: string;
+  age: string;
+  gender: string;
+  weight: number;
+}
+
+// export enum Gender {
+//   'MALE',
+//   'FEMALE',
+// }
+
 export interface DestinationProps {
   latitude: number;
   longitude: number;

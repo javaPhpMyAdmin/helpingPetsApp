@@ -1,6 +1,6 @@
 /* eslint-disable import/order */
 import { createContext, useContext } from 'react';
-import { AuthState } from '../types';
+import { AuthState, UserContext } from '../types';
 
 interface AuthProps {
   onLogin: (username: string, password: string) => void;
@@ -10,7 +10,12 @@ interface AuthProps {
     password: string,
     confirmPassword: string
   ) => void;
-  authState: AuthState;
+  authState: boolean;
+  setAuthState: (value: boolean) => void;
+  setAccessToken: (accessToken: string) => void;
+  accessToken: string;
+  currentUser: UserContext;
+  setCurrentUser: (user: UserContext) => void;
 }
 
 export const AuthContext = createContext<Partial<AuthProps>>({});

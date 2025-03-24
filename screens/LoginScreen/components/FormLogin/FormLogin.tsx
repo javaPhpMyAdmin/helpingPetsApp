@@ -48,6 +48,7 @@ const FormLogin = () => {
 
   const onSubmit = (data: FormProps) => {
     setIsLoading(true);
+    console.log('DATA FORM LOGIN', data);
     setTimeout(() => {
       onLogin!(data.userEmail!, data.password!);
       reset();

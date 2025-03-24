@@ -7,10 +7,10 @@ import {
 import React, { useEffect } from 'react';
 import { MaterialIcons } from '@expo/vector-icons';
 import { usePets } from '@/context';
-import { PetForAdoption } from '@/types';
+import { PetsForAdoptionApi } from '@/types';
 
 interface MarkFavProps {
-  pet: PetForAdoption;
+  pet: PetsForAdoptionApi;
 }
 
 const MarkFav = ({ pet }: MarkFavProps) => {
@@ -18,11 +18,11 @@ const MarkFav = ({ pet }: MarkFavProps) => {
   const { getFavs, addToFavs, removeFromFavs } = usePets();
   const favsPets = getFavs!();
 
-  const petsIds = favsPets.map((pet) => pet.id);
+  const petsIds = favsPets.map((pet) => pet?.id);
 
   return (
     <>
-      {petsIds.includes(pet.id) ? (
+      {petsIds.includes(pet?.id) ? (
         <TouchableOpacity
           onPress={() => removeFromFavs!(pet)}
           style={styles({ width }).favouriteIcon}

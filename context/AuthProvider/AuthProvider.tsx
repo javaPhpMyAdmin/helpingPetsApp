@@ -6,8 +6,10 @@ import {
   isErrorWithCode,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
-import { AuthState } from '../types';
+import { AuthState, UserContext } from '../types';
 import { AuthContext } from '../AuthContext/AuthContext';
+import { set } from 'react-hook-form';
+import { router } from 'expo-router';
 
 // GoogleSignin.configure({
 //   webClientId:
@@ -17,7 +19,7 @@ import { AuthContext } from '../AuthContext/AuthContext';
 //     '964976949621-hr3aonf5ml6ic9shfgoi1j8bfda4o8jp.apps.googleusercontent.com',
 // });
 
-const UserEmpty = {
+export const UserEmpty = {
   email: '',
   photo: '',
   name: '',
@@ -35,17 +37,38 @@ export const SessionProvider = ({
 }: {
   children: React.ReactNode | React.ReactNode[];
 }) => {
-  const [authState, setAuthState] = useState<AuthState>({
-    authenticated: true,
-    user: UserMocked,
-  });
+  const [authState, setAuthState] = useState<boolean>(true);
+  const [currentUser, setCurrentUser] = useState<UserContext>(UserMocked);
+  const [accessToken, setAccessToken] = useState<string>(
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOlsiSEVMUElOR19QRVRTIl0sImp0aSI6IjcyN2VkMWFmLTg3OTgtNGUzNi04ZDY0LTE0ODUyOWEwOTRjMiIsImlhdCI6MTc0Mjc3MDg3MiwibmJmIjoxNzQyNzcwODcyLCJzdWIiOiJjaGVsb2JhdDE2NDExQGdtYWlsLmNvbSIsIkFVVEhPUklUSUVTIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifV0sIlJPTEUiOiJVU0VSIiwiZXhwIjoxNzQyNzc2ODcyfQ.NvhiQgqY_0HSJBjB0EcDyJSJMHIXaNOKzWO-lE-NVJHxBP_B-T76AFeo5fmg2P6c_gZdkMXrjJ7cWrAxNl_Mpg'
+  );
 
   const login = async (username: string, password: string) => {
-    setAuthState({ authenticated: true, user: UserEmpty });
+    console.log('LOGIN', username, password);
+    const response = await fetch('http://localhost:8082/api/v1/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: username,
+        password,
+      }),
+    });
+    const data = await response.json();
+    console.log('DATA', data);
+    setAuthState(true);
+    setAccessToken(data.result.result.accessToken);
+    setCurrentUser({
+      email: data.result.result.email,
+      photo: data.result.result.profileImageUrl,
+      name: data.result.result.firstName,
+    });
+    router.replace('/');
   };
 
   const loginWithGoogle = async () => {
-    setAuthState({ authenticated: true, user: UserEmpty });
+    // setAuthState({ authenticated: true, user: UserEmpty });
     // try {
     //   await GoogleSignin.hasPlayServices();
     //   const response = await GoogleSignin.signIn();
@@ -91,7 +114,7 @@ export const SessionProvider = ({
     password: string,
     confirmPassword: string
   ) => {
-    setAuthState({ authenticated: true, user: UserEmpty });
+    setAuthState(true);
   };
 
   const signUpWithGoogle = async () => {};
@@ -101,6 +124,11 @@ export const SessionProvider = ({
     onLogout: logout,
     onSignIn: signIn,
     authState,
+    currentUser,
+    setAuthState,
+    setAccessToken,
+    accessToken,
+    setCurrentUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

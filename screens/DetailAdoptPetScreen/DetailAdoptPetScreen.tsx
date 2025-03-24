@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable import/order */
 import {
   View,
@@ -6,7 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import { HeaderDetail } from '@/components';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
@@ -14,52 +15,70 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Foundation } from '@expo/vector-icons';
-import { Carousel, MarkFav, Pagination } from './components';
-import { PetForAdoption } from '@/types';
-import { MockedPetsForAdoption } from '@/MockedPetsForAdoption';
+import { Carousel, MarkFav } from './components';
+import { PetsForAdoptionApi } from '@/types';
+import { useAuth } from '../../context';
 
 const DetailAdoptPet = () => {
+  const [currentPet, setCurrentPet] = useState<PetsForAdoptionApi>();
+  const { accessToken } = useAuth();
   const { width, height } = useWindowDimensions();
   const params = useLocalSearchParams();
-  // console.log('PARAMS', params);
-  const petFounded = MockedPetsForAdoption.find((pet) => pet.id === params.id);
-  // console.log('CURRENT PET', petcurrent);
-  const currentPet: PetForAdoption = {
-    id: petFounded?.id as string,
-    petName: petFounded?.petName as string,
-    breed: petFounded?.breed as string,
-    gender: petFounded?.gender as string,
-    age: petFounded?.age as string,
-    weight: Number(petFounded?.weight),
-    photos: petFounded?.photos as [],
-    aboutPet: petFounded?.aboutPet as string,
+
+  const getPetById = async () => {
+    try {
+      console.log('Fetching pet in DetailAdoptPetScreen...');
+      const response = await fetch(
+        `http://localhost:8082/api/v1/pets/${params.id}`,
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
+      }
+      const data = await response.json();
+      setCurrentPet(data.result.result);
+      console.log('PET DATA', data.result.result);
+    } catch (error) {
+      console.error('Error fetching pets:', error);
+    } //} finally {
+    //   setTimeout(() => setIsLoading(false), 1500); // Simula carga
+    // }
   };
+
+  useEffect(() => {
+    getPetById();
+  }, []);
 
   const fontScale = useWindowDimensions().fontScale;
 
   return (
     <View style={styles({}).container}>
-      <Carousel photosUrl={currentPet.photos as []} />
+      <Carousel photosUrl={currentPet?.imageUrls!} />
       <HeaderDetail routeBack="/(auth)/(tabs)/adoptPet" />
       <View style={styles({ height }).cardContainer}>
         <View
           style={
-            styles({ height, width, gender: currentPet.gender })
+            styles({ height, width, gender: currentPet?.gender })
               .cardInfoContainer
           }
         >
           <View style={styles({}).headerContainer}>
             <View style={styles({}).nameContainer}>
               <Text style={styles({ fontScale }).petName}>
-                {currentPet.petName}
+                {currentPet?.name}
               </Text>
-              {currentPet.gender === 'Hembra' ? (
+              {currentPet?.gender === 'Hembra' ? (
                 <Foundation name="female-symbol" size={35} color="gray" />
               ) : (
                 <Foundation name="male-symbol" size={38} color="gray" />
               )}
             </View>
-            <MarkFav pet={currentPet} />
+            <MarkFav pet={currentPet!} />
           </View>
           <View style={styles({}).locationContainer}>
             <FontAwesome5
@@ -76,7 +95,9 @@ const DetailAdoptPet = () => {
                 <FontAwesome
                   name="birthday-cake"
                   size={30}
-                  color={currentPet.gender === 'Hembra' ? 'hotpink' : 'skyblue'}
+                  color={
+                    currentPet?.gender === 'Hembra' ? 'hotpink' : 'skyblue'
+                  }
                 />
               </View>
               <View>
@@ -87,11 +108,11 @@ const DetailAdoptPet = () => {
                       fontScale,
                       width,
                       height,
-                      gender: currentPet.gender,
+                      gender: currentPet?.gender,
                     }).textDescriptive
                   }
                 >
-                  {currentPet.age}
+                  {currentPet?.age}
                 </Text>
               </View>
             </View>
@@ -100,7 +121,9 @@ const DetailAdoptPet = () => {
                 <MaterialCommunityIcons
                   name="weight-kilogram"
                   size={42}
-                  color={currentPet.gender === 'Hembra' ? 'hotpink' : 'skyblue'}
+                  color={
+                    currentPet?.gender === 'Hembra' ? 'hotpink' : 'skyblue'
+                  }
                 />
               </View>
               <View>
@@ -111,11 +134,11 @@ const DetailAdoptPet = () => {
                       fontScale,
                       width,
                       height,
-                      gender: currentPet.gender,
+                      gender: currentPet?.gender,
                     }).textDescriptive
                   }
                 >
-                  {currentPet.weight} Kg
+                  {currentPet?.weight} Kg
                 </Text>
               </View>
             </View>
@@ -124,7 +147,9 @@ const DetailAdoptPet = () => {
                 <MaterialIcons
                   name="pets"
                   size={42}
-                  color={currentPet.gender === 'Hembra' ? 'hotpink' : 'skyblue'}
+                  color={
+                    currentPet?.gender === 'Hembra' ? 'hotpink' : 'skyblue'
+                  }
                 />
               </View>
               <View>
@@ -135,29 +160,29 @@ const DetailAdoptPet = () => {
                       fontScale,
                       width,
                       height,
-                      gender: currentPet.gender,
+                      gender: currentPet?.gender,
                     }).textDescriptive
                   }
                 >
-                  {currentPet.breed}
+                  {currentPet?.breed}
                 </Text>
               </View>
             </View>
           </View>
 
           <Text style={styles({ fontScale }).aboutText}>
-            Acerca de {currentPet.petName}
+            Acerca de {currentPet?.name}
           </Text>
           <Text
             style={
-              styles({ fontScale, height, width, gender: currentPet.gender })
+              styles({ fontScale, height, width, gender: currentPet?.gender })
                 .textAbout
             }
           >
-            {currentPet.aboutPet}
+            {currentPet?.description}
           </Text>
           <TouchableOpacity
-            style={styles({ height, width, gender: currentPet.gender }).button}
+            style={styles({ height, width, gender: currentPet?.gender }).button}
           >
             <Text style={styles({ fontScale }).buttonText}>
               Se mi nuevo amigo

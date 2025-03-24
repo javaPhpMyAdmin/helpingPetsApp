@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-import { Marker, MarkerLostPet } from '@/types/types';
+import { Marker, MarkerLostPet, ReportLostPetApi } from '@/types/types';
 import { generateColor } from '@/utils/generateRandomColor';
 
 enum Gender {
@@ -22,7 +22,7 @@ enum Gender {
   Female = 'female',
 }
 interface RenderItemProps {
-  item: Marker & MarkerLostPet;
+  item: ReportLostPetApi;
   index: number;
 }
 
@@ -30,6 +30,7 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
   const { width } = useWindowDimensions();
   const randomColor = generateColor();
   const fontScale = useWindowDimensions().fontScale;
+  const imageUrl = item?.imagesLostPet?.[0];
 
   return (
     <Pressable
@@ -46,13 +47,18 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
       <View style={styles({ width, randomColor }).squareImage}>
         <Image
           // sharedTransitionTag={item.id}
-          source={{ uri: item.photos[0].uri }}
+          source={{
+            uri:
+              item.reportType === 'LOST'
+                ? item?.imagesLostPet?.[0]
+                : item?.imageFoundPet,
+          }}
           style={styles({ width }).image}
         />
       </View>
 
       <View style={styles({ width }).textContainer}>
-        {item.lost ? (
+        {item.reportType === 'LOST' ? (
           <View style={styles({ width }).textLostContainer}>
             <Text style={styles({ fontScale }).textLost}>SE ME PERDIÓ</Text>
           </View>
@@ -62,14 +68,14 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
           </View>
         )}
 
-        <Text style={styles({ fontScale }).textTitle}>{item.title}</Text>
+        <Text style={styles({ fontScale }).textTitle}>{item?.title}</Text>
         <Text style={styles({ fontScale }).textUserEmail}>
-          {item.userEmail.split('').length > 19
-            ? item.userEmail.slice(0, 19) + '...'
-            : item.userEmail}
+          {item?.contactEmail?.split('').length > 19
+            ? item?.contactEmail?.slice(0, 19) + '...'
+            : item?.contactEmail}
         </Text>
         <Text style={styles({ fontScale }).textCreatedAt}>
-          {item.createdAt}
+          {item.reportedAt}
         </Text>
         <View style={styles({ width }).infoContainer}>
           <Text style={styles({ fontScale, width }).moreInformation}>
@@ -80,13 +86,13 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
           </View>
         </View>
       </View>
-      <View style={styles({ width }).gender}>
-        {item.gender && item.gender === Gender.Male ? (
+      {/* <View style={styles({ width }).gender}>
+        {item. && item.gender === Gender.Male ? (
           <Foundation name="male-symbol" size={29} color="green" />
         ) : (
           <Foundation name="female-symbol" size={29} color="hotpink" />
         )}
-      </View>
+      </View> */}
     </Pressable>
   );
 };

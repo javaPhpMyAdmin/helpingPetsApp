@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { PetsContext } from '../PetsContext/PetsContext';
 import { Marker, MarkerLostPet, PetForAdoption } from '@/types';
 import { MockedPets } from '@/MockedPets';
+import { useAuth } from '../AuthContext/AuthContext';
 
 const PetsProvider = ({
   children,
@@ -13,6 +14,7 @@ const PetsProvider = ({
   const [pets, setPets] = useState<Marker[] & MarkerLostPet[]>(
     MockedPets as Marker[] & MarkerLostPet[]
   );
+  const { accessToken } = useAuth();
 
   const orderPetsByDate = (pets: Marker[] & MarkerLostPet[]) => {
     return pets.sort((a, b) => {
@@ -20,6 +22,21 @@ const PetsProvider = ({
       const petA = new Date(a.createdAt);
       return petA.getTime() - petB.getTime();
     });
+  };
+
+  const getPets = async () => {
+    const response = await fetch(
+      'http://localhost:8082/api/v1/reports?page=0&size=100',
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const data = await response.json();
+    console.log('DATA PROVIDER', data.result.Result.content);
+    return data.result.Result.content;
   };
 
   const getFavsPets = () => {
@@ -50,7 +67,7 @@ const PetsProvider = ({
     addToFavs,
     removeFromFavs,
     addPet,
-    pets: orderPetsByDate(pets),
+    getPets,
     removePet,
   };
   return <PetsContext.Provider value={value}>{children}</PetsContext.Provider>;

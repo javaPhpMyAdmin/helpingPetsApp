@@ -17,7 +17,7 @@ type Href = ComponentProps<typeof Link>['href'];
 
 const Index = () => {
   const { authState } = useAuth();
-  const isAuthenticated = authState?.authenticated;
+  const isAuthenticated = authState;
   const { width, height } = useWindowDimensions();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -27,11 +27,14 @@ const Index = () => {
       () =>
         isAuthenticated
           ? // ? router.replace('/(auth)/addNewPet')
-            router.replace('/(auth)/ReportPet')
+            // router.replace('/(auth)/ReportPet')
+            // router.replace('/(public)/login')
+            router.replace('/(auth)/(tabs)/home')
           : // router.replace('/(auth)/(tabs)/favPets')
-            // router.replace('/(auth)/(tabs)/home')
-            // router.replace('/(auth)/(tabs)/adopt')
-            router.replace('/(public)/login/signup') //router.replace('/(public)/login'),
+            router.replace('/(auth)/(tabs)/home')
+      // router.replace('/(auth)/(tabs)/adopt')
+      // router.replace('/(public)/login')
+      //router.replace('/(public)/login/signup') //router.replace('/(public)/login'),
     );
   }, []);
   return (

@@ -2,25 +2,19 @@
 /* eslint-disable import/order */
 import { View, StyleSheet, useWindowDimensions } from 'react-native';
 import React from 'react';
-import Animated, {
-  Extrapolation,
-  interpolate,
-  SharedValue,
-  useAnimatedStyle,
-} from 'react-native-reanimated';
-import { Photo } from '@/types';
+import Animated, { SharedValue } from 'react-native-reanimated';
 
 interface PaginationProps {
   scrollX: SharedValue<number>;
   paginationIndex: number;
-  items: Photo[];
+  items: string[];
 }
 
 const Pagination = ({ scrollX, paginationIndex, items }: PaginationProps) => {
   const { width } = useWindowDimensions();
   return (
     <View style={styles().container}>
-      {items.map((_, index) => {
+      {items?.map((_, index) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         // const pgAnimationStyle = useAnimatedStyle(() => {
         //   const dotWidth = interpolate(

@@ -2,15 +2,11 @@
 import { View, FlatList, useWindowDimensions, ViewToken } from 'react-native';
 import React, { useRef, useState } from 'react';
 import { ItemCarousel } from '../ItemCarousel';
-import { Photo } from '../../../../types';
 import { Pagination } from '../Pagination';
-import {
-  useAnimatedScrollHandler,
-  useSharedValue,
-} from 'react-native-reanimated';
+import { useSharedValue } from 'react-native-reanimated';
 
 interface CarouselProps {
-  photosUrl: Photo[];
+  photosUrl: string[];
 }
 
 const Carousel = ({ photosUrl }: CarouselProps) => {
@@ -44,7 +40,7 @@ const Carousel = ({ photosUrl }: CarouselProps) => {
       <FlatList
         horizontal
         data={photosUrl}
-        renderItem={({ item }) => <ItemCarousel photoUrl={item.uri} />}
+        renderItem={({ item }) => <ItemCarousel photoUrl={item} />}
         keyExtractor={(item, index) => item + index.toString()}
         pagingEnabled
         viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}

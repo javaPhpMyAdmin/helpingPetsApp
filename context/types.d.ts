@@ -5,6 +5,5 @@ export interface UserContext {
 }
 
 export interface AuthState {
-  authenticated: boolean | null;
-  user: UserContext;
+  authenticated: boolean;
 }

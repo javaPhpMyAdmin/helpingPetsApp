@@ -9,24 +9,27 @@ import {
 } from 'react-native';
 import React from 'react';
 import Foundation from '@expo/vector-icons/Foundation';
-import { PetForAdoption, Photo } from '@/types';
+import { PetsForAdoptionApi } from '@/types';
 import { router } from 'expo-router';
 import { FontAwesome } from '@expo/vector-icons';
 
 interface RenderItemProps {
-  pet: PetForAdoption;
+  pet: PetsForAdoptionApi;
+}
+
+export enum Gender {
+  'MALE',
+  'FEMALE',
 }
 
 const RenderItem = ({ pet }: RenderItemProps) => {
   const { width, height } = useWindowDimensions();
   const fontScale = useWindowDimensions().fontScale;
 
-  // console.log('PET render item adopt pet', pet.photos);
-
   return (
     <TouchableOpacity
       onPress={() =>
-        router.push<PetForAdoption>({
+        router.push({
           pathname: '/(auth)/detailAdoptPet',
           params: {
             id: pet.id,
@@ -37,28 +40,30 @@ const RenderItem = ({ pet }: RenderItemProps) => {
     >
       <Image
         style={styles(fontScale, width, height).image}
-        source={{ uri: pet.photos[0].uri }}
+        source={{ uri: pet.imageUrls?.[0] }}
       />
       <View style={styles(fontScale, width).detailContainer}>
         <View style={styles(fontScale, width, height).descriptionContainer}>
-          <Text style={styles(fontScale).petName}>{pet.petName}</Text>
+          <Text style={styles(fontScale).petName}>{pet.name}</Text>
           <Text style={styles(fontScale).petBreed}>Raza: {pet.breed}</Text>
           <View style={styles(fontScale).footerContainer}>
             <View style={styles(fontScale).genderContainer}>
-              {pet.gender === 'Hembra' ? (
+              {pet.gender === 'FEMALE' ? (
                 <Foundation name="female-symbol" size={35} color="hotpink" />
               ) : (
                 <Foundation name="male-symbol" size={38} color="green" />
               )}
-              <Text style={styles(fontScale).genderText}>{pet.gender}</Text>
+              <Text style={styles(fontScale).genderText}>
+                {pet.gender === 'FEMALE' ? 'Hembra' : 'Macho'}
+              </Text>
             </View>
             <View style={styles(fontScale).ageContainer}>
               <FontAwesome
                 name="birthday-cake"
                 size={27}
-                color={pet.gender === 'Hembra' ? 'hotpink' : 'green'}
+                color={pet.gender === `${Gender.FEMALE}` ? 'hotpink' : 'green'}
               />
-              <Text style={styles(fontScale).ageText}>{pet.age}</Text>
+              <Text style={styles(fontScale).ageText}>{pet.age} meses</Text>
             </View>
           </View>
         </View>
