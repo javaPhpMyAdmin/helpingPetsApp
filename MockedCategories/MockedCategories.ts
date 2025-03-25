@@ -5,11 +5,11 @@ export const categories = [
   },
   {
     id: '344234',
-    category: 'Perros',
+    category: 'Perdidos',
   },
   {
     id: '4234',
-    category: 'Gatos',
+    category: 'Abandonados',
   },
   {
     id: '423334',

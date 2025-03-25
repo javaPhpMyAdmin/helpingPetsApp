@@ -9,7 +9,7 @@ import {
 import { AuthState, UserContext } from '../types';
 import { AuthContext } from '../AuthContext/AuthContext';
 import { set } from 'react-hook-form';
-import { router } from 'expo-router';
+import { Href, router } from 'expo-router';
 
 // GoogleSignin.configure({
 //   webClientId:
@@ -23,6 +23,12 @@ export const UserEmpty = {
   email: '',
   photo: '',
   name: '',
+};
+
+export const Constants = {
+  EMPTY: '',
+  GO_HOME: '/',
+  BEARER: 'Bearer ',
 };
 
 const UserMocked = {
@@ -40,7 +46,7 @@ export const SessionProvider = ({
   const [authState, setAuthState] = useState<boolean>(true);
   const [currentUser, setCurrentUser] = useState<UserContext>(UserMocked);
   const [accessToken, setAccessToken] = useState<string>(
-    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOlsiSEVMUElOR19QRVRTIl0sImp0aSI6IjcyN2VkMWFmLTg3OTgtNGUzNi04ZDY0LTE0ODUyOWEwOTRjMiIsImlhdCI6MTc0Mjc3MDg3MiwibmJmIjoxNzQyNzcwODcyLCJzdWIiOiJjaGVsb2JhdDE2NDExQGdtYWlsLmNvbSIsIkFVVEhPUklUSUVTIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifV0sIlJPTEUiOiJVU0VSIiwiZXhwIjoxNzQyNzc2ODcyfQ.NvhiQgqY_0HSJBjB0EcDyJSJMHIXaNOKzWO-lE-NVJHxBP_B-T76AFeo5fmg2P6c_gZdkMXrjJ7cWrAxNl_Mpg'
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOlsiSEVMUElOR19QRVRTIl0sImp0aSI6ImQ5ZmE2NmRkLTY4ODYtNDc3Ny1iOTgwLTljMmNhNWRmNzNlNiIsImlhdCI6MTc0Mjg3MTgxMywibmJmIjoxNzQyODcxODEzLCJzdWIiOiJjaGVsb2JhdDE2NDExQGdtYWlsLmNvbSIsIkFVVEhPUklUSUVTIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifV0sIlJPTEUiOiJVU0VSIiwiZXhwIjoxNzQyODc3ODEzfQ.zJOJSStRamopVCA4igF5BpirelYNw5iMGcB78n6JuDjiLbWPqmB5HGbsImyT8_2S4esvOjIb5eCyPpb4byZNpw'
   );
 
   const login = async (username: string, password: string) => {
@@ -56,7 +62,7 @@ export const SessionProvider = ({
       }),
     });
     const data = await response.json();
-    console.log('DATA', data);
+    console.log('Login response', JSON.stringify(data, null, 4));
     setAuthState(true);
     setAccessToken(data.result.result.accessToken);
     setCurrentUser({
@@ -64,7 +70,7 @@ export const SessionProvider = ({
       photo: data.result.result.profileImageUrl,
       name: data.result.result.firstName,
     });
-    router.replace('/');
+    router.replace(`${Constants.GO_HOME}` as Href);
   };
 
   const loginWithGoogle = async () => {
@@ -100,6 +106,25 @@ export const SessionProvider = ({
     // }
   };
   const logout = async () => {
+    try {
+      const response = await fetch('http://localhost:8082/api/v1/auth/logout', {
+        method: 'POST',
+        headers: {
+          Authorization: `${Constants.BEARER}${accessToken}`,
+        },
+      });
+      const data = await response.json();
+      console.log('Logout response', JSON.stringify(data, null, 4));
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
+      }
+      setAuthState(false);
+      setCurrentUser(UserEmpty);
+      setAccessToken(`${Constants.EMPTY}`);
+      router.replace(`${Constants.GO_HOME}` as Href);
+    } catch (error) {
+      console.log('ERROR', error);
+    }
     // try {
     //   await GoogleSignin.signOut();
     //   setAuthState({ authenticated: false, user: UserEmpty }); // Remember to remove the user from your app's state as well

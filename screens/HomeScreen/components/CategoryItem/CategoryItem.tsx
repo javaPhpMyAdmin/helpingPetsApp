@@ -43,19 +43,19 @@ const styles = (width: number, height: number) =>
     categoryItem: {
       fontStyle: 'normal',
       fontWeight: 'bold',
-      fontSize: 20,
+      fontSize: 15,
       marginHorizontal: 12,
       color: 'black',
       opacity: 0.3,
     },
     selectedCategory: {
       color: 'orange',
-      fontSize: 22,
+      fontSize: 18,
       fontWeight: '900',
       opacity: 1,
     },
     buttonContainer: {
-      width: width * 0.3,
+      width: width * 0.35,
       height: 30,
       backgroundColor: 'transparent',
       display: 'flex',

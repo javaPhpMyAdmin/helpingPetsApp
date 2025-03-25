@@ -22,6 +22,34 @@ export interface ReportLostPetApi {
   updatedAt: string;
 }
 
+export interface LostReportApi {
+  reportId: number;
+  reportType: string;
+  reporter: LostReportReporterApi;
+  images: [LostReportImageApi];
+  pet: LostReportPetApi;
+  metadata: LostReportMetadata;
+  title: string;
+}
+
+export interface LostReportMetadata {
+  reportedAt: string;
+  updatedAt: string;
+  status: string;
+}
+export interface LostReportReporterApi {
+  reporterId: number;
+  contactEmail: string;
+}
+export interface LostReportImageApi {
+  imageUrl: string;
+}
+export interface LostReportPetApi {
+  petName: string;
+  breed: string;
+  description: string;
+}
+
 export interface PetsForAdoptionApi {
   breed: string;
   createdAt: string;

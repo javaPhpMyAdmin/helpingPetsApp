@@ -4,12 +4,20 @@ import React, { useState } from 'react';
 import { categories } from '@/MockedCategories';
 import { CategoryItem } from '../CategoryItem';
 
-const CategoryList = () => {
-  const [selectedCategory, setSelectedCategory] = useState('Todos');
+interface CategoryListProps {
+  handlecaseCategoryPress: (category: string) => void;
+  category: string;
+}
+
+const CategoryList = ({
+  handlecaseCategoryPress,
+  category,
+}: CategoryListProps) => {
+  // const [selectedCategory, setSelectedCategory] = useState('Todos');
   const { width, height } = useWindowDimensions();
 
   const handleOnPress = (category: string) => {
-    setSelectedCategory(category);
+    handlecaseCategoryPress(category);
   };
 
   return (
@@ -24,7 +32,7 @@ const CategoryList = () => {
         renderItem={({ item }) => (
           <CategoryItem
             handleOnPress={handleOnPress}
-            selectedCategory={selectedCategory}
+            selectedCategory={category}
             item={item}
           />
         )}

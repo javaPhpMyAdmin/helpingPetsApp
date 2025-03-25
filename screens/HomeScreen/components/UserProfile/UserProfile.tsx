@@ -28,11 +28,11 @@ const UserProfile = ({ setIsVisibleModal }: UserProfileProps) => {
   const { width, height } = useWindowDimensions();
   const [selectedMode, setSelectedMode] = useState<string>('No');
   const [selectedLanguage, setSelectedLanguage] = useState<string>('Español');
-  const { authState } = useAuth();
-  const [userName, setUserName] = useState(authState?.user.name);
+  const { currentUser, onLogout } = useAuth();
+  const [userName, setUserName] = useState(currentUser?.name);
   const [isLoadingImage, setIsLoadingImage] = useState(false);
 
-  const [image, setImage] = useState<string>(authState?.user.photo!);
+  const [image, setImage] = useState<string>(currentUser?.photo!);
   const isKeyboardVisible = useKeyboardVisible();
   const fontScale = useWindowDimensions().fontScale;
 
@@ -40,6 +40,11 @@ const UserProfile = ({ setIsVisibleModal }: UserProfileProps) => {
     Alert.alert(
       JSON.stringify({ selectedLanguage, selectedMode, userName, image })
     );
+  };
+
+  const handleLogout = async () => {
+    onLogout!();
+    setIsVisibleModal(false);
   };
 
   const pickImage = async () => {
@@ -77,7 +82,7 @@ const UserProfile = ({ setIsVisibleModal }: UserProfileProps) => {
         }}
       />
       <TouchableOpacity
-        onPress={() => Alert.alert('NOS VEMOS DULIO')}
+        onPress={handleLogout}
         style={{
           position: 'absolute',
           right: 10,
