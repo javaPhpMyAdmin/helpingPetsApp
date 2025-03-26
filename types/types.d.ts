@@ -25,19 +25,79 @@ export interface ReportLostPetApi {
 export interface LostReportApi {
   reportId: number;
   reportType: string;
-  reporter: LostReportReporterApi;
+  reporter: ReportReporterApi;
   images: [LostReportImageApi];
   pet: LostReportPetApi;
-  metadata: LostReportMetadata;
+  metadata: ReportMetadata;
   title: string;
+  gender?: string;
 }
 
-export interface LostReportMetadata {
+export interface FoundReportApi {
+  reportId: number;
+  reportType: string;
+  reporter: ReportReporterApi;
+  image: FoundReportImageApi;
+  location: Location;
+  metadata: ReportMetadata;
+  title: string;
+  gender?: string;
+}
+
+export interface Location {
+  coordinates: Coordinates;
+}
+
+export interface Coordinates {
+  latitude: number;
+  longitude: number;
+}
+
+export interface FoundReportImageApi {
+  imageUrl: string;
+  description: string;
+}
+
+export interface ReportPetApi {
+  breed?: string;
+  description: string;
+  id: number;
+  title: string;
+  imagesLostPet: string[];
+  imageFoundPet: string;
+  latitude?: number;
+  longitude?: number;
+  petName?: string;
+  reportType: string;
+  reportedAt: string;
+  reportedBy?: string;
+  contactEmail?: string;
+  status: string;
+  gender?: string;
+}
+
+export interface ReportPetApp {
+  breed?: string;
+  description: string;
+  reportId: number;
+  title: string;
+  imagesPet: string[] | string;
+  latitude?: number;
+  longitude?: number;
+  petName?: string;
+  reportType: string;
+  reportedAt: string;
+  reportedBy?: string;
+  status: string;
+  gender?: string;
+}
+
+export interface ReportMetadata {
   reportedAt: string;
   updatedAt: string;
   status: string;
 }
-export interface LostReportReporterApi {
+export interface ReportReporterApi {
   reporterId: number;
   contactEmail: string;
 }

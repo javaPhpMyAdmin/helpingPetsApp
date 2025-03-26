@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable import/order */
 import { router, Stack, useLocalSearchParams } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -15,18 +16,35 @@ import Animated, { FadeInDown } from 'react-native-reanimated';
 import { HeaderDetail } from '@/components/HeaderDetail';
 import { ButtonDetail } from '@/components/ButtonDetail';
 import { CarouselDetailPet } from './components/CarouselDetailPet';
-import { useAuth, usePets } from '@/context';
+import { useAuth } from '@/context';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Toast from 'react-native-root-toast';
 
 const DetailPet = () => {
+  const [petFounded, setPetFounded] = useState();
   const { width, height } = useWindowDimensions();
-  const { petId } = useLocalSearchParams();
+  const { petId, reportType } = useLocalSearchParams();
+  console.log('PET ID', petId);
+  console.log('REPORT TYPE', reportType);
 
-  const { pets, removePet } = usePets();
-  const { authState } = useAuth();
+  // const { pets, removePet } = usePets();
+  const { accessToken, currentUser } = useAuth();
 
-  const petFounded = pets?.find((pet) => pet.id === petId);
+  const getReportById = async (id: number, reportType: string) => {
+    const argument = reportType === 'LOST' ? 'lost-pet/' : 'found-pet/';
+    const response = await fetch(
+      `http://localhost:8082/api/v1/reports/${argument}${id}`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    const data = await response.json();
+    console.log('REPORT FOUND', JSON.stringify(data.result.Result, null, 4));
+    setPetFounded(data.result.Result);
+  };
 
   const handleDelete = () => {
     Alert.alert('Eliminar Reporte', '¿Estás seguro de eliminar este reporte?', [
@@ -38,7 +56,7 @@ const DetailPet = () => {
       {
         text: 'OK',
         onPress: () => {
-          removePet!(petFounded!);
+          // removePet!(petFounded!);
           Toast.show('REPORTE ELIMINADO CON ÉXITO.', {
             duration: Toast.durations.LONG,
             position: Toast.positions.BOTTOM,
@@ -53,13 +71,17 @@ const DetailPet = () => {
     ]);
   };
 
+  useEffect(() => {
+    getReportById(Number(petId), String(reportType));
+  }, []);
+
   return (
     <View style={styles({}).container}>
       <StatusBar translucent barStyle="dark-content" />
       <Stack.Screen options={{ headerShown: false }} />
       <View>
         <HeaderDetail routeBack="/(auth)/(tabs)/home" />
-        <CarouselDetailPet photosUrl={petFounded?.photos!} />
+        <CarouselDetailPet photosUrl={petFounded?.imagesPet!} />
         <Animated.View
           entering={FadeInDown.delay(400)}
           style={styles({ height, width }).textContainer}
@@ -70,7 +92,7 @@ const DetailPet = () => {
       </View>
       <View style={styles({ height }).cardContainer}>
         <Animated.View entering={FadeInDown.delay(800)}>
-          {authState?.user.email === petFounded?.userEmail && (
+          {currentUser?.email === petFounded?.userEmail && (
             <View style={styles({ width }).buttonsContainer}>
               <TouchableOpacity style={styles({ width }).editButton}>
                 <View style={styles({}).iconContainer}>

@@ -3,10 +3,10 @@
 import { ActivityIndicator, FlatList, View } from 'react-native';
 import React from 'react';
 import { RenderItem } from '../RenderItem';
-import { LostReportApi, ReportLostPetApi } from '@/types';
+import { ReportPetApp } from '@/types';
 
 interface PetsListProps {
-  pets: ReportLostPetApi[] | LostReportApi[];
+  pets: ReportPetApp[];
   isLoading: boolean;
 }
 
@@ -16,8 +16,10 @@ const PetsList = ({ pets, isLoading }: PetsListProps) => {
       {!isLoading ? (
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={pets as ReportLostPetApi[]}
-          keyExtractor={(item) => `${item.id} - ${item.reportType}`}
+          data={pets}
+          keyExtractor={(item) =>
+            `${item.reportId} - ${item.reportType} - ${item.reportedBy}`
+          }
           renderItem={({ item, index }) => {
             return <RenderItem item={item} index={index} />;
           }}

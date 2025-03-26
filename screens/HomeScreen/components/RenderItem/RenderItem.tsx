@@ -1,6 +1,5 @@
 /* eslint-disable import/order */
 import AntDesign from '@expo/vector-icons/AntDesign';
-import Foundation from '@expo/vector-icons/Foundation';
 import { router } from 'expo-router';
 import React from 'react';
 
@@ -12,17 +11,17 @@ import {
   useWindowDimensions,
   Image,
 } from 'react-native';
-import Animated from 'react-native-reanimated';
 
-import { Marker, MarkerLostPet, ReportLostPetApi } from '@/types/types';
+import { ReportPetApp } from '@/types/types';
 import { generateColor } from '@/utils/generateRandomColor';
+import { Foundation } from '@expo/vector-icons';
 
 enum Gender {
   Male = 'male',
   Female = 'female',
 }
 interface RenderItemProps {
-  item: ReportLostPetApi;
+  item: ReportPetApp;
   index: number;
 }
 
@@ -30,7 +29,6 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
   const { width } = useWindowDimensions();
   const randomColor = generateColor();
   const fontScale = useWindowDimensions().fontScale;
-  const imageUrl = item?.imagesLostPet?.[0];
 
   return (
     <Pressable
@@ -39,7 +37,8 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
         router.push({
           pathname: '/(auth)/detailPet',
           params: {
-            petId: item.id,
+            petId: item.reportId,
+            reportType: item.reportType,
           },
         })
       }
@@ -49,9 +48,9 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
           // sharedTransitionTag={item.id}
           source={{
             uri:
-              item.reportType === 'LOST'
-                ? item?.imagesLostPet?.[0]
-                : item?.imageFoundPet,
+              item.imagesPet instanceof Array
+                ? item.imagesPet?.[0]
+                : item.imagesPet,
           }}
           style={styles({ width }).image}
         />
@@ -70,9 +69,9 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
 
         <Text style={styles({ fontScale }).textTitle}>{item?.title}</Text>
         <Text style={styles({ fontScale }).textUserEmail}>
-          {item?.contactEmail?.split('').length > 19
-            ? item?.contactEmail?.slice(0, 19) + '...'
-            : item?.contactEmail}
+          {item?.reportedBy?.split('').length! > 19
+            ? item?.reportedBy?.slice(0, 19) + '...'
+            : item?.reportedBy}
         </Text>
         <Text style={styles({ fontScale }).textCreatedAt}>
           {item.reportedAt}
@@ -86,13 +85,13 @@ const RenderItem = ({ item, index }: RenderItemProps) => {
           </View>
         </View>
       </View>
-      {/* <View style={styles({ width }).gender}>
-        {item. && item.gender === Gender.Male ? (
+      <View style={styles({ width }).gender}>
+        {item && item.gender === Gender.Male ? (
           <Foundation name="male-symbol" size={29} color="green" />
         ) : (
           <Foundation name="female-symbol" size={29} color="hotpink" />
         )}
-      </View> */}
+      </View>
     </Pressable>
   );
 };
