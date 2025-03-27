@@ -19,14 +19,15 @@ import { CarouselDetailPet } from './components/CarouselDetailPet';
 import { useAuth } from '@/context';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Toast from 'react-native-root-toast';
+import { LostReportApi, ReportPetApp } from '../../types';
 
 const DetailPet = () => {
-  const [petFounded, setPetFounded] = useState();
+  const [petFounded, setPetFounded] = useState<ReportPetApp>();
   const { width, height } = useWindowDimensions();
   const { petId, reportType } = useLocalSearchParams();
   console.log('PET ID', petId);
   console.log('REPORT TYPE', reportType);
-
+  const LOST = 'LOST';
   // const { pets, removePet } = usePets();
   const { accessToken, currentUser } = useAuth();
 
@@ -43,9 +44,32 @@ const DetailPet = () => {
     );
     const data = await response.json();
     console.log('REPORT FOUND', JSON.stringify(data.result.Result, null, 4));
-    setPetFounded(data.result.Result);
-  };
 
+    if (reportType === LOST) {
+      const petFormatted = reportPetAddapterFromLostReport(data.result.Result);
+      console.log('PET FOUNDED', JSON.stringify(petFormatted, null, 4));
+      setPetFounded(petFormatted);
+      console.log('PET FORMATTED', JSON.stringify(petFormatted, null, 4));
+    }
+  };
+  const reportPetAddapterFromLostReport = (
+    report: LostReportApi
+  ): ReportPetApp => {
+    console.log('INSIDE REPORT PET LOST REPORT');
+    return {
+      breed: report.pet.breed,
+      description: report.pet.description,
+      reportId: report.reportId,
+      title: report.title,
+      imagesPet: report.images.map((image) => image.imageUrl),
+      petName: report.pet.petName,
+      reportType: report.reportType,
+      reportedAt: report.metadata.reportedAt,
+      reportedBy: report?.reporter?.contactEmail,
+      status: report.metadata.status,
+      gender: report?.gender,
+    };
+  };
   const handleDelete = () => {
     Alert.alert('Eliminar Reporte', '¿Estás seguro de eliminar este reporte?', [
       {
@@ -73,7 +97,7 @@ const DetailPet = () => {
 
   useEffect(() => {
     getReportById(Number(petId), String(reportType));
-  }, []);
+  }, [petId]);
 
   return (
     <View style={styles({}).container}>
@@ -86,13 +110,13 @@ const DetailPet = () => {
           entering={FadeInDown.delay(400)}
           style={styles({ height, width }).textContainer}
         >
-          <Text style={styles({}).textName}>{petFounded?.title}</Text>
-          <Text style={styles({}).textLocation}>{petFounded?.userEmail}</Text>
+          <Text style={styles({}).textName}>{petFounded?.title!}</Text>
+          <Text style={styles({}).textLocation}>{petFounded?.title!}</Text>
         </Animated.View>
       </View>
       <View style={styles({ height }).cardContainer}>
         <Animated.View entering={FadeInDown.delay(800)}>
-          {currentUser?.email === petFounded?.userEmail && (
+          {currentUser?.email === petFounded?.reportedBy! && (
             <View style={styles({ width }).buttonsContainer}>
               <TouchableOpacity style={styles({ width }).editButton}>
                 <View style={styles({}).iconContainer}>
@@ -114,16 +138,12 @@ const DetailPet = () => {
 
           <Text style={styles({}).textTitle}>Descripción del reporte </Text>
           <Text style={styles({}).textDescription}>
-            {petFounded?.aboutPet}
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Et deserunt
-            dolorem dicta ab id. Odit ut recusandae dolorum eum nihil, facilis
-            aliquam aliquid eligendi ullam tempore minima perferendis? Eaque,
-            blanditiis?
+            {petFounded?.description!}
           </Text>
         </Animated.View>
         <ButtonDetail
-          lat={Number(petFounded?.lat)}
-          long={Number(petFounded?.long)}
+          lat={Number(petFounded?.latitude!)}
+          long={Number(petFounded?.longitude!)}
         />
       </View>
     </View>

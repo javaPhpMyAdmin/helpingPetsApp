@@ -6,7 +6,7 @@ import { ItemCarousel } from '../ItemCarousel';
 import { Photo } from '@/types';
 
 interface CarouselDetailPetProps {
-  photosUrl: Photo[];
+  photosUrl: string[] | string;
 }
 
 const CarouselDetailPet = ({ photosUrl }: CarouselDetailPetProps) => {
@@ -16,8 +16,8 @@ const CarouselDetailPet = ({ photosUrl }: CarouselDetailPetProps) => {
     <View style={{ width: '100%', height: height! * 0.5 }}>
       <FlatList
         horizontal
-        data={photosUrl}
-        renderItem={({ item }) => <ItemCarousel photoUrl={item.uri} />}
+        data={photosUrl as []}
+        renderItem={({ item }) => <ItemCarousel photoUrl={item} />}
         keyExtractor={(item, index) => item + index.toString()}
         pagingEnabled
         // viewabilityConfigCallbackPairs={viewabilityConfigCallbackPairs.current}
