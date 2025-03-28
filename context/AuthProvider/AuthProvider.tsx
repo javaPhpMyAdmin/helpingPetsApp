@@ -46,7 +46,7 @@ export const SessionProvider = ({
   const [authState, setAuthState] = useState<boolean>(true);
   const [currentUser, setCurrentUser] = useState<UserContext>(UserMocked);
   const [accessToken, setAccessToken] = useState<string>(
-    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOlsiSEVMUElOR19QRVRTIl0sImp0aSI6Ijc0NjhjZmU0LWNiZTAtNDMwNS1iOWMxLThmMzU5YjcyN2IyNyIsImlhdCI6MTc0MzA0NzM4NiwibmJmIjoxNzQzMDQ3Mzg2LCJzdWIiOiJjaGVsb2JhdDE2NDExQGdtYWlsLmNvbSIsIkFVVEhPUklUSUVTIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifV0sIlJPTEUiOiJVU0VSIiwiZXhwIjoxNzQzMDUzMzg2fQ.gxeimICkK24fFvAKPbrSc6bxkFIQ8AIBq_C1OOAtJ3LnaSv4F_NGxG7neGf8cLeJKLEFJFX0Gp0-O4J7NoDaYg'
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOlsiSEVMUElOR19QRVRTIl0sImp0aSI6ImZlNWU1OGM2LTVlOTMtNDY2Zi1iZDZhLWU2YmY1ZGQ5ODI2ZCIsImlhdCI6MTc0MzEyMzA1NywibmJmIjoxNzQzMTIzMDU3LCJzdWIiOiJjaGVsb2JhdDE2NDExQGdtYWlsLmNvbSIsIkFVVEhPUklUSUVTIjpbeyJhdXRob3JpdHkiOiJST0xFX1VTRVIifV0sIlJPTEUiOiJVU0VSIiwiZXhwIjoxNzQzMTI5MDU3fQ.rD-0uN-mec2VbG47rxdoly_v_cEWIT8iJyHdMBS9PLgQT1sCXb1-FVbPc5KcG5maDKVwg7tNKG1pxcpleGdqlA'
   );
 
   const login = async (username: string, password: string) => {

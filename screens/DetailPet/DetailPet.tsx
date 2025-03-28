@@ -21,13 +21,16 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Toast from 'react-native-root-toast';
 import { LostReportApi, ReportPetApp } from '../../types';
 
+const LOSTPET = 'lost-pet/';
+const FOUNDPET = 'found-pet/';
+const LOST = 'LOST';
+
 const DetailPet = () => {
   const [petFounded, setPetFounded] = useState<ReportPetApp>();
   const { width, height } = useWindowDimensions();
   const { petId, reportType } = useLocalSearchParams();
   console.log('PET ID', petId);
   console.log('REPORT TYPE', reportType);
-  const LOST = 'LOST';
   // const { pets, removePet } = usePets();
   const { accessToken, currentUser } = useAuth();
 
@@ -47,15 +50,36 @@ const DetailPet = () => {
 
     if (reportType === LOST) {
       const petFormatted = reportPetAddapterFromLostReport(data.result.Result);
-      console.log('PET FOUNDED', JSON.stringify(petFormatted, null, 4));
       setPetFounded(petFormatted);
       console.log('PET FORMATTED', JSON.stringify(petFormatted, null, 4));
     }
   };
+
+  const deleteReportById = async (id: number, reportType: string) => {
+    const argument = reportType === LOST ? LOSTPET : FOUNDPET;
+    try {
+      const response = await fetch(
+        `http://localhost:8082/api/v1/reports/${argument}${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log('REPORT DELETED', JSON.stringify(data, null, 4));
+    } catch (error) {
+      console.error('Error fetching pets:', error);
+    }
+  };
+
   const reportPetAddapterFromLostReport = (
     report: LostReportApi
   ): ReportPetApp => {
-    console.log('INSIDE REPORT PET LOST REPORT');
     return {
       breed: report.pet.breed,
       description: report.pet.description,
@@ -81,6 +105,7 @@ const DetailPet = () => {
         text: 'OK',
         onPress: () => {
           // removePet!(petFounded!);
+          deleteReportById(Number(petId), String(reportType));
           Toast.show('REPORTE ELIMINADO CON ÉXITO.', {
             duration: Toast.durations.LONG,
             position: Toast.positions.BOTTOM,
@@ -89,7 +114,7 @@ const DetailPet = () => {
             hideOnPress: false,
             backgroundColor: 'green',
           });
-          router.back();
+          router.replace('/(auth)/(tabs)/home');
         },
       },
     ]);
